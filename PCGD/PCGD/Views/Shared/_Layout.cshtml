@@ -3,37 +3,74 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Hệ thống phân công giảng dạy AGU</title>
+
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/fontawesome")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+            <div class="container">
+                <a class="navbar-brand font-weight-bold" href="/">AGU<small>.edu.vn</small></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/"><i class="fal fa-home"></i> Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fal fa-sign-in"></i> Đăng Nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fal fa-drafting-compass"></i> Phân Công</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fal fa-cog"></i> Quản lý
+                            </a>
+                            <div class="dropdown-menu" style="top: 45px;font-size: 14px" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Học Phần</a>
+                                <a class="dropdown-item" href="#">Giảng Viên</a>
+                                <a class="dropdown-item" href="#">Tài Khoản</a>
+                                <a class="dropdown-item" href="#">Ngành</a>
+                                <a class="dropdown-item" href="#">Khoa</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fal fa-user-circle"></i> Admin
+                            </a>
+                            <div class="dropdown-menu" style="top: 45px;font-size: 14px; right: 0; left: unset" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#"><i class="fal fa-lock"></i> Thay Đổi Mật Khẩu</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><i class="fal fa-sign-out"></i> Đăng Xuất</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container">
+            @RenderBody()
+        </div>
+    </section>
+
+    <footer>
+        <div class="container mt-3">
+            <div class="text-center">
+                <small>&copy; 2021 - @DateTime.Now.Year - Được làm bởi Đặng Tiến Sĩ</p></small>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

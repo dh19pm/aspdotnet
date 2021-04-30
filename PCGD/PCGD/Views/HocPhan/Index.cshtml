@@ -1,0 +1,68 @@
+﻿@model IEnumerable<PCGD.Models.HocPhan>
+
+@{
+    ViewBag.Title = "Học Phần";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("Create")">Thêm Mới <i class="fal fa-plus"></i></a>
+        </p>
+        <table class="table table-bordered table-sm table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenHP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoTC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoTCBatBuoc)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoTCTuChon)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoTietLT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoTietTH)
+                </th>
+                <th>Hành Động</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTCBatBuoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTCTuChon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTietLT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTietTH)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaHP }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MaHP }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaHP })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

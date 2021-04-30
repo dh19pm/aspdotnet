@@ -46,7 +46,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,TaiKhoan1,MatKhau,NgayTao")] TaiKhoan taiKhoan)
+        public ActionResult Create([Bind(Include = "ID,QuyenHan,TaiKhoan1,MatKhau,NgayTao")] TaiKhoan taiKhoan)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,TaiKhoan1,MatKhau,NgayTao")] TaiKhoan taiKhoan)
+        public ActionResult Edit([Bind(Include = "ID,QuyenHan,TaiKhoan1,MatKhau,NgayTao")] TaiKhoan taiKhoan)
         {
             if (ModelState.IsValid)
             {

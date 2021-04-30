@@ -104,6 +104,7 @@
       <EntityTypeMapping TypeName="PCGDModel.TaiKhoan">
         <MappingFragment StoreEntitySet="TaiKhoan">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="QuyenHan" ColumnName="QuyenHan" />
           <ScalarProperty Name="TaiKhoan1" ColumnName="TaiKhoan" />
           <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
           <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />

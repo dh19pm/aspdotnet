@@ -1,0 +1,66 @@
+﻿@model PCGD.Models.HocPhan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HocPhan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTCBatBuoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTCBatBuoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTCTuChon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTCTuChon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTietLT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTietLT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTietTH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTietTH)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaHP }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

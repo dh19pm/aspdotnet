@@ -21,6 +21,7 @@ namespace PCGD.Models
         }
     
         public int ID { get; set; }
+        public byte QuyenHan { get; set; }
         public string TaiKhoan1 { get; set; }
         public string MatKhau { get; set; }
         public System.DateTime NgayTao { get; set; }

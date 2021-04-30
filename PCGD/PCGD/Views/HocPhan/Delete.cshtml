@@ -1,0 +1,72 @@
+﻿@model PCGD.Models.HocPhan
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HocPhan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TenHP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TenHP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTCBatBuoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTCBatBuoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTCTuChon)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTCTuChon)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTietLT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTietLT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SoTietTH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SoTietTH)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

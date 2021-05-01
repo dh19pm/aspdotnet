@@ -10,8 +10,11 @@
         <p>
             <a class="btn btn-primary" href="@Url.Action("Create")">Thêm Mới <i class="fal fa-plus"></i></a>
         </p>
-        <table class="table table-bordered table-sm table-hover">
+        <table class="table table-bordered table-sm table-hover" style="font-size: 14px">
             <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaHP)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TenHP)
                 </th>
@@ -30,12 +33,15 @@
                 <th>
                     @Html.DisplayNameFor(model => model.SoTietTH)
                 </th>
-                <th>Hành Động</th>
+                <th class="text-center">Hành Động</th>
             </tr>
 
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaHP)
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TenHP)
                     </td>
@@ -54,10 +60,9 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SoTietTH)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.MaHP }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.MaHP }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.MaHP })
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
             }
@@ -65,4 +70,3 @@
         </table>
     </div>
 </div>
-

@@ -20,6 +20,7 @@ namespace PCGD.Models
             this.PhanCong = new HashSet<PhanCong>();
         }
     
+        public int ID { get; set; }
         public string MaLop { get; set; }
         public int Nganh_ID { get; set; }
         public int ChuongTrinh_ID { get; set; }

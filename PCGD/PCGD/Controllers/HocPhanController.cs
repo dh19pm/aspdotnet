@@ -17,22 +17,17 @@ namespace PCGD.Controllers
         // GET: HocPhan
         public ActionResult Index()
         {
-            return View(db.HocPhan.ToList());
+            return View(db.HocPhan.OrderByDescending(x => x.ID).ToList());
         }
 
-        // GET: HocPhan/Details/5
-        public ActionResult Details(string id)
+        // Post: HocPhan/Search
+        [HttpPost]
+        public JsonResult Search([Bind(Include = "MaHP")] HocPhan hocPhan)
         {
-            if (id == null)
+            return new JsonResult() { Data = db.HocPhan.Where(x => x.MaHP.Contains(hocPhan.MaHP)).Select(x => new
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HocPhan hocPhan = db.HocPhan.Find(id);
-            if (hocPhan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hocPhan);
+                value = x.MaHP
+            }).ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: HocPhan/Create
@@ -46,10 +41,34 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
+        public ActionResult Create([Bind(Include = "ID,MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
         {
             if (ModelState.IsValid)
             {
+                if (db.HocPhan.Where(x => x.MaHP == hocPhan.MaHP).Count() > 0)
+                {
+                    ModelState.AddModelError("MaHP", "Mã học phần đã tồn tại trên hệ thống!");
+                    return View(hocPhan);
+                }
+
+                if (hocPhan.SoTCBatBuoc.HasValue && hocPhan.SoTCTuChon.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không nhập cả trường số tính chỉ bắt buộc và tự chọn.");
+                    return View(hocPhan);
+                }
+
+                if (!hocPhan.SoTCBatBuoc.HasValue && !hocPhan.SoTCTuChon.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tính chỉ bắt buộc và tự chọn.");
+                    return View(hocPhan);
+                }
+
+                if (!hocPhan.SoTietLT.HasValue && !hocPhan.SoTietTH.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tiết lý thuyết và thực hành.");
+                    return View(hocPhan);
+                }
+
                 db.HocPhan.Add(hocPhan);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,7 +78,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -78,10 +97,34 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
+        public ActionResult Edit([Bind(Include = "ID,MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
         {
             if (ModelState.IsValid)
             {
+                if (db.HocPhan.Where(x => x.ID != hocPhan.ID && x.MaHP == hocPhan.MaHP).Count() > 0)
+                {
+                    ModelState.AddModelError("MaHP", "Mã học phần đã tồn tại trên hệ thống!");
+                    return View(hocPhan);
+                }
+
+                if (hocPhan.SoTCBatBuoc.HasValue && hocPhan.SoTCTuChon.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không nhập cả trường số tính chỉ bắt buộc và tự chọn.");
+                    return View(hocPhan);
+                }
+
+                if (!hocPhan.SoTCBatBuoc.HasValue && !hocPhan.SoTCTuChon.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tính chỉ bắt buộc và tự chọn.");
+                    return View(hocPhan);
+                }
+
+                if (!hocPhan.SoTietLT.HasValue && !hocPhan.SoTietTH.HasValue)
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tiết lý thuyết và thực hành.");
+                    return View(hocPhan);
+                }
+
                 db.Entry(hocPhan).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -90,7 +133,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -107,7 +150,7 @@ namespace PCGD.Controllers
         // POST: HocPhan/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
             HocPhan hocPhan = db.HocPhan.Find(id);
             db.HocPhan.Remove(hocPhan);

@@ -16,7 +16,7 @@ namespace PCGD.Models
     {
         public int ID { get; set; }
         public int ChuongTrinh_ID { get; set; }
-        public string MaHP { get; set; }
+        public int HocPhan_ID { get; set; }
     
         public virtual ChuongTrinh ChuongTrinh { get; set; }
         public virtual HocPhan HocPhan { get; set; }

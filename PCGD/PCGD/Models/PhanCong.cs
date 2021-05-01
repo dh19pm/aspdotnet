@@ -17,8 +17,8 @@ namespace PCGD.Models
         public int ID { get; set; }
         public int TaiKhoan_ID { get; set; }
         public int HocKi_ID { get; set; }
-        public string MaHP { get; set; }
-        public string MaLop { get; set; }
+        public int HocPhan_ID { get; set; }
+        public int Lop_ID { get; set; }
         public int GiangVien_ID { get; set; }
         public string GhiChu { get; set; }
         public string LoaiPhong { get; set; }

@@ -128,13 +128,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ChuongTrinhController.cs" />
-    <Compile Include="Controllers\GiangVienController.cs" />
     <Compile Include="Controllers\HocPhanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhoaController.cs" />
     <Compile Include="Controllers\NganhController.cs" />
-    <Compile Include="Controllers\PhanCongController.cs" />
-    <Compile Include="Controllers\TaiKhoanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -187,6 +184,7 @@
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Systems\Resources.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\all.css" />
@@ -211,6 +209,7 @@
     <Content Include="Content\solid.min.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
+    <Content Include="Content\tagify.min.css" />
     <Content Include="Content\v4-shims.css" />
     <Content Include="Content\v4-shims.min.css" />
     <Content Include="favicon.ico" />
@@ -350,6 +349,7 @@
     <Content Include="Scripts\src\utils\setAttributes.js" />
     <Content Include="Scripts\src\utils\setStyles.js" />
     <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\tagify.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -365,7 +365,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.js.flow" />
@@ -401,11 +400,11 @@
     <Content Include="webfonts\fa-light-300.ttf" />
     <Content Include="webfonts\fa-light-300.woff" />
     <Content Include="webfonts\fa-light-300.woff2" />
-    <Content Include="Views\TaiKhoan\Create.cshtml" />
-    <Content Include="Views\TaiKhoan\Delete.cshtml" />
-    <Content Include="Views\TaiKhoan\Details.cshtml" />
-    <Content Include="Views\TaiKhoan\Edit.cshtml" />
-    <Content Include="Views\TaiKhoan\Index.cshtml" />
+    <Content Include="Views\HocPhan\Create.cshtml" />
+    <Content Include="Views\HocPhan\Delete.cshtml" />
+    <Content Include="Views\HocPhan\Edit.cshtml" />
+    <Content Include="Views\HocPhan\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Khoa\Create.cshtml" />
     <Content Include="Views\Khoa\Delete.cshtml" />
     <Content Include="Views\Khoa\Details.cshtml" />
@@ -421,20 +420,9 @@
     <Content Include="Views\ChuongTrinh\Details.cshtml" />
     <Content Include="Views\ChuongTrinh\Edit.cshtml" />
     <Content Include="Views\ChuongTrinh\Index.cshtml" />
-    <Content Include="Views\HocPhan\Create.cshtml" />
-    <Content Include="Views\HocPhan\Delete.cshtml" />
-    <Content Include="Views\HocPhan\Details.cshtml" />
-    <Content Include="Views\HocPhan\Edit.cshtml" />
-    <Content Include="Views\HocPhan\Index.cshtml" />
-    <Content Include="Views\GiangVien\Create.cshtml" />
-    <Content Include="Views\GiangVien\Delete.cshtml" />
-    <Content Include="Views\GiangVien\Details.cshtml" />
-    <Content Include="Views\GiangVien\Edit.cshtml" />
-    <Content Include="Views\GiangVien\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PhanCong\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

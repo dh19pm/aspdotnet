@@ -22,6 +22,9 @@ namespace PCGD
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/tagify").Include(
+                      "~/Scripts/tagify.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/site.css"));
 
@@ -30,6 +33,9 @@ namespace PCGD
 
             bundles.Add(new StyleBundle("~/Content/fontawesome").Include(
                       "~/Content/all.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/tagify").Include(
+                      "~/Content/tagify.min.css"));
         }
     }
 }

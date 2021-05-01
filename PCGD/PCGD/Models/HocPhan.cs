@@ -23,8 +23,11 @@ namespace PCGD.Models
             this.PhanCong = new HashSet<PhanCong>();
         }
 
+        public int ID { get; set; }
+
         [Display(Name = "Mã học phần")]
         [Required(ErrorMessage = "Mã học phần không được bỏ trống!")]
+        [StringLength(6, MinimumLength = 6, ErrorMessage = "Mã học phần buộc phải là 6 kí tự!")]
         public string MaHP { get; set; }
 
         [Display(Name = "Tên học phần")]

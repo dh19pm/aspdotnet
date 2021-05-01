@@ -17,7 +17,7 @@ namespace PCGD.Controllers
         // GET: ChuongTrinh
         public ActionResult Index()
         {
-            return View(db.ChuongTrinh.ToList());
+            return View(db.ChuongTrinh.OrderByDescending(x => x.NgayTao).ToList());
         }
 
         // GET: ChuongTrinh/Details/5

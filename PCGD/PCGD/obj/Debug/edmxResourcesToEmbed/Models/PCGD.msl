@@ -14,7 +14,7 @@
         <MappingFragment StoreEntitySet="ChuongTrinh_HocPhan">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ChuongTrinh_ID" ColumnName="ChuongTrinh_ID" />
-          <ScalarProperty Name="MaHP" ColumnName="MaHP" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -31,7 +31,7 @@
         <MappingFragment StoreEntitySet="GiangVien_HocPhan">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
-          <ScalarProperty Name="MaHP" ColumnName="MaHP" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -47,6 +47,7 @@
     <EntitySetMapping Name="HocPhan">
       <EntityTypeMapping TypeName="PCGDModel.HocPhan">
         <MappingFragment StoreEntitySet="HocPhan">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="MaHP" ColumnName="MaHP" />
           <ScalarProperty Name="TenHP" ColumnName="TenHP" />
           <ScalarProperty Name="SoTC" ColumnName="SoTC" />
@@ -68,6 +69,7 @@
     <EntitySetMapping Name="Lop">
       <EntityTypeMapping TypeName="PCGDModel.Lop">
         <MappingFragment StoreEntitySet="Lop">
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="MaLop" ColumnName="MaLop" />
           <ScalarProperty Name="Nganh_ID" ColumnName="Nganh_ID" />
           <ScalarProperty Name="ChuongTrinh_ID" ColumnName="ChuongTrinh_ID" />
@@ -90,8 +92,8 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="TaiKhoan_ID" ColumnName="TaiKhoan_ID" />
           <ScalarProperty Name="HocKi_ID" ColumnName="HocKi_ID" />
-          <ScalarProperty Name="MaHP" ColumnName="MaHP" />
-          <ScalarProperty Name="MaLop" ColumnName="MaLop" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
+          <ScalarProperty Name="Lop_ID" ColumnName="Lop_ID" />
           <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
           <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
           <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />

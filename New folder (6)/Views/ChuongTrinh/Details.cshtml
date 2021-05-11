@@ -1,0 +1,169 @@
+﻿@model PCGD.Models.ViewChuongTrinhModel
+
+@{
+    ViewBag.Title = @Model.ChuongTrinh.TenCT;
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="text-left mb-3">
+            Trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a> <div class="float-right">Ngày tạo: @Model.ChuongTrinh.NgayTao.ToString("dd-MM-yyyy")</div>
+        </div>
+        <table class="table table-bordered table-sm mb-0">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle" style="width: 50px">
+                        TT
+                    </th>
+                    <th rowspan="2" class="text-center align-middle" style="width: 130px">
+                        Mã học phần
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Tên học phần
+                    </th>
+                    <th rowspan="2" class="text-center align-middle" style="width: 100px">
+                        Số tín chỉ
+                    </th>
+                    <th colspan="2" class="text-center">
+                        Loại học phần
+                    </th>
+                    <th colspan="2" class="text-center">
+                        Số tiết
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Học kì
+                    </th>
+                    <th class="text-center align-middle" style="width: 100px" rowspan="2">Hành động</th>
+                </tr>
+                <tr>
+                    <th class="text-center">
+                        Bắt buộc
+                    </th>
+                    <th class="text-center">
+                        Tự chọn
+                    </th>
+                    <th class="text-center">
+                        Lý thuyết
+                    </th>
+                    <th class="text-center">
+                        Thực hành
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var hocKi in Model.HocKi.Where(x => x.ChuongTrinh_ID == Model.ChuongTrinh.ID).ToList())
+                {
+                    <tr>
+                        <td colspan="10" class="bg-light"><strong>Tổng số tín chỉ học kỳ @PCGD.Libs.HocPhanLibs.ConvertHocKi(hocKi.SoHocKi):  @hocKi.TongTC TC (Bắt buộc: @hocKi.TongTCBatBuoc TC; Tự chọn: @hocKi.TongTCTuChon TC)</strong> <span class="float-right"><a class="badge badge-primary" href="@Url.Action("ThemNhomHocPhan", new { hocki_id = hocKi.ID })"><i class="fal fa-plus"></i> Thêm Nhóm</a></span></td>
+                    </tr>
+                    int i = 1;
+                    var ModelNhomHocPhan = Model.NhomHocPhan.Where(x => x.HocKi_ID == hocKi.ID).ToList();
+                    if (ModelNhomHocPhan.Count() <= 0)
+                    {
+                        <tr>
+                            <td colspan="10">Danh sách học phần rỗng.</td>
+                        </tr>
+                    }
+                    foreach (var nhomHocPhan in ModelNhomHocPhan)
+                    {
+                        int j = 1;
+                        var ModelChiTietHocPhan = Model.ChiTietHocPhan.Where(x => x.NhomHocPhan_ID == nhomHocPhan.ID).ToList();
+                        if (ModelChiTietHocPhan.Count() <= 0)
+                        {
+                            <tr>
+                                <td colspan="9" class="text-danger">Nhóm học phần rỗng.</td>
+                                <td class="text-center align-middle">
+                                    <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
+                                    <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                        if (nhomHocPhan.HocPhanThayThe == 1)
+                        {
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    <strong>Các học phần thay thế khóa luận tốt nghiệp:</strong>
+                                </td>
+                                <td class="text-center">
+                                </td>
+                            </tr>
+                        }
+                        foreach (var chiTietHocPhan in ModelChiTietHocPhan)
+                        {
+                            var hocPhan = Model.HocPhan.Where(x => x.ID == chiTietHocPhan.HocPhan_ID).FirstOrDefault();
+                            if (hocPhan != null)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @i
+                                    </td>
+                                    <td class="text-center">
+                                        <strong>@Html.DisplayFor(modelItem => hocPhan.MaHP)</strong>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => hocPhan.TenHP)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => hocPhan.SoTC)@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                        {@Html.Raw("*")}
+                                    </td>
+                                    <td class="text-center">
+                                        @if (hocPhan.LoaiHP == 0)
+                                        {
+                                            @hocPhan.SoTC if (nhomHocPhan.HocPhanDieuKien == 1)
+                                            {@Html.Raw("*")}
+                                    }
+                                    </td>
+                                    @if (hocPhan.LoaiHP == 1 && ModelChiTietHocPhan.Count() > 1)
+                                    {
+                                        if (j == 1)
+                                        {
+                                            <td class="text-center align-middle" rowspan="@ModelChiTietHocPhan.Count()">
+                                                @nhomHocPhan.TongTC@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                                {@Html.Raw("*")}
+                                            </td>
+                                        }
+                                    }
+                                    else if (hocPhan.LoaiHP == 1)
+                                    {
+                                        <td class="text-center">
+                                            @hocPhan.SoTC@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                            {@Html.Raw("*")}
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="text-center">
+                                        </td>
+                                    }
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => chiTietHocPhan.SoTietLT)
+                                    </td>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(modelItem => chiTietHocPhan.SoTietTH)
+                                    </td>
+                                    @if (i == 1)
+                                    {
+                                        <td class="text-center align-middle" rowspan="@hocKi.SoHocPhan">
+                                            <strong>@PCGD.Libs.HocPhanLibs.ConvertHocKi(hocKi.SoHocKi)</strong>
+                                        </td>
+                                    }
+                                    @if (j == 1)
+                                    {
+                                        <td class="text-center align-middle" rowspan="@ModelChiTietHocPhan.Count()">
+                                            <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
+                                            <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
+                                        </td>
+                                    }
+                                </tr>
+                                i++;
+                                j++;
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

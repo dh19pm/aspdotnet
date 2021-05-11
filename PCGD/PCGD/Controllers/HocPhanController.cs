@@ -10,6 +10,8 @@ using PCGD.Models;
 
 namespace PCGD.Controllers
 {
+    [Authentication]
+    [Role("Admin")]
     public class HocPhanController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
@@ -18,16 +20,6 @@ namespace PCGD.Controllers
         public ActionResult Index()
         {
             return View(db.HocPhan.OrderByDescending(x => x.ID).ToList());
-        }
-
-        // Post: HocPhan/Search
-        [HttpPost]
-        public JsonResult Search([Bind(Include = "MaHP")] HocPhan hocPhan)
-        {
-            return new JsonResult() { Data = db.HocPhan.Where(x => x.MaHP.Contains(hocPhan.MaHP)).Select(x => new
-            {
-                value = x.MaHP
-            }).ToList(), JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         // GET: HocPhan/Create
@@ -41,31 +33,13 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
+        public ActionResult Create([Bind(Include = "ID,MaHP,LoaiHP,TenHP,SoTC")] HocPhan hocPhan)
         {
             if (ModelState.IsValid)
             {
                 if (db.HocPhan.Where(x => x.MaHP == hocPhan.MaHP).Count() > 0)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã tồn tại trên hệ thống!");
-                    return View(hocPhan);
-                }
-
-                if (hocPhan.SoTCBatBuoc.HasValue && hocPhan.SoTCTuChon.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không nhập cả trường số tính chỉ bắt buộc và tự chọn.");
-                    return View(hocPhan);
-                }
-
-                if (!hocPhan.SoTCBatBuoc.HasValue && !hocPhan.SoTCTuChon.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tính chỉ bắt buộc và tự chọn.");
-                    return View(hocPhan);
-                }
-
-                if (!hocPhan.SoTietLT.HasValue && !hocPhan.SoTietTH.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tiết lý thuyết và thực hành.");
                     return View(hocPhan);
                 }
 
@@ -78,7 +52,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(long? id)
         {
             if (id == null)
             {
@@ -97,7 +71,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,MaHP,TenHP,SoTC,SoTCBatBuoc,SoTCTuChon,SoTietLT,SoTietTH")] HocPhan hocPhan)
+        public ActionResult Edit([Bind(Include = "ID,MaHP,TenHP,SoTC")] HocPhan hocPhan)
         {
             if (ModelState.IsValid)
             {
@@ -107,25 +81,12 @@ namespace PCGD.Controllers
                     return View(hocPhan);
                 }
 
-                if (hocPhan.SoTCBatBuoc.HasValue && hocPhan.SoTCTuChon.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không nhập cả trường số tính chỉ bắt buộc và tự chọn.");
-                    return View(hocPhan);
-                }
+                HocPhan editHocPhan = db.HocPhan.Find(hocPhan.ID);
+                editHocPhan.MaHP = hocPhan.MaHP;
+                editHocPhan.SoTC = hocPhan.SoTC;
+                editHocPhan.TenHP = hocPhan.TenHP;
 
-                if (!hocPhan.SoTCBatBuoc.HasValue && !hocPhan.SoTCTuChon.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tính chỉ bắt buộc và tự chọn.");
-                    return View(hocPhan);
-                }
-
-                if (!hocPhan.SoTietLT.HasValue && !hocPhan.SoTietTH.HasValue)
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Lỗi! Vui lòng không bỏ trống cả trường số tiết lý thuyết và thực hành.");
-                    return View(hocPhan);
-                }
-
-                db.Entry(hocPhan).State = EntityState.Modified;
+                db.Entry(editHocPhan).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -133,7 +94,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(long? id)
         {
             if (id == null)
             {
@@ -150,12 +111,36 @@ namespace PCGD.Controllers
         // POST: HocPhan/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(long id)
         {
             HocPhan hocPhan = db.HocPhan.Find(id);
             db.HocPhan.Remove(hocPhan);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // Post: HocPhan/Search
+        public JsonResult Search(string q)
+        {
+            if (q == null)
+            {
+                return new JsonResult()
+                {
+                    Data = db.HocPhan.OrderByDescending(x => x.ID).Select(x => new
+                    {
+                        value = x.MaHP
+                    }).Take(100).ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            return new JsonResult()
+            {
+                Data = db.HocPhan.OrderByDescending(x => x.ID).Where(x => x.MaHP.Contains(q)).Select(x => new
+                {
+                    value = x.MaHP
+                }).ToList(),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         protected override void Dispose(bool disposing)

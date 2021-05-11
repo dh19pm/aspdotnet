@@ -1,0 +1,54 @@
+﻿@model IEnumerable<PCGD.Models.Lop>
+
+@{
+    ViewBag.Title = "Danh Sách Lớp";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("Create")">Thêm Mới <i class="fal fa-plus"></i></a>
+        </p>
+        <table class="table table-bordered table-sm table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenLop)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nganh.TenNganh)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChuongTrinh.NgayTao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SoSV)
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenLop)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nganh.TenNganh)
+                    </td>
+                    <td>
+                        @item.ChuongTrinh.NgayTao.ToString("dd-MM-yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoSV)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

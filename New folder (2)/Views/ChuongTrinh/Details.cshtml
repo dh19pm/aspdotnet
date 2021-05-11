@@ -1,0 +1,263 @@
+﻿@model PCGD.Models.ViewModel
+
+@{
+    ViewBag.Title = @Model.ChuongTrinh.TenCT;
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { id = Model.ChuongTrinh.ID })">Thêm Mới <i class="fal fa-plus"></i></a> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+        </p>
+        <table class="table table-bordered table-sm mb-0">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle">
+                        TT
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Mã học phần
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Tên học phần
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Số tín chỉ
+                    </th>
+                    <th colspan="2" class="text-center">
+                        Loại học phần
+                    </th>
+                    <th colspan="2" class="text-center">
+                        Số tiết
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">
+                        Học kì
+                    </th>
+                    <th class="text-center align-middle" style="width: 100px" rowspan="2">Hành động</th>
+                </tr>
+                <tr>
+                    <th class="text-center">
+                        Bắt buộc
+                    </th>
+                    <th class="text-center">
+                        Tự chọn
+                    </th>
+                    <th class="text-center">
+                        Lý thuyết
+                    </th>
+                    <th class="text-center">
+                        Thực hành
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int tt = 1, num = 1, hocki = 0, tongHP = 0; bool isGopBang = false;
+                }
+                @foreach (var item in Model.HocPhan)
+                {
+                    if (item.HocKi != hocki)
+                    {
+                        tt = 1;
+                        hocki = item.HocKi;
+                        tongHP = 0;
+
+                        foreach (var item1 in Model.HocPhan)
+                        {
+                            if (item1.HocKi == hocki)
+                            {
+                                tongHP++;
+                            }
+                        }
+                        <tr>
+                            <td colspan="10"><strong>Tổng số tín chỉ học kỳ @if (item.HocKi.Equals(1))
+                                {
+                                    @Html.Raw("I");
+                                }
+                                else if (item.HocKi.Equals(2))
+                                {
+                                    @Html.Raw("II");
+                                }
+                                else if (item.HocKi.Equals(3))
+                                {
+                                    @Html.Raw("III");
+                                }
+                                else if (item.HocKi.Equals(4))
+                                {
+                                    @Html.Raw("IV");
+                                }
+                                else if (item.HocKi.Equals(5))
+                                {
+                                    @Html.Raw("V");
+                                }
+                                else if (item.HocKi.Equals(6))
+                                {
+                                    @Html.Raw("VI");
+                                }
+                                else if (item.HocKi.Equals(7))
+                                {
+                                    @Html.Raw("VII");
+                                }
+                                else if (item.HocKi.Equals(8))
+                                {
+                                    @Html.Raw("VIII");
+                                }:  <span id="tongTC_@item.HocKi">0</span> TC (Bắt buộc: <span id="tongTCBB_@item.HocKi">0</span> TC; Tự chọn: <span id="tongTCTC_@item.HocKi">0</span> TC)</strong></td>
+                        </tr>
+                    }
+                <tr>
+                    <td class="text-center">
+                        @tt
+                    </td>
+                    <td class="text-center">
+                        <strong><a target="_blank" href="@Url.Action("Edit", "HocPhan", new { id = item.HocPhan_ID })">@Html.DisplayFor(modelItem => item.MaHP)</a></strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTC)
+                    </td>
+                    <td class="text-center @if(item.TenHP.Replace("(*)", "") == item.TenHP) { @Html.Raw("soTCBB_" + item.HocKi); }">
+                        @if (item.LoaiHP == 0)
+                        {
+                            isGopBang = false;
+                            @Html.DisplayFor(modelItem => item.SoTC)
+                        }
+                    </td>
+                    @if (item.LoaiHP == 1 || item.LoaiHP == 2)
+                    {
+                        int dem = 0, tongTCTuChon = 0;
+                        bool isDem = false, isOther = false;
+                        foreach (var item2 in Model.HocPhan)
+                        {
+                            if (item.MaHP == item2.MaHP)
+                            {
+                                isDem = true;
+                            }
+
+                            if (isDem == true && item2.LoaiHP == 1)
+                            {
+                                tongTCTuChon = tongTCTuChon + item2.SoTC;
+                                if (item.SoTC != item2.SoTC)
+                                {
+                                    isOther = true;
+                                }
+                                dem++;
+                            }
+                            else
+                            {
+                                isDem = false;
+                            }
+                        }
+                        if (isGopBang == false)
+                        {
+                            isGopBang = true;
+                            <td class="text-center align-middle @if(item.TenHP.Replace("(*)", "") == item.TenHP) { @Html.Raw("soTCTC_" + item.HocKi); }" rowspan="@dem">
+                                @if (isOther == true)
+                                {
+                                    @tongTCTuChon
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.SoTC)
+                                }
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        <td class="text-center"></td>
+                    }
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTietLT)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTietTH)
+                    </td>
+                    @if (tt == 1)
+                    {
+                        <td class="text-center align-middle" rowspan="@tongHP">
+                            <strong>
+                                @if (item.HocKi.Equals(1))
+                                {
+                                    @Html.Raw("I");
+                                }
+                                else if (item.HocKi.Equals(2))
+                                {
+                                    @Html.Raw("II");
+                                }
+                                else if (item.HocKi.Equals(3))
+                                {
+                                    @Html.Raw("III");
+                                }
+                                else if (item.HocKi.Equals(4))
+                                {
+                                    @Html.Raw("IV");
+                                }
+                                else if (item.HocKi.Equals(5))
+                                {
+                                    @Html.Raw("V");
+                                }
+                                else if (item.HocKi.Equals(6))
+                                {
+                                    @Html.Raw("VI");
+                                }
+                                else if (item.HocKi.Equals(7))
+                                {
+                                    @Html.Raw("VII");
+                                }
+                                else if (item.HocKi.Equals(8))
+                                {
+                                    @Html.Raw("VIII");
+                                }
+                            </strong>
+                        </td>
+                    }
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                tt++;
+                num++;
+            }
+                </tbody>
+            </table>
+    </div>
+</div>
+<script>
+    for (let j = 1; j <= 8; j++)
+    {
+        let dataBB = document.querySelectorAll('.soTCBB_' + j),
+            dataTC = document.querySelectorAll('.soTCTC_' + j),
+            el = document.getElementById('tongTC_' + j),
+            elBB = document.getElementById('tongTCBB_' + j),
+            elTC = document.getElementById('tongTCTC_' + j),
+            tong = 0, tongBB = 0, tongTC = 0;
+        if (dataBB.length > 0) {
+            for (let i = 0; i < dataBB.length; i++)
+            {
+                let value = parseInt(dataBB[i].innerHTML);
+                if (!isNaN(value))
+                    tongBB = tongBB + value;
+            }
+        }
+        if (dataTC.length > 0) {
+            for (let i = 0; i < dataTC.length; i++) {
+                let value = parseInt(dataTC[i].innerHTML);
+                if (!isNaN(value))
+                    tongTC = tongTC + value;
+            }
+        }
+        tong = tongTC + tongBB;
+        if (tongBB)
+            elBB.innerHTML = tongBB;
+
+        if (tongTC)
+            elTC.innerHTML = tongTC;
+
+        if (tong)
+            el.innerHTML = tong;
+    }
+</script>

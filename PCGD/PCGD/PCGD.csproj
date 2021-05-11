@@ -124,27 +124,36 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Authentication.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RoleAttribute.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ChuongTrinhController.cs" />
+    <Compile Include="Controllers\GiangVienController.cs" />
     <Compile Include="Controllers\HocPhanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KhoaController.cs" />
+    <Compile Include="Controllers\LopController.cs" />
     <Compile Include="Controllers\NganhController.cs" />
+    <Compile Include="Controllers\NguoiDungController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Libs\HocPhanLib.cs" />
+    <Compile Include="Libs\NguoiDungLib.cs" />
+    <Compile Include="Libs\Request.cs" />
+    <Compile Include="Libs\Sha1.cs" />
+    <Compile Include="Models\ChiTietGiangVien.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTietHocPhan.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChuongTrinh.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ChuongTrinh_HocPhan.cs">
-      <DependentUpon>PCGD.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\GiangVien.cs">
-      <DependentUpon>PCGD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\GiangVien_HocPhan.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HocKi.cs">
@@ -160,6 +169,15 @@
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Nganh.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NguoiDung.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NhiemVu.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NhomHocPhan.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PCGD.Context.cs">
@@ -178,9 +196,6 @@
       <DependentUpon>PCGD.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\PhanCong.cs">
-      <DependentUpon>PCGD.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TaiKhoan.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -400,26 +415,45 @@
     <Content Include="webfonts\fa-light-300.ttf" />
     <Content Include="webfonts\fa-light-300.woff" />
     <Content Include="webfonts\fa-light-300.woff2" />
-    <Content Include="Views\HocPhan\Create.cshtml" />
-    <Content Include="Views\HocPhan\Delete.cshtml" />
-    <Content Include="Views\HocPhan\Edit.cshtml" />
-    <Content Include="Views\HocPhan\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Khoa\Create.cshtml" />
     <Content Include="Views\Khoa\Delete.cshtml" />
-    <Content Include="Views\Khoa\Details.cshtml" />
     <Content Include="Views\Khoa\Edit.cshtml" />
     <Content Include="Views\Khoa\Index.cshtml" />
     <Content Include="Views\Nganh\Create.cshtml" />
     <Content Include="Views\Nganh\Delete.cshtml" />
-    <Content Include="Views\Nganh\Details.cshtml" />
     <Content Include="Views\Nganh\Edit.cshtml" />
     <Content Include="Views\Nganh\Index.cshtml" />
+    <Content Include="Views\Lop\Create.cshtml" />
+    <Content Include="Views\Lop\Delete.cshtml" />
+    <Content Include="Views\Lop\Edit.cshtml" />
+    <Content Include="Views\Lop\Index.cshtml" />
     <Content Include="Views\ChuongTrinh\Create.cshtml" />
     <Content Include="Views\ChuongTrinh\Delete.cshtml" />
     <Content Include="Views\ChuongTrinh\Details.cshtml" />
     <Content Include="Views\ChuongTrinh\Edit.cshtml" />
     <Content Include="Views\ChuongTrinh\Index.cshtml" />
+    <Content Include="Views\ChuongTrinh\ThemHocPhan.cshtml" />
+    <Content Include="Views\ChuongTrinh\SuaHocPhan.cshtml" />
+    <Content Include="Views\ChuongTrinh\XoaHocPhan.cshtml" />
+    <Content Include="Views\ChuongTrinh\NhomHocPhan.cshtml" />
+    <Content Include="Views\HocPhan\Create.cshtml" />
+    <Content Include="Views\HocPhan\Delete.cshtml" />
+    <Content Include="Views\HocPhan\Edit.cshtml" />
+    <Content Include="Views\HocPhan\Index.cshtml" />
+    <Content Include="Views\ChuongTrinh\XoaNhomHocPhan.cshtml" />
+    <Content Include="Views\GiangVien\Create.cshtml" />
+    <Content Include="Views\GiangVien\Delete.cshtml" />
+    <Content Include="Views\GiangVien\Details.cshtml" />
+    <Content Include="Views\GiangVien\Edit.cshtml" />
+    <Content Include="Views\GiangVien\Index.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\Unauthorized.cshtml" />
+    <Content Include="Views\NguoiDung\Create.cshtml" />
+    <Content Include="Views\NguoiDung\Delete.cshtml" />
+    <Content Include="Views\NguoiDung\Edit.cshtml" />
+    <Content Include="Views\NguoiDung\Index.cshtml" />
+    <Content Include="Views\NguoiDung\DoiMatKhau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

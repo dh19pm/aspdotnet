@@ -10,6 +10,8 @@ using PCGD.Models;
 
 namespace PCGD.Controllers
 {
+    [Authentication]
+    [Role("Admin")]
     public class KhoaController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
@@ -18,21 +20,6 @@ namespace PCGD.Controllers
         public ActionResult Index()
         {
             return View(db.Khoa.ToList());
-        }
-
-        // GET: Khoa/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Khoa khoa = db.Khoa.Find(id);
-            if (khoa == null)
-            {
-                return HttpNotFound();
-            }
-            return View(khoa);
         }
 
         // GET: Khoa/Create

@@ -13,8 +13,12 @@ body {
 
 }
 
-.dropdown-toggle::after
-{
+.navbar-dark .navbar-brand {
+    border: 2px solid #ffffff3b;
+    padding: 3px 11px;
+}
+
+.dropdown-toggle::after {
     vertical-align: 2px;
 }
 
@@ -37,4 +41,23 @@ body {
 .form-control.input-validation-error ~ .invalid-feedback
 {
     display: block;
+}
+
+.bg-gradient {
+    background: linear-gradient(62deg,#ee7752,#e73c7e,#23a6d5,#23d5ab);
+    animation: gradient 10s ease infinite;
+    background-size: 400% 400%;
+}
+@keyframes gradient {
+    0% {
+        background-position: 0 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0 50%
+    }
 }

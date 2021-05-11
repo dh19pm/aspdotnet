@@ -1,20 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="PCGDModelStoreContainer" CdmEntityContainer="PCGDEntities">
+    <EntitySetMapping Name="ChiTietGiangVien">
+      <EntityTypeMapping TypeName="PCGDModel.ChiTietGiangVien">
+        <MappingFragment StoreEntitySet="ChiTietGiangVien">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ChiTietHocPhan">
+      <EntityTypeMapping TypeName="PCGDModel.ChiTietHocPhan">
+        <MappingFragment StoreEntitySet="ChiTietHocPhan">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NhomHocPhan_ID" ColumnName="NhomHocPhan_ID" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
+          <ScalarProperty Name="SoTietLT" ColumnName="SoTietLT" />
+          <ScalarProperty Name="SoTietTH" ColumnName="SoTietTH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ChuongTrinh">
       <EntityTypeMapping TypeName="PCGDModel.ChuongTrinh">
         <MappingFragment StoreEntitySet="ChuongTrinh">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TenCT" ColumnName="TenCT" />
           <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ChuongTrinh_HocPhan">
-      <EntityTypeMapping TypeName="PCGDModel.ChuongTrinh_HocPhan">
-        <MappingFragment StoreEntitySet="ChuongTrinh_HocPhan">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="ChuongTrinh_ID" ColumnName="ChuongTrinh_ID" />
-          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -26,21 +38,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GiangVien_HocPhan">
-      <EntityTypeMapping TypeName="PCGDModel.GiangVien_HocPhan">
-        <MappingFragment StoreEntitySet="GiangVien_HocPhan">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
-          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="HocKi">
       <EntityTypeMapping TypeName="PCGDModel.HocKi">
         <MappingFragment StoreEntitySet="HocKi">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="HocKi1" ColumnName="HocKi" />
-          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+          <ScalarProperty Name="ChuongTrinh_ID" ColumnName="ChuongTrinh_ID" />
+          <ScalarProperty Name="SoHocKi" ColumnName="SoHocKi" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -50,11 +53,8 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="MaHP" ColumnName="MaHP" />
           <ScalarProperty Name="TenHP" ColumnName="TenHP" />
+          <ScalarProperty Name="LoaiHP" ColumnName="LoaiHP" />
           <ScalarProperty Name="SoTC" ColumnName="SoTC" />
-          <ScalarProperty Name="SoTCBatBuoc" ColumnName="SoTCBatBuoc" />
-          <ScalarProperty Name="SoTCTuChon" ColumnName="SoTCTuChon" />
-          <ScalarProperty Name="SoTietLT" ColumnName="SoTietLT" />
-          <ScalarProperty Name="SoTietTH" ColumnName="SoTietTH" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -70,9 +70,9 @@
       <EntityTypeMapping TypeName="PCGDModel.Lop">
         <MappingFragment StoreEntitySet="Lop">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="MaLop" ColumnName="MaLop" />
           <ScalarProperty Name="Nganh_ID" ColumnName="Nganh_ID" />
           <ScalarProperty Name="ChuongTrinh_ID" ColumnName="ChuongTrinh_ID" />
+          <ScalarProperty Name="TenLop" ColumnName="TenLop" />
           <ScalarProperty Name="SoSV" ColumnName="SoSV" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -86,29 +86,49 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="NguoiDung">
+      <EntityTypeMapping TypeName="PCGDModel.NguoiDung">
+        <MappingFragment StoreEntitySet="NguoiDung">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="QuyenHan" ColumnName="QuyenHan" />
+          <ScalarProperty Name="TaiKhoan" ColumnName="TaiKhoan" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhiemVu">
+      <EntityTypeMapping TypeName="PCGDModel.NhiemVu">
+        <MappingFragment StoreEntitySet="NhiemVu">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Lop_ID" ColumnName="Lop_ID" />
+          <ScalarProperty Name="PhanCong_ID" ColumnName="PhanCong_ID" />
+          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
+          <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
+          <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />
+          <ScalarProperty Name="NhomLT" ColumnName="NhomLT" />
+          <ScalarProperty Name="NhomHT" ColumnName="NhomHT" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NhomHocPhan">
+      <EntityTypeMapping TypeName="PCGDModel.NhomHocPhan">
+        <MappingFragment StoreEntitySet="NhomHocPhan">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="HocKi_ID" ColumnName="HocKi_ID" />
+          <ScalarProperty Name="HocPhanDieuKien" ColumnName="HocPhanDieuKien" />
+          <ScalarProperty Name="HocPhanThayThe" ColumnName="HocPhanThayThe" />
+          <ScalarProperty Name="TongTC" ColumnName="TongTC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="PhanCong">
       <EntityTypeMapping TypeName="PCGDModel.PhanCong">
         <MappingFragment StoreEntitySet="PhanCong">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TaiKhoan_ID" ColumnName="TaiKhoan_ID" />
-          <ScalarProperty Name="HocKi_ID" ColumnName="HocKi_ID" />
-          <ScalarProperty Name="HocPhan_ID" ColumnName="HocPhan_ID" />
-          <ScalarProperty Name="Lop_ID" ColumnName="Lop_ID" />
-          <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
-          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
-          <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />
-          <ScalarProperty Name="NhomLT" ColumnName="NhomLT" />
-          <ScalarProperty Name="NhomHT" ColumnName="NhomHT" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TaiKhoan">
-      <EntityTypeMapping TypeName="PCGDModel.TaiKhoan">
-        <MappingFragment StoreEntitySet="TaiKhoan">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="QuyenHan" ColumnName="QuyenHan" />
-          <ScalarProperty Name="TaiKhoan1" ColumnName="TaiKhoan" />
-          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="NguoiDung_ID" ColumnName="NguoiDung_ID" />
+          <ScalarProperty Name="HocKi" ColumnName="HocKi" />
           <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
         </MappingFragment>
       </EntityTypeMapping>

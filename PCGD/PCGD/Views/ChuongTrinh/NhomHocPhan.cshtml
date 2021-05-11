@@ -1,0 +1,139 @@
+﻿@using PCGD.Libs
+@model PCGD.Models.ViewNhomHocPhan
+
+@{
+    ViewBag.Title = "Nhóm Học Phần";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @if (HocPhanLib.getCountHocPhanTuChon(Model.NhomHocPhan.ID) == HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID))
+        {
+            <p>
+                <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { nhomhocphan_id = Model.NhomHocPhan.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
+            </p>
+        }
+        <table class="table table-bordered table-sm">
+            <tr>
+                <th>
+                    Mã Học Phần
+                </th>
+                <th>
+                    Tên Học Phần
+                </th>
+                <th>
+                    Loại Học Phần
+                </th>
+                <th>
+                    Số tín chỉ
+                </th>
+                <th>
+                    Số tiết lý thuyết
+                </th>
+                <th>
+                    Số tiết thực hành
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @if (Model.HocPhan.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="7" class="text-center bg-light">Danh sách học phần rỗng.</td>
+                </tr>
+            }
+            @foreach (var item in Model.HocPhan)
+            {
+                <tr>
+                    <td class="text-center">
+                        <strong>@Html.DisplayFor(modelItem => item.MaHP)</strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td>
+                        @if (item.LoaiHP == 0)
+                        {
+                            @Html.Raw("Bắt buộc")
+                        }
+                        else
+                        {
+                            @Html.Raw("Tự chọn")
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTC)@if (item.HocPhanDieuKien == 1)
+                        {@Html.Raw("*")}
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTietLT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTietTH)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { chitiethocphan_id = item.ChiTietHocPhan_ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitiethocphan_id = item.ChiTietHocPhan_ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="d-block text-danger">@ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <input data-val="true" data-val-number="The field NhomHocPhan_ID must be a number." data-val-required="The NhomHocPhan_ID field is required." id="NhomHocPhan_ID" name="NhomHocPhan_ID" type="hidden" value="@Model.NhomHocPhanModel.NhomHocPhan_ID">
+
+            if (Model.HocPhan.Count() > 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NhomHocPhanModel.HocPhanDieuKien)
+                    <select id="HocPhanDieuKien" name="HocPhanDieuKien" class="form-control">
+                        <option value="0" @if (Model.NhomHocPhan.HocPhanDieuKien == 0) { @Html.Raw("selected") }>Không</option>
+                        <option value="1" @if (Model.NhomHocPhan.HocPhanDieuKien == 1) { @Html.Raw("selected") }>Có</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.NhomHocPhanModel.HocPhanDieuKien, "", new { @class = "invalid-feedback" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NhomHocPhanModel.HocPhanThayThe)
+                    <select id="HocPhanThayThe" name="HocPhanThayThe" class="form-control">
+                        <option value="0" @if (Model.NhomHocPhan.HocPhanThayThe == 0) { @Html.Raw("selected") }>Không</option>
+                        <option value="1" @if (Model.NhomHocPhan.HocPhanThayThe == 1) { @Html.Raw("selected") }>Có</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.NhomHocPhanModel.HocPhanThayThe, "", new { @class = "invalid-feedback" })
+                </div>
+
+                if (HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID) >= 2 && HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID) == HocPhanLib.getCountHocPhanTuChon(Model.NhomHocPhan.ID))
+                {
+                    <div class="form-group">
+                        <label for="NhomHocPhanModel_TongTC">Số tín chỉ tự chọn tối đa</label>
+                        <input autocomplete="off" class="form-control text-box single-line" data-val="true" data-val-number="The field Tổng tín chỉ must be a number." data-val-required="Tổng tín chỉ không được bỏ trống!" id="TongTC" name="TongTC" type="number" value="@Model.NhomHocPhanModel.TongTC">
+                        @Html.ValidationMessageFor(model => model.NhomHocPhanModel.TongTC, "", new { @class = "invalid-feedback" })
+                    </div>
+                }
+
+                <div class="text-left">
+                    <input type="submit" value="Sửa ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = Model.ChuongTrinh.ID })">trang chính</a>
+                </div>
+            }
+            else
+            {
+                <div class="text-left">
+                    hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = Model.ChuongTrinh.ID })">trang chính</a>
+                </div>
+            }
+        }
+    </div>
+</div>

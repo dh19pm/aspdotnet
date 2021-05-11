@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Hệ thống phân công giảng dạy AGU</title>
+
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/fontawesome")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/tagify")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/tagify")
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand font-weight-bold" href="/">AGU<small>.edu.vn</small></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/"><i class="fal fa-home"></i> Trang Chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fal fa-sign-in"></i> Đăng Nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fal fa-drafting-compass"></i> Phân Công</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fal fa-cog"></i> Quản lý
+                            </a>
+                            <div class="dropdown-menu" style="top: 45px;font-size: 14px" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="@Url.Action("Index","HocPhan")">Học Phần</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","GiangVien")">Giảng Viên</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","TaiKhoan")">Tài Khoản</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","ChuongTrinh")">Chương Trình</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","Khoa")">Khoa</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","Nganh")">Ngành</a>
+                                <a class="dropdown-item" href="@Url.Action("Index","Lop")">Lớp</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fal fa-user-circle"></i> Admin
+                            </a>
+                            <div class="dropdown-menu" style="top: 45px;font-size: 14px; right: 0; left: unset" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#"><i class="fal fa-lock"></i> Thay Đổi Mật Khẩu</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><i class="fal fa-sign-out"></i> Đăng Xuất</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <section>
+        <div class="container-fluid mb-3">
+            @RenderBody()
+        </div>
+    </section>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

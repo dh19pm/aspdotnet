@@ -10,6 +10,8 @@ using PCGD.Models;
 
 namespace PCGD.Controllers
 {
+    [Authentication]
+    [Role("Admin")]
     public class NganhController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
@@ -19,21 +21,6 @@ namespace PCGD.Controllers
         {
             var nganh = db.Nganh.Include(n => n.Khoa);
             return View(nganh.ToList());
-        }
-
-        // GET: Nganh/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Nganh nganh = db.Nganh.Find(id);
-            if (nganh == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nganh);
         }
 
         // GET: Nganh/Create

@@ -1,0 +1,23 @@
+﻿@model PCGD.Models.Lop
+
+@{
+    ViewBag.Title = "Xoá Lớp";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="alert alert-warning" role="alert">
+            Bạn có muốn xoá lớp <strong>@Html.DisplayFor(model => model.TenLop)</strong> này không?
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="text-left">
+                <input type="submit" value="Xoá ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+            </div>
+        }
+
+    </div>
+</div>

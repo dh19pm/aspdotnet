@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea9993569e044ec8b93c45491fd339bb" Name="Diagram1">
+        <EntityTypeShape EntityType="PCGDModel.ChiTietGiangVien" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.ChiTietHocPhan" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.ChuongTrinh" Width="1.5" PointX="1.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.GiangVien" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.HocKi" Width="1.5" PointX="1.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.HocPhan" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Khoa" Width="1.5" PointX="1.5" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Lop" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Nganh" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NguoiDung" Width="1.5" PointX="1.5" PointY="24.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NhiemVu" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NhomHocPhan" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.PhanCong" Width="1.5" PointX="3.75" PointY="24.5" IsExpanded="true" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__Giang__57B2EEB2" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__HocPh__58A712EB" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__HocPh__4D35603F" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__NhomH__4C413C06" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__HocKi__ChuongTri__468862B0" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Lop__ChuongTrinh__51FA155C" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__GiangVi__6324A15E" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhomHocPh__HocKi__4964CF5B" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__HocPhan__62307D25" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Nganh__Khoa_ID__40CF895A" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Lop__Nganh_ID__5105F123" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__Lop_ID__604834B3" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__PhanCong__NguoiD__5D6BC808" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__PhanCon__613C58EC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

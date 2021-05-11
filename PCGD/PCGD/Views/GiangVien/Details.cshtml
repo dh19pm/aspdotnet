@@ -1,26 +1,66 @@
-﻿@model PCGD.Models.GiangVien
+﻿@model PCGD.Models.ViewGiangVienModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Danh Sách Học Phần Giảng Viên";
 }
 
-<h2>Details</h2>
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { giangvien_id = Model.GiangVien_ID })">Thêm Mới <i class="fal fa-plus"></i></a> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+        </p>
+        <table class="table table-bordered table-sm mb-0 table-hover">
+            <tr>
+                <th>
+                    Mã Học Phần
+                </th>
+                <th>
+                    Tên Học Phần
+                </th>
+                <th>
+                    Loại Học Phần
+                </th>
+                <th>
+                    Số tín chỉ
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @if (Model.HocPhan.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-center bg-light">Danh sách học phần rỗng.</td>
+                </tr>
+            }
+            @foreach (var item in Model.HocPhan)
+            {
+                <tr>
+                    <td class="text-center">
+                        <strong>@Html.DisplayFor(modelItem => item.MaHP)</strong>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td>
+                        @if (item.LoaiHP == 0)
+                        {
+                            @Html.Raw("Bắt buộc")
+                        }
+                        else
+                        {
+                            @Html.Raw("Tự chọn")
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SoTC)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+            }
 
-<div>
-    <h4>GiangVien</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenGV)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenGV)
-        </dd>
-
-    </dl>
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

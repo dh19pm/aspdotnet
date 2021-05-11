@@ -20,7 +20,7 @@ namespace PCGD.Controllers
         public ActionResult Index()
         {
             var nganh = db.Nganh.Include(n => n.Khoa);
-            return View(nganh.ToList());
+            return View(nganh.OrderByDescending(x => x.ID).ToList());
         }
 
         // GET: Nganh/Create
@@ -39,6 +39,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Nganh.Where(x => x.TenNganh == nganh.TenNganh).Count() > 0)
+                {
+                    ModelState.AddModelError("TenNganh", "Tên ngành đã tồn tại trên hệ thống!");
+                    return View(nganh);
+                }
                 db.Nganh.Add(nganh);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -73,6 +78,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Nganh.Where(x => x.TenNganh == nganh.TenNganh && x.ID != nganh.ID).Count() > 0)
+                {
+                    ModelState.AddModelError("TenNganh", "Tên ngành đã tồn tại trên hệ thống!");
+                    return View(nganh);
+                }
                 db.Entry(nganh).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

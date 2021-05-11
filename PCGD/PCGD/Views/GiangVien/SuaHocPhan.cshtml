@@ -1,4 +1,4 @@
-﻿@model PCGD.Models.SuaHocPhanModel
+﻿@model PCGD.Models.SuaHocPhanGiangVienModel
 
 @{
     ViewBag.Title = "Sửa Học Phần";
@@ -10,8 +10,8 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.NhomHocPhan_ID)
-            @Html.HiddenFor(model => model.ChiTietHocPhan_ID)
+            @Html.HiddenFor(model => model.GiangVien_ID)
+            @Html.HiddenFor(model => model.ChiTietGiangVien_ID)
 
             if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
             {
@@ -29,20 +29,8 @@
                 @Html.ValidationMessageFor(model => model.MaHP, "", new { @class = "invalid-feedback" })
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.SoTietLT)
-                @Html.EditorFor(model => model.SoTietLT, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.SoTietLT, "", new { @class = "invalid-feedback" })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.SoTietTH)
-                @Html.EditorFor(model => model.SoTietTH, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
-                @Html.ValidationMessageFor(model => model.SoTietTH, "", new { @class = "invalid-feedback" })
-            </div>
-
             <div class="text-left">
-                <input type="submit" value="Sửa ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = Model.NhomHocPhan_ID })">trang chính</a>
+                <input type="submit" value="Sửa ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = Model.GiangVien_ID })">trang chính</a>
             </div>
         }
     </div>
@@ -110,14 +98,17 @@
         $.ajax({
             url: '/HocPhan/Search?q=' + value,
             type: 'GET',
-            success: function (data) {
-                if (isFocus === true) {
+            success: function(data)
+            {
+                if (isFocus === true)
+                {
                     tagifyMaHP.settings.whitelist = [];
                     tagifyMaHP.settings.whitelist.splice(0, data.length, ...data);
                     tagifyMaHP.loading(false).dropdown.show.call(tagifyMaHP);
                 }
             },
-            error: function () {
+            error: function()
+            {
                 tagifyMaHP.loading(false).dropdown.hide.call(tagifyMaHP);
             }
         });

@@ -8,13 +8,13 @@
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
-        @if (HocPhanLib.getCountHocPhanTuChon(Model.NhomHocPhan.ID) == HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID))
+        @if (HocPhanLib.GetCountHocPhanTuChon(Model.NhomHocPhan.ID) == HocPhanLib.GetCountHocPhan(Model.NhomHocPhan.ID))
         {
             <p>
                 <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { nhomhocphan_id = Model.NhomHocPhan.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
             </p>
         }
-        <table class="table table-bordered table-sm">
+        <table class="table table-bordered table-sm table-hover">
             <tr>
                 <th>
                     Mã Học Phần
@@ -115,7 +115,7 @@
                     @Html.ValidationMessageFor(model => model.NhomHocPhanModel.HocPhanThayThe, "", new { @class = "invalid-feedback" })
                 </div>
 
-                if (HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID) >= 2 && HocPhanLib.getCountHocPhan(Model.NhomHocPhan.ID) == HocPhanLib.getCountHocPhanTuChon(Model.NhomHocPhan.ID))
+                if (HocPhanLib.GetCountHocPhan(Model.NhomHocPhan.ID) >= 2 && HocPhanLib.GetCountHocPhan(Model.NhomHocPhan.ID) == HocPhanLib.GetCountHocPhanTuChon(Model.NhomHocPhan.ID))
                 {
                     <div class="form-group">
                         <label for="NhomHocPhanModel_TongTC">Số tín chỉ tự chọn tối đa</label>

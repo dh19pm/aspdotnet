@@ -30,7 +30,7 @@ namespace PCGD.Libs
                     return "VIII";
             }
         }
-        public static int getCountHocPhanTuChon(long nhomHocPhanID)
+        public static int GetCountHocPhanTuChon(long nhomHocPhanID)
         {
             PCGDEntities db = new PCGDEntities();
             return (from n in db.NhomHocPhan
@@ -39,7 +39,7 @@ namespace PCGD.Libs
                     where n.ID == nhomHocPhanID && h.LoaiHP == 1
                     select new { }).Count();
         }
-        public static int getCountHocPhanBatBuoc(long nhomHocPhanID)
+        public static int GetCountHocPhanBatBuoc(long nhomHocPhanID)
         {
             PCGDEntities db = new PCGDEntities();
             return (from n in db.NhomHocPhan
@@ -48,7 +48,7 @@ namespace PCGD.Libs
                     where n.ID == nhomHocPhanID && h.LoaiHP == 0
                     select new { }).Count();
         }
-        public static int getCountHocPhan(long nhomHocPhanID)
+        public static int GetCountHocPhan(long nhomHocPhanID)
         {
             PCGDEntities db = new PCGDEntities();
             return (from n in db.NhomHocPhan
@@ -57,7 +57,7 @@ namespace PCGD.Libs
                     where n.ID == nhomHocPhanID
                     select new { }).Count();
         }
-        public static List<HocPhanModel> getHocPhanModel(long nhomHocPhanID)
+        public static List<HocPhanModel> GetHocPhanModel(long nhomHocPhanID)
         {
             PCGDEntities db = new PCGDEntities();
             return (from c in db.ChiTietHocPhan
@@ -78,7 +78,7 @@ namespace PCGD.Libs
                         SoTietTH = c.SoTietTH
                     }).ToList();
         }
-        public static List<ViewHocKiModel> getViewHocKiModel()
+        public static List<ViewHocKiModel> GetViewHocKiModel()
         {
             PCGDEntities db = new PCGDEntities();
             List<ViewHocKiModel> viewHocKiModel = new List<ViewHocKiModel>();
@@ -133,7 +133,7 @@ namespace PCGD.Libs
             }
             return viewHocKiModel;
         }
-        public static bool existMaHocPhan(long nhomHocPhanID, string MaHP, long chiTietHocPhanID = 0)
+        public static bool ExistMaHocPhan(long nhomHocPhanID, string MaHP, long chiTietHocPhanID = 0)
         {
             PCGDEntities db = new PCGDEntities();
             int countRow = 0;
@@ -155,6 +155,21 @@ namespace PCGD.Libs
                 return true;
 
             return false;
+        }
+        public static List<HocPhanGiangVienModel> GetHocPhanGiangVienModels(long giangVienID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            return (from c in db.ChiTietGiangVien
+                    join h in db.HocPhan on c.HocPhan_ID equals h.ID
+                    where c.GiangVien_ID == giangVienID
+                    select new HocPhanGiangVienModel
+                    {
+                        ChiTietGiangVien_ID = c.ID,
+                        MaHP = h.MaHP,
+                        TenHP = h.TenHP,
+                        LoaiHP = h.LoaiHP,
+                        SoTC = h.SoTC
+                    }).ToList();
         }
     }
 }

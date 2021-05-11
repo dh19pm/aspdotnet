@@ -13,9 +13,20 @@ body {
 
 }
 
-.navbar-dark .navbar-brand {
-    border: 2px solid #ffffff3b;
-    padding: 3px 11px;
+header {
+    box-shadow: 0px 1px 2px 0px #00000057;
+}
+
+section {
+    min-height: calc(100vh - 150px);
+}
+
+
+footer {
+    margin-top: 20px;
+    padding: 17px 0px;
+    text-align: center;
+    background: #eaeaea;
 }
 
 .dropdown-toggle::after {
@@ -60,4 +71,13 @@ body {
     100% {
         background-position: 0 50%
     }
+}
+
+
+.bg-center {
+    position: absolute;
+    top: 50%;
+    margin-top: -60px;
+    left: 0;
+    right: 0;
 }

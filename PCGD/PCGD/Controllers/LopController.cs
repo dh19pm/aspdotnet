@@ -20,7 +20,7 @@ namespace PCGD.Controllers
         public ActionResult Index()
         {
             var lop = db.Lop.Include(l => l.ChuongTrinh).Include(l => l.Nganh);
-            return View(lop.ToList());
+            return View(lop.OrderByDescending(x => x.ID).ToList());
         }
 
         // GET: Lop/Create
@@ -40,6 +40,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Lop.Where(x => x.TenLop == lop.TenLop).Count() > 0)
+                {
+                    ModelState.AddModelError("TenLop", "Tên lớp đã tồn tại trên hệ thống!");
+                    return View(lop);
+                }
                 db.Lop.Add(lop);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -76,6 +81,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Lop.Where(x => x.TenLop == lop.TenLop && x.ID != lop.ID).Count() > 0)
+                {
+                    ModelState.AddModelError("TenLop", "Tên lớp đã tồn tại trên hệ thống!");
+                    return View(lop);
+                }
                 db.Entry(lop).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

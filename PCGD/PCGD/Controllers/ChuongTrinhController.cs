@@ -37,7 +37,7 @@ namespace PCGD.Controllers
             }
             ViewChuongTrinhModel viewChuongTrinhModel = new ViewChuongTrinhModel();
             viewChuongTrinhModel.ChuongTrinh = chuongTrinh;
-            viewChuongTrinhModel.HocKi = HocPhanLib.getViewHocKiModel();
+            viewChuongTrinhModel.HocKi = HocPhanLib.GetViewHocKiModel();
             viewChuongTrinhModel.NhomHocPhan = db.NhomHocPhan;
             viewChuongTrinhModel.ChiTietHocPhan = db.ChiTietHocPhan;
             viewChuongTrinhModel.HocPhan = db.HocPhan;
@@ -182,7 +182,7 @@ namespace PCGD.Controllers
             nhomHocPhanModel.TongTC = nhomHocPhan.TongTC;
             nhomHocPhanModel.HocPhanDieuKien = nhomHocPhan.HocPhanDieuKien;
             nhomHocPhanModel.HocPhanThayThe = nhomHocPhan.HocPhanThayThe;
-            List<HocPhanModel> hocPhanModel = HocPhanLib.getHocPhanModel(Convert.ToInt64(nhomhocphan_id));
+            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(nhomhocphan_id));
             viewNhomHocPhan.ChuongTrinh = chuongTrinh;
             viewNhomHocPhan.NhomHocPhan = nhomHocPhan;
             viewNhomHocPhan.HocPhan = hocPhanModel;
@@ -202,7 +202,7 @@ namespace PCGD.Controllers
                 NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(nhomHocPhanModel.NhomHocPhan_ID);
                 if (nhomHocPhan == null)
                     return HttpNotFound();
-                if (HocPhanLib.getCountHocPhan(nhomHocPhan.ID) >= 2 && HocPhanLib.getCountHocPhan(nhomHocPhan.ID) == HocPhanLib.getCountHocPhanTuChon(nhomHocPhan.ID))
+                if (HocPhanLib.GetCountHocPhan(nhomHocPhan.ID) >= 2 && HocPhanLib.GetCountHocPhan(nhomHocPhan.ID) == HocPhanLib.GetCountHocPhanTuChon(nhomHocPhan.ID))
                     nhomHocPhan.TongTC = nhomHocPhanModel.TongTC;
                 else
                     nhomHocPhan.TongTC = 0;
@@ -248,22 +248,22 @@ namespace PCGD.Controllers
                     ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.existMaHocPhan(themHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP))
+                if (HocPhanLib.ExistMaHocPhan(themHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP))
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã đã tồn tại!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhan(themHocPhanModel.NhomHocPhan_ID) > 0 && HocPhanLib.getCountHocPhan(themHocPhanModel.NhomHocPhan_ID) == HocPhanLib.getCountHocPhanTuChon(themHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 0)
+                if (HocPhanLib.GetCountHocPhan(themHocPhanModel.NhomHocPhan_ID) > 0 && HocPhanLib.GetCountHocPhan(themHocPhanModel.NhomHocPhan_ID) == HocPhanLib.GetCountHocPhanTuChon(themHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 0)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần bắt buộc không thể nhóm với học phần tự chọn!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhan(themHocPhanModel.NhomHocPhan_ID) > 0 && HocPhanLib.getCountHocPhan(themHocPhanModel.NhomHocPhan_ID) == HocPhanLib.getCountHocPhanBatBuoc(themHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 1)
+                if (HocPhanLib.GetCountHocPhan(themHocPhanModel.NhomHocPhan_ID) > 0 && HocPhanLib.GetCountHocPhan(themHocPhanModel.NhomHocPhan_ID) == HocPhanLib.GetCountHocPhanBatBuoc(themHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 1)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần tự chọn không thể nhóm với học phần bắt buộc!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhanBatBuoc(themHocPhanModel.NhomHocPhan_ID) > 0)
+                if (HocPhanLib.GetCountHocPhanBatBuoc(themHocPhanModel.NhomHocPhan_ID) > 0)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần bắt buộc không thể nhóm với nhau!");
                     return View(themHocPhanModel);
@@ -324,22 +324,22 @@ namespace PCGD.Controllers
                     ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
                     return View(suaHocPhanModel);
                 }
-                if (HocPhanLib.existMaHocPhan(suaHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP, suaHocPhanModel.ChiTietHocPhan_ID))
+                if (HocPhanLib.ExistMaHocPhan(suaHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP, suaHocPhanModel.ChiTietHocPhan_ID))
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã đã tồn tại!");
                     return View(suaHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) > 1 && HocPhanLib.getCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) == HocPhanLib.getCountHocPhanTuChon(suaHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 0)
+                if (HocPhanLib.GetCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) > 1 && HocPhanLib.GetCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) == HocPhanLib.GetCountHocPhanTuChon(suaHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 0)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần bắt buộc không thể nhóm với học phần tự chọn!");
                     return View(suaHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) > 1 && HocPhanLib.getCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) == HocPhanLib.getCountHocPhanBatBuoc(suaHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 1)
+                if (HocPhanLib.GetCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) > 1 && HocPhanLib.GetCountHocPhan(suaHocPhanModel.NhomHocPhan_ID) == HocPhanLib.GetCountHocPhanBatBuoc(suaHocPhanModel.NhomHocPhan_ID) && hocPhan.LoaiHP == 1)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần tự chọn không thể nhóm với học phần bắt buộc!");
                     return View(suaHocPhanModel);
                 }
-                if (HocPhanLib.getCountHocPhanBatBuoc(suaHocPhanModel.NhomHocPhan_ID) > 1)
+                if (HocPhanLib.GetCountHocPhanBatBuoc(suaHocPhanModel.NhomHocPhan_ID) > 1)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần bắt buộc không thể nhóm với nhau!");
                     return View(suaHocPhanModel);
@@ -393,9 +393,9 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
-            if (HocPhanLib.getCountHocPhan(chiTietHocPhan.NhomHocPhan_ID) <= 1)
+            if (HocPhanLib.GetCountHocPhan(chiTietHocPhan.NhomHocPhan_ID) <= 1)
             {
-                if (HocPhanLib.getCountHocPhan(chiTietHocPhan.NhomHocPhan_ID) <= 0)
+                if (HocPhanLib.GetCountHocPhan(chiTietHocPhan.NhomHocPhan_ID) <= 0)
                 {
                     nhomHocPhan.HocPhanDieuKien = 0;
                 }
@@ -416,7 +416,7 @@ namespace PCGD.Controllers
                 return HttpNotFound();
             }
 
-            List<HocPhanModel> hocPhanModel = HocPhanLib.getHocPhanModel(Convert.ToInt64(nhomhocphan_id));
+            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(nhomhocphan_id));
             XoaNhomHocPhanModel xoaNhomHocPhanModel = new XoaNhomHocPhanModel();
             xoaNhomHocPhanModel.HocPhan = hocPhanModel;
             xoaNhomHocPhanModel.ChuongTrinh_ID = db.HocKi.Find(nhomHocPhan.HocKi_ID).ChuongTrinh_ID;

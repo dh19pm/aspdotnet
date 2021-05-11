@@ -19,7 +19,7 @@ namespace PCGD.Controllers
         // GET: Khoa
         public ActionResult Index()
         {
-            return View(db.Khoa.ToList());
+            return View(db.Khoa.OrderByDescending(x => x.ID).ToList());
         }
 
         // GET: Khoa/Create
@@ -37,6 +37,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Khoa.Where(x => x.TenKhoa == khoa.TenKhoa).Count() > 0)
+                {
+                    ModelState.AddModelError("TenKhoa", "Tên khoa đã tồn tại trên hệ thống!");
+                    return View(khoa);
+                }
                 db.Khoa.Add(khoa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -69,6 +74,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Khoa.Where(x => x.TenKhoa == khoa.TenKhoa && x.ID != khoa.ID).Count() > 0)
+                {
+                    ModelState.AddModelError("TenKhoa", "Tên khoa đã tồn tại trên hệ thống!");
+                    return View(khoa);
+                }
                 db.Entry(khoa).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -16,10 +16,10 @@
     @Scripts.Render("~/bundles/tagify")
 </head>
 <body>
-    <header>
+    <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-dark mb-3 bg-gradient">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><i class="fal fa-graduation-cap"></i> AGU</a>
+                <a class="navbar-brand font-weight-bold" href="/"><i class="fal fa-graduation-cap"></i> AGU<small>.edu.vn</small></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -74,10 +74,16 @@
     </header>
     
     <section>
-        <div class="container-fluid mb-3">
+        <div class="container-fluid">
             @RenderBody()
         </div>
     </section>
+
+    <footer>
+        <div class="container-fluid">
+            Copyright &copy; 2020 - @DateTime.Now.ToString("yyyy") - Đặng Tiến Sĩ
+        </div>
+    </footer>
     @RenderSection("scripts", required: false)
 </body>
 </html>

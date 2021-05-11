@@ -74,9 +74,9 @@
         controller && controller.abort();
         controller = new AbortController();
         tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
-
+        let valueInput = document.getElementById("MaHP").getAttribute("value");
         $.ajax({
-            url: '/HocPhan/Search',
+            url: '/HocPhan/Search' + (valueInput ? '?q=' + valueInput : ""),
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -90,8 +90,13 @@
             }
         });
     });
+    tagifyMaHP.on('remove', (e) => {
+        document.getElementById("MaHP").setAttribute("value", "");
+    });
     tagifyMaHP.on('input', (e) => {
         let value = e.detail.value, controller;
+        document.getElementById("MaHP").setAttribute("value", value);
+
         isFocus = true;
 
         if (value == "")
@@ -104,17 +109,14 @@
         $.ajax({
             url: '/HocPhan/Search?q=' + value,
             type: 'GET',
-            success: function(data)
-            {
-                if (isFocus === true)
-                {
+            success: function (data) {
+                if (isFocus === true) {
                     tagifyMaHP.settings.whitelist = [];
                     tagifyMaHP.settings.whitelist.splice(0, data.length, ...data);
                     tagifyMaHP.loading(false).dropdown.show.call(tagifyMaHP);
                 }
             },
-            error: function()
-            {
+            error: function () {
                 tagifyMaHP.loading(false).dropdown.hide.call(tagifyMaHP);
             }
         });

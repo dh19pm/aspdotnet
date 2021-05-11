@@ -20,7 +20,7 @@ namespace PCGD.Controllers
         [Role("Admin")]
         public ActionResult Index()
         {
-            return View(db.NguoiDung.ToList());
+            return View(db.NguoiDung.OrderByDescending(x => x.ID).ToList());
         }
 
         // GET: NguoiDung/Create
@@ -40,6 +40,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.NguoiDung.Where(x => x.TaiKhoan == nguoiDung.TaiKhoan).Count() > 0)
+                {
+                    ModelState.AddModelError("TaiKhoan", "Tài khoản đã tồn tại trên hệ thống!");
+                    return View(nguoiDung);
+                }
                 nguoiDung.MatKhau = Sha1.Convert(nguoiDung.MatKhau);
                 nguoiDung.XacNhanMatKhau = nguoiDung.MatKhau;
                 nguoiDung.NgayTao = DateTime.Now;
@@ -77,6 +82,11 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.NguoiDung.Where(x => x.TaiKhoan == nguoiDung.TaiKhoan && x.ID != nguoiDung.ID).Count() > 0)
+                {
+                    ModelState.AddModelError("TaiKhoan", "Tài khoản đã tồn tại trên hệ thống!");
+                    return View(nguoiDung);
+                }
                 nguoiDung.MatKhau = Sha1.Convert(nguoiDung.MatKhau);
                 nguoiDung.XacNhanMatKhau = nguoiDung.MatKhau;
                 nguoiDung.NgayTao = DateTime.Now;

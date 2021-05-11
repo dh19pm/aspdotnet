@@ -12,16 +12,16 @@
         </p>
         <table class="table table-bordered table-sm mb-0 table-hover">
             <tr>
-                <th>
+                <th class="text-center" style="width: 130px">
                     Mã Học Phần
                 </th>
-                <th>
+                <th class="text-center">
                     Tên Học Phần
                 </th>
-                <th>
+                <th class="text-center" style="width: 150px">
                     Loại Học Phần
                 </th>
-                <th>
+                <th class="text-center" style="width: 100px">
                     Số tín chỉ
                 </th>
                 <th class="text-center" style="width: 100px">Hành động</th>
@@ -41,7 +41,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.TenHP)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @if (item.LoaiHP == 0)
                         {
                             @Html.Raw("Bắt buộc")
@@ -51,7 +51,7 @@
                             @Html.Raw("Tự chọn")
                         }
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.SoTC)
                     </td>
                     <td class="text-center">

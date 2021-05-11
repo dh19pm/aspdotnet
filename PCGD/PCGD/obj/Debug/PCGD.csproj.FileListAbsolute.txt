@@ -61,3 +61,4 @@ D:\Github\doanasp.net\PCGD\PCGD\bin\roslyn\System.Buffers.dll
 D:\Github\doanasp.net\PCGD\PCGD\bin\roslyn\System.Memory.dll
 D:\Github\doanasp.net\PCGD\PCGD\bin\roslyn\System.Numerics.Vectors.dll
 D:\Github\doanasp.net\PCGD\PCGD\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
+D:\Github\doanasp.net\PCGD\PCGD\obj\Debug\PCGD.csprojAssemblyReference.cache

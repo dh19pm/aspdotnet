@@ -12,7 +12,10 @@
         </p>
         <table class="table table-bordered table-sm table-hover mb-0">
             <tr>
-                <th>
+                <th class="text-center" style="width: 80px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 130px">
                     @Html.DisplayNameFor(model => model.MaHP)
                 </th>
                 <th>
@@ -26,18 +29,26 @@
                 </th>
                 <th class="text-center" style="width: 100px">Hành động</th>
             </tr>
-
+            @{
+                int stt = 1;
+            }
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaHP)
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        <strong>@Html.DisplayFor(modelItem => item.MaHP)</strong>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TenHP)
                     </td>
                     <td>
-                        @if (item.LoaiHP == 0){ @Html.Raw("Bắt buộc") }else{ @Html.Raw("Tự chọn") }
+                        @if (item.LoaiHP == 0)
+                        {@Html.Raw("Bắt buộc") }
+                    else
+                    { @Html.Raw("Tự chọn")}
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SoTC)
@@ -47,6 +58,7 @@
                         <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
+                stt++;
             }
 
         </table>

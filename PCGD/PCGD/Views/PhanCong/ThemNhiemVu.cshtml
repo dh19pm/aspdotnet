@@ -1,0 +1,72 @@
+﻿@model PCGD.Models.ThemNhiemVuModel
+
+@{
+    ViewBag.Title = "Thêm Nhiệm Vụ";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.PhanCong_ID)
+
+            if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="d-block text-danger">@ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenGV)
+                @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.TenGV, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaHP)
+                @Html.EditorFor(model => model.MaHP, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.MaHP, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenLop)
+                @Html.EditorFor(model => model.TenLop, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.TenLop, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.LoaiPhong)
+                @Html.EditorFor(model => model.LoaiPhong, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.LoaiPhong, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NhomLT)
+                @Html.EditorFor(model => model.NhomLT, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.NhomLT, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NhomHT)
+                @Html.EditorFor(model => model.NhomHT, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.NhomHT, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GhiChu)
+                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="text-left">
+                <input type="submit" value="Thêm ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = Model.PhanCong_ID })">trang chính</a>
+            </div>
+        }
+    </div>
+</div>

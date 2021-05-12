@@ -64,7 +64,7 @@ namespace PCGD.Controllers
 
                 db.GiangVien.Add(giangVien);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = giangVien.ID });
             }
 
             return View(giangVien);

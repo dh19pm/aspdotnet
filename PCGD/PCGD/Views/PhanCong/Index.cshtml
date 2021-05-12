@@ -1,7 +1,7 @@
-﻿@model IEnumerable<PCGD.Models.ChuongTrinh>
+﻿@model IEnumerable<PCGD.Models.PhanCong>
 
 @{
-    ViewBag.Title = "Danh Sách Chương Trình";
+    ViewBag.Title = "Danh Sách Phân Công";
 }
 
 <div class="card">
@@ -15,16 +15,18 @@
                 <th class="text-center" style="width: 80px">
                     TT
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TenCT)
+                <th class="text-center" style="width: 200px">
+                    @Html.DisplayNameFor(model => model.HocKi)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.NgayTao)
                 </th>
-                <th class="text-center" style="width: 200px">Danh sách học phần</th>
+                <th class="text-center" style="width: 150px">
+                    Nhiệm vụ
+                </th>
                 <th class="text-center" style="width: 100px">Hành động</th>
             </tr>
-            @{
+            @{ 
                 int stt = 1;
             }
             @foreach (var item in Model)
@@ -33,8 +35,8 @@
                     <td class="text-center">
                         @stt
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TenCT)
+                    <td class="text-center">
+                        @PCGD.Libs.HocPhanLib.ConvertHocKi(item.HocKi)
                     </td>
                     <td>
                         @item.NgayTao.ToString("dd-MM-yyyy")

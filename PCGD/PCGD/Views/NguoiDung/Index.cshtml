@@ -12,6 +12,9 @@
         </p>
         <table class="table table-bordered table-sm table-hover mb-0">
             <tr>
+                <th class="text-center" style="width: 80px">
+                    TT
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.TaiKhoan)
                 </th>
@@ -23,10 +26,15 @@
                 </th>
                 <th class="text-center" style="width: 100px">Hành động</th>
             </tr>
-
+            @{
+                int stt = 1;
+            }
             @foreach (var item in Model)
             {
                 <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TaiKhoan)
                     </td>
@@ -41,6 +49,7 @@
                         <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
+                stt++;
             }
 
         </table>

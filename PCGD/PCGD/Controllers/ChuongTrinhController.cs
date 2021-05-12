@@ -71,7 +71,7 @@ namespace PCGD.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = chuongTrinh.ID });
             }
 
             return View(chuongTrinh);

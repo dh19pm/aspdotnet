@@ -64,7 +64,7 @@
         tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
         let valueInput = document.getElementById("MaHP").getAttribute("value");
         $.ajax({
-            url: '/HocPhan/Search' + (valueInput ? '?q=' + valueInput : ""),
+            url: '/HocPhan/Search' + (valueInput ? '?mahp=' + valueInput : ""),
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -95,7 +95,7 @@
         tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
 
         $.ajax({
-            url: '/HocPhan/Search?q=' + value,
+            url: '/HocPhan/Search?mahp=' + value,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {

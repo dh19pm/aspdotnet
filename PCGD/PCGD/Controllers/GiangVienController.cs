@@ -269,6 +269,116 @@ namespace PCGD.Controllers
             return RedirectToAction("Details", "GiangVien", new { id = chiTietGiangVien.GiangVien_ID });
         }
 
+        // Post: HocPhan/Search
+        public JsonResult Search(string mahp, string tengv, string tenlop)
+        {
+            if (string.IsNullOrEmpty(mahp) && !string.IsNullOrEmpty(tengv) && string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = db.GiangVien.Where(x => x.TenGV.Contains(tengv)).Select(x => new { value = x.TenGV }).ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (!string.IsNullOrEmpty(mahp) && string.IsNullOrEmpty(tengv) && string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from g in db.GiangVien
+                            join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
+                            join h in db.HocPhan on c.HocPhan_ID equals h.ID
+                            where h.MaHP == mahp
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (string.IsNullOrEmpty(mahp) && string.IsNullOrEmpty(tengv) && !string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where l.TenLop == tenlop
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (!string.IsNullOrEmpty(mahp) && !string.IsNullOrEmpty(tengv) && string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from g in db.GiangVien
+                            join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
+                            join h in db.HocPhan on c.HocPhan_ID equals h.ID
+                            where g.TenGV.Contains(tengv) && h.MaHP == mahp
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (!string.IsNullOrEmpty(mahp) && string.IsNullOrEmpty(tengv) && !string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where h.MaHP == mahp && l.TenLop == tenlop
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (string.IsNullOrEmpty(mahp) && !string.IsNullOrEmpty(tengv) && !string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where l.TenLop == tenlop && g.TenGV.Contains(tengv)
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (!string.IsNullOrEmpty(mahp) && !string.IsNullOrEmpty(tengv) && !string.IsNullOrEmpty(tenlop))
+            {
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where h.MaHP == mahp && l.TenLop == tenlop && g.TenGV.Contains(tengv)
+                            select new { value = g.TenGV }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            return new JsonResult()
+            {
+                Data = db.GiangVien.Select(x => new { value = x.TenGV }).ToList(),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

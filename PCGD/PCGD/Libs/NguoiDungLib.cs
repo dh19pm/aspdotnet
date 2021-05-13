@@ -8,18 +8,18 @@ namespace PCGD.Libs
 {
     public class NguoiDungLib
     {
-        private static Models.NguoiDung nguoiDung;
+        private static NguoiDung nguoiDung;
         private const string Key = "!@#$%^&*%%^@#$@$!@#!@$%^&(*&^%$#$%^&*(*&^%$#@";
         static NguoiDungLib()
         {
             if (HttpContext.Current.Session["users" + Key + Libs.Request.Protect()] == null)
             {
-                nguoiDung = new Models.NguoiDung();
+                nguoiDung = new NguoiDung();
                 HttpContext.Current.Session["users" + Key + Libs.Request.Protect()] = nguoiDung;
             }
             else
             {
-                nguoiDung = (Models.NguoiDung)HttpContext.Current.Session["users" + Key + Libs.Request.Protect()];
+                nguoiDung = (NguoiDung)HttpContext.Current.Session["users" + Key + Libs.Request.Protect()];
             }
         }
         public static string Role(int role)
@@ -32,17 +32,17 @@ namespace PCGD.Libs
                     return "User";
             }
         }
-        public static Models.NguoiDung Get()
+        public static NguoiDung Get()
         {
             return nguoiDung;
         }
-        public static void Set(Models.NguoiDung n)
+        public static void Set(NguoiDung n)
         {
             nguoiDung = n;
         }
         public static void Clear()
         {
-            nguoiDung = new Models.NguoiDung();
+            nguoiDung = new NguoiDung();
         }
     }
 }

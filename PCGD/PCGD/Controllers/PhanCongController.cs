@@ -175,7 +175,7 @@ namespace PCGD.Controllers
                 }
                 if (!PhanCongLib.IsLopOfHocPhan(hocPhan.MaHP, lop.TenLop))
                 {
-                    ModelState.AddModelError("TenLop", "Tên lớp này không có dạy học phần \"" + hocPhan.MaHP + "\"");
+                    ModelState.AddModelError("TenLop", "Chương trình của tên lớp này không có học phần \"" + hocPhan.MaHP + "\"");
                     return View(themNhiemVuModel);
                 }
                 nhiemVu.Lop_ID = lop.ID;

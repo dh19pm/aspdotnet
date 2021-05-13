@@ -122,6 +122,7 @@ namespace PCGD.Controllers
         // Post: HocPhan/Search
         public JsonResult Search(string mahp, string tengv, string tenlop)
         {
+            tengv = HttpUtility.UrlDecode(tengv);
             if (!string.IsNullOrEmpty(mahp) && string.IsNullOrEmpty(tengv) && string.IsNullOrEmpty(tenlop))
             {
                 return new JsonResult()

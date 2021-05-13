@@ -269,9 +269,10 @@ namespace PCGD.Controllers
             return RedirectToAction("Details", "GiangVien", new { id = chiTietGiangVien.GiangVien_ID });
         }
 
-        // Post: HocPhan/Search
+        // Post: GiangVien/Search
         public JsonResult Search(string mahp, string tengv, string tenlop)
         {
+            tengv = HttpUtility.UrlDecode(tengv);
             if (string.IsNullOrEmpty(mahp) && !string.IsNullOrEmpty(tengv) && string.IsNullOrEmpty(tenlop))
             {
                 return new JsonResult()
@@ -350,7 +351,7 @@ namespace PCGD.Controllers
                             join k in db.HocKi on n.HocKi_ID equals k.ID
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
-                            where l.TenLop == tenlop && g.TenGV.Contains(tengv)
+                            where g.TenGV.Contains(tengv) && l.TenLop == tenlop
                             select new { value = g.TenGV }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
@@ -367,7 +368,7 @@ namespace PCGD.Controllers
                             join k in db.HocKi on n.HocKi_ID equals k.ID
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
-                            where h.MaHP == mahp && l.TenLop == tenlop && g.TenGV.Contains(tengv)
+                            where g.TenGV.Contains(tengv) && h.MaHP == mahp && l.TenLop == tenlop
                             select new { value = g.TenGV }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };

@@ -120,25 +120,114 @@ namespace PCGD.Controllers
         }
 
         // Post: HocPhan/Search
-        public JsonResult Search(string q)
+        public JsonResult Search(string q, string tengv, string tenlop)
         {
-            if (q == null)
+            if (q != null && tengv == null && tenlop == null)
             {
+                // lấy học phần bằng mã học phần
                 return new JsonResult()
                 {
-                    Data = db.HocPhan.OrderByDescending(x => x.ID).Select(x => new
-                    {
-                        value = x.MaHP
-                    }).Take(100).ToList(),
+                    Data = db.HocPhan.Where(x => x.MaHP.Contains(q)).Select(x => new { value = x.MaHP }).ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
+            else if (q == null && tengv != null && tenlop == null)
+            {
+                // lấy học phần bằng tên giảng viên
+                return new JsonResult()
+                {
+                    Data = (from g in db.GiangVien
+                            join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
+                            join h in db.HocPhan on c.HocPhan_ID equals h.ID
+                            where g.TenGV == tengv
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (q == null && tengv == null && tenlop != null)
+            {
+                // lấy học phần bằng tên lớp
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where l.TenLop == tenlop
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (q != null && tengv != null && tenlop == null)
+            {
+                // lấy học phần bằng mã học phần và tên giảng viên
+                return new JsonResult()
+                {
+                    Data = (from g in db.GiangVien
+                            join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
+                            join h in db.HocPhan on c.HocPhan_ID equals h.ID
+                            where h.MaHP.Contains(q) && g.TenGV == tengv
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (q != null && tengv == null && tenlop != null)
+            {
+                // lấy học phần bằng mã học phần và tên lớp
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where h.MaHP.Contains(q) && l.TenLop == tenlop
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else if (q == null && tengv != null && tenlop != null)
+            {
+                // lấy học phần bằng tên giảng viên và tên lớp
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where l.TenLop == tenlop && g.TenGV == tengv
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }else if (q != null && tengv != null && tenlop != null)
+            {
+                // lấy học phần bằng tên giảng viên và tên lớp và mã học phần
+                return new JsonResult()
+                {
+                    Data = (from h in db.HocPhan
+                            join v in db.ChiTietGiangVien on h.ID equals v.HocPhan_ID
+                            join g in db.GiangVien on v.GiangVien_ID equals g.ID
+                            join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                            join n in db.NhomHocPhan on c.NhomHocPhan_ID equals n.ID
+                            join k in db.HocKi on n.HocKi_ID equals k.ID
+                            join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
+                            join l in db.Lop on t.ID equals l.ChuongTrinh_ID
+                            where h.MaHP.Contains(q) && l.TenLop == tenlop && g.TenGV == tengv
+                            select new { value = h.MaHP }).Distinct().ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            // lấy học phần khi không có cả 3 tham số tên giảng viên, mã hp, tên lớp
             return new JsonResult()
             {
-                Data = db.HocPhan.OrderByDescending(x => x.ID).Where(x => x.MaHP.Contains(q)).Select(x => new
-                {
-                    value = x.MaHP
-                }).ToList(),
+                Data = db.HocPhan.Select(x => new { value = x.MaHP }).ToList(),
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }

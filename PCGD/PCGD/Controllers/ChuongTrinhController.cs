@@ -12,7 +12,7 @@ using PCGD.Libs;
 namespace PCGD.Controllers
 {
     [Authentication]
-    [Role("Admin")]
+    [Role("Admin", "USer")]
     public class ChuongTrinhController : Controller
     {
         private PCGDEntities db = new PCGDEntities();

@@ -12,6 +12,9 @@
         </p>
         <table class="table table-bordered table-sm mb-0 table-hover">
             <tr>
+                <th class="text-center" style="width: 80px">
+                    TT
+                </th>
                 <th class="text-center" style="width: 130px">
                     Mã Học Phần
                 </th>
@@ -32,9 +35,15 @@
                     <td colspan="5" class="text-center bg-light">Danh sách học phần rỗng.</td>
                 </tr>
             }
+            @{
+                int stt = 1;
+            }
             @foreach (var item in Model.HocPhan)
             {
                 <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
                     <td class="text-center">
                         <strong>@Html.DisplayFor(modelItem => item.MaHP)</strong>
                     </td>
@@ -59,6 +68,7 @@
                         <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
+                stt++;
             }
 
         </table>

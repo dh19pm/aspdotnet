@@ -43,8 +43,11 @@ footer {
     background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 }
 
-.form-control.input-validation-error:focus
-{
+.tagify.form-control.input-validation-error {
+    background-image: none;
+}
+
+.form-control.input-validation-error:focus {
     border-color: #dc3545;
     box-shadow: 0 0 0 .2rem rgba(220,53,69,.25)
 }

@@ -42,7 +42,10 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.LoaiPhong)
-                @Html.EditorFor(model => model.LoaiPhong, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                <select id="LoaiPhong" name="LoaiPhong" class="form-control">
+                    <option value="0" @if (Model != null && Model.LoaiPhong.Equals(0)) { @Html.Raw("selected") }>Phòng Thường</option>
+                    <option value="1" @if (Model != null && Model.LoaiPhong.Equals(1)) { @Html.Raw("selected") }>Phòng Máy Tính</option>
+                </select>
                 @Html.ValidationMessageFor(model => model.LoaiPhong, "", new { @class = "invalid-feedback" })
             </div>
 
@@ -71,6 +74,7 @@
     </div>
 </div>
 <script>
+    let MaHP = "", TenGV = "", TenLop = "";
     // giảng viên
     let isFocus = true;
     let inputTenGV = document.getElementById('TenGV');
@@ -98,9 +102,10 @@
         controller && controller.abort();
         controller = new AbortController();
         tagifyTenGV.loading(true).dropdown.hide.call(tagifyTenGV);
-        let valueInput = document.getElementById("TenGV").getAttribute("value");
+        let valueInput = inputTenGV.getAttribute("value");
+        TenGV = valueInput;
         $.ajax({
-            url: '/GiangVien/Search' + (valueInput ? '?tengv=' + valueInput : ""),
+            url: '/GiangVien/Search?tengv=' + valueInput + '&mahp=' + MaHP + '&tenlop=' + TenLop,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -115,11 +120,13 @@
         });
     });
     tagifyTenGV.on('remove', (e) => {
-        document.getElementById("TenGV").setAttribute("value", "");
+        TenGV = "";
+        inputTenGV.setAttribute("value", "");
     });
     tagifyTenGV.on('input', (e) => {
         let value = e.detail.value, controller;
-        document.getElementById("TenGV").setAttribute("value", value);
+        TenGV = value;
+        inputTenGV.setAttribute("value", value);
 
         isFocus = true;
 
@@ -128,7 +135,7 @@
         tagifyTenGV.loading(true).dropdown.hide.call(tagifyTenGV);
 
         $.ajax({
-            url: '/GiangVien/Search?tengv=' + value,
+            url: '/GiangVien/Search?tengv=' + value + '&mahp=' + MaHP + '&tenlop=' + TenLop,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -143,7 +150,8 @@
         });
     });
     tagifyTenGV.on('add', (e) => {
-        document.getElementById("TenGV").setAttribute("value", e.detail.data.value);
+        TenGV = e.detail.data.value;
+        inputTenGV.setAttribute("value", e.detail.data.value);
     });
 
 
@@ -173,9 +181,10 @@
         controller && controller.abort();
         controller = new AbortController();
         tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
-        let valueInput = document.getElementById("MaHP").getAttribute("value");
+        let valueInput = inputMaHP.getAttribute("value");
+        MaHP = valueInput;
         $.ajax({
-            url: '/HocPhan/Search' + (valueInput ? '?mahp=' + valueInput : ""),
+            url: '/HocPhan/Search?mahp=' + valueInput + '&tengv=' + TenGV + '&tenlop=' + TenLop,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -190,11 +199,13 @@
         });
     });
     tagifyMaHP.on('remove', (e) => {
-        document.getElementById("MaHP").setAttribute("value", "");
+        MaHP = "";
+        inputMaHP.setAttribute("value", "");
     });
     tagifyMaHP.on('input', (e) => {
         let value = e.detail.value, controller;
-        document.getElementById("MaHP").setAttribute("value", value);
+        MaHP = value;
+        inputMaHP.setAttribute("value", value);
 
         isFocus = true;
 
@@ -203,7 +214,7 @@
         tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
 
         $.ajax({
-            url: '/HocPhan/Search?mahp=' + value,
+            url: '/HocPhan/Search?mahp=' + value + '&tengv=' + TenGV + '&tenlop=' + TenLop,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -218,7 +229,8 @@
         });
     });
     tagifyMaHP.on('add', (e) => {
-        document.getElementById("MaHP").setAttribute("value", e.detail.data.value);
+        MaHP = e.detail.data.value;
+        inputMaHP.setAttribute("value", e.detail.data.value);
     });
 
     // tên lớp
@@ -247,9 +259,10 @@
         controller && controller.abort();
         controller = new AbortController();
         tagifyTenLop.loading(true).dropdown.hide.call(tagifyTenLop);
-        let valueInput = document.getElementById("TenLop").getAttribute("value");
+        let valueInput = inputTenLop.getAttribute("value");
+        TenLop = valueInput;
         $.ajax({
-            url: '/Lop/Search' + (valueInput ? '?tenlop=' + valueInput : ""),
+            url: '/Lop/Search?tenlop=' + valueInput + '&tengv=' + TenGV + '&mahp=' + MaHP,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -264,11 +277,13 @@
         });
     });
     tagifyTenLop.on('remove', (e) => {
-        document.getElementById("TenLop").setAttribute("value", "");
+        TenLop = "";
+        inputTenLop.setAttribute("value", "");
     });
     tagifyTenLop.on('input', (e) => {
         let value = e.detail.value, controller;
-        document.getElementById("TenLop").setAttribute("value", value);
+        TenLop = value;
+        inputTenLop.setAttribute("value", value);
 
         isFocus = true;
 
@@ -277,7 +292,7 @@
         tagifyTenLop.loading(true).dropdown.hide.call(tagifyTenLop);
 
         $.ajax({
-            url: '/Lop/Search?TenLop=' + value,
+            url: '/Lop/Search?tenlop=' + value + '&tengv=' + TenGV + '&mahp=' + MaHP,
             type: 'GET',
             success: function (data) {
                 if (isFocus === true) {
@@ -292,6 +307,7 @@
         });
     });
     tagifyTenLop.on('add', (e) => {
-        document.getElementById("TenLop").setAttribute("value", e.detail.data.value);
+        TenLop = e.detail.data.value;
+        inputTenLop.setAttribute("value", e.detail.data.value);
     });
 </script>

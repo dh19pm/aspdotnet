@@ -103,21 +103,35 @@ namespace PCGD.Models
     public class XoaNhiemVuModel
     {
         public long ID { get; set; }
+        public string TenGV { get; set; }
         public long PhanCong_ID { get; set; }
+    }
+    public class NhiemVuLopModel
+    {
+        public long ID { get; set; }
+        public string TenLop { get; set; }
+        public string TenNganh { get; set; }
+    }
+    public class NhiemVuNhomHocPhanModel
+    {
+        public long ID { get; set; }
+        public long Lop_ID { get; set; }
+        public byte HocPhanDieuKien { get; set; }
+        public int TongTC { get; set; }
     }
     public class NhiemVuModel
     {
         public long ID { get; set; }
         public long Lop_ID { get; set; }
-        public long PhanCong_ID { get; set; }
-        public long HocPhan_ID { get; set; }
-        public long GiangVien_ID { get; set; }
+        public long NhomHocPhan_ID { get; set; }
         public string TenLop { get; set; }
         public int SoSV { get; set; }
         public string MaHP { get; set; }
         public string TenHP { get; set; }
         public byte LoaiHP { get; set; }
         public int SoTC { get; set; }
+        public Nullable<int> SoTietLT { get; set; }
+        public Nullable<int> SoTietTH { get; set; }
         public string TenGV { get; set; }
         public byte LoaiPhong { get; set; }
         public Nullable<int> NhomLT { get; set; }
@@ -126,6 +140,9 @@ namespace PCGD.Models
     }
     public class ViewNhiemVuModel
     {
-
+        public PhanCong PhanCong { get; set; }
+        public IEnumerable<NhiemVuLopModel> Lop { get; set; }
+        public IEnumerable<NhiemVuNhomHocPhanModel> NhomHocPhan { get; set; }
+        public IEnumerable<NhiemVuModel> NhiemVu { get; set; }
     }
 }

@@ -35,27 +35,66 @@ namespace PCGD.Libs
                 return true;
             return false;
         }
-        public static List<NhiemVuModel> GetDanhSachNhiemVuPhanCong(long PhanCongID)
+        public static List<NhiemVuLopModel> GetNhiemVuLopModel(long PhanCongID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            return (from n in db.NhiemVu
+                    join l in db.Lop on n.Lop_ID equals l.ID
+                    join g in db.Nganh on l.Nganh_ID equals g.ID
+                    where n.PhanCong_ID == PhanCongID
+                    orderby l.TenLop ascending
+                    select new NhiemVuLopModel
+                    {
+                        ID = l.ID,
+                        TenLop = l.TenLop,
+                        TenNganh = g.TenNganh
+                    }).Distinct().ToList();
+        }
+        public static List<NhiemVuNhomHocPhanModel> GetNhiemVuNhomHocPhanModel(long PhanCongID)
         {
             PCGDEntities db = new PCGDEntities();
             return (from n in db.NhiemVu
                     join g in db.GiangVien on n.GiangVien_ID equals g.ID
                     join h in db.HocPhan on n.HocPhan_ID equals h.ID
+                    join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                    join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
+                    join k in db.HocKi on o.HocKi_ID equals k.ID
                     join l in db.Lop on n.Lop_ID equals l.ID
                     where n.PhanCong_ID == PhanCongID
+                    orderby o.ID ascending, k.SoHocKi ascending 
+                    select new NhiemVuNhomHocPhanModel
+                    {
+                        ID = o.ID,
+                        Lop_ID = l.ID,
+                        HocPhanDieuKien = o.HocPhanDieuKien,
+                        TongTC = o.TongTC
+                    }).Distinct().ToList();
+        }
+        public static List<NhiemVuModel> GetNhiemVuModel(long PhanCongID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            return (from n in db.NhiemVu
+                    join g in db.GiangVien on n.GiangVien_ID equals g.ID
+                    join h in db.HocPhan on n.HocPhan_ID equals h.ID
+                    join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                    join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
+                    join k in db.HocKi on o.HocKi_ID equals k.ID
+                    join l in db.Lop on n.Lop_ID equals l.ID
+                    where n.PhanCong_ID == PhanCongID
+                    orderby c.ID ascending
                     select new NhiemVuModel
                     {
                         ID = n.ID,
                         Lop_ID = l.ID,
-                        GiangVien_ID = g.ID,
-                        HocPhan_ID = h.ID,
-                        PhanCong_ID = n.PhanCong_ID,
+                        NhomHocPhan_ID = o.ID,
                         TenLop = l.TenLop,
                         SoSV = l.SoSV,
                         MaHP = h.MaHP,
                         TenHP = h.TenHP,
                         LoaiHP = h.LoaiHP,
                         SoTC = h.SoTC,
+                        SoTietLT = c.SoTietLT,
+                        SoTietTH = c.SoTietTH,
                         TenGV = g.TenGV,
                         LoaiPhong = n.LoaiPhong,
                         NhomLT = n.NhomLT,

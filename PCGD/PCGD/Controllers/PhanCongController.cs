@@ -36,7 +36,12 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
-            return View(phanCong);
+            ViewNhiemVuModel viewNhiemVuModel = new ViewNhiemVuModel();
+            viewNhiemVuModel.PhanCong = phanCong;
+            viewNhiemVuModel.Lop = PhanCongLib.GetNhiemVuLopModel(Convert.ToInt64(id));
+            viewNhiemVuModel.NhomHocPhan = PhanCongLib.GetNhiemVuNhomHocPhanModel(Convert.ToInt64(id));
+            viewNhiemVuModel.NhiemVu = PhanCongLib.GetNhiemVuModel(Convert.ToInt64(id));
+            return View(viewNhiemVuModel);
         }
 
         // GET: PhanCong/Create
@@ -284,6 +289,36 @@ namespace PCGD.Controllers
             }
 
             return View(suaNhiemVuModel);
+        }
+
+        // GET: PhanCong/Delete/5
+        public ActionResult XoaNhiemVu(long? nhiemvu_id)
+        {
+            if (nhiemvu_id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            if (nhiemVu == null)
+            {
+                return HttpNotFound();
+            }
+            XoaNhiemVuModel xoaNhiemVuModel = new XoaNhiemVuModel();
+            xoaNhiemVuModel.ID = nhiemVu.ID;
+            xoaNhiemVuModel.PhanCong_ID = nhiemVu.PhanCong_ID;
+            xoaNhiemVuModel.TenGV = nhiemVu.GiangVien.TenGV;
+            return View(xoaNhiemVuModel);
+        }
+
+        // POST: PhanCong/Delete/5
+        [HttpPost, ActionName("XoaNhiemVu")]
+        [ValidateAntiForgeryToken]
+        public ActionResult XoaNhiemVuConfirmed(long nhiemvu_id)
+        {
+            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            db.NhiemVu.Remove(nhiemVu);
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = nhiemVu.PhanCong_ID });
         }
 
         protected override void Dispose(bool disposing)

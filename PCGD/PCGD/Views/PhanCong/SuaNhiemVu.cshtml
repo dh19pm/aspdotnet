@@ -75,7 +75,7 @@
     </div>
 </div>
 <script>
-    let MaHP = "@Model.MaHP", TenGV = "@Model.TenGV", TenLop = "@Model.TenLop";
+    let MaHP = "@Html.Raw(Model.MaHP)", TenGV = "@Html.Raw(Model.TenGV)", TenLop = "@Html.Raw(Model.TenLop)";
     // giảng viên
     let isFocus = true;
     let inputTenGV = document.getElementById('TenGV');

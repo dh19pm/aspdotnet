@@ -142,7 +142,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemNhiemVu([Bind(Include = "ID,PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomHT,GhiChu")] ThemNhiemVuModel themNhiemVuModel)
+        public ActionResult ThemNhiemVu([Bind(Include = "PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomHT,GhiChu")] ThemNhiemVuModel themNhiemVuModel)
         {
             if (ModelState.IsValid)
             {
@@ -189,6 +189,101 @@ namespace PCGD.Controllers
             }
 
             return View(themNhiemVuModel);
+        }
+
+        // GET: PhanCong/Edit/5
+        public ActionResult SuaNhiemVu(long? nhiemvu_id)
+        {
+            if (nhiemvu_id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            if (nhiemVu == null)
+            {
+                return HttpNotFound();
+            }
+            SuaNhiemVuModel suaNhiemVuModel = new SuaNhiemVuModel();
+            suaNhiemVuModel.ID = nhiemVu.ID;
+            suaNhiemVuModel.PhanCong_ID = nhiemVu.PhanCong_ID;
+            GiangVien giangVien = db.GiangVien.Find(nhiemVu.GiangVien_ID);
+            if (giangVien == null)
+            {
+                return HttpNotFound();
+            }
+            suaNhiemVuModel.TenGV = giangVien.TenGV;
+            HocPhan hocPhan = db.HocPhan.Find(nhiemVu.HocPhan_ID);
+            if (hocPhan == null)
+            {
+                return HttpNotFound();
+            }
+            suaNhiemVuModel.MaHP = hocPhan.MaHP;
+            Lop lop = db.Lop.Find(nhiemVu.Lop_ID);
+            if (lop == null)
+            {
+                return HttpNotFound();
+            }
+            suaNhiemVuModel.TenLop = lop.TenLop;
+            suaNhiemVuModel.LoaiPhong = nhiemVu.LoaiPhong;
+            suaNhiemVuModel.NhomLT = nhiemVu.NhomLT;
+            suaNhiemVuModel.NhomHT = nhiemVu.NhomHT;
+            suaNhiemVuModel.GhiChu = nhiemVu.GhiChu;
+            return View(suaNhiemVuModel);
+        }
+
+        // POST: PhanCong/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SuaNhiemVu([Bind(Include = "ID,PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomHT,GhiChu")] SuaNhiemVuModel suaNhiemVuModel)
+        {
+            if (ModelState.IsValid)
+            {
+                NhiemVu nhiemVu = new NhiemVu();
+                nhiemVu.ID = suaNhiemVuModel.ID;
+                nhiemVu.PhanCong_ID = suaNhiemVuModel.PhanCong_ID;
+                GiangVien giangVien = db.GiangVien.Where(x => x.TenGV == suaNhiemVuModel.TenGV).SingleOrDefault();
+                if (giangVien == null)
+                {
+                    ModelState.AddModelError("TenGV", "Tên giảng viên không tồn tại trên hệ thống!");
+                    return View(suaNhiemVuModel);
+                }
+                nhiemVu.GiangVien_ID = giangVien.ID;
+                HocPhan hocPhan = db.HocPhan.Where(x => x.MaHP == suaNhiemVuModel.MaHP).SingleOrDefault();
+                if (hocPhan == null)
+                {
+                    ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
+                    return View(suaNhiemVuModel);
+                }
+                if (!PhanCongLib.IsHocPhanOfGiangVien(giangVien.TenGV, hocPhan.MaHP))
+                {
+                    ModelState.AddModelError("MaHP", "Mã học phần này giảng viên \"" + giangVien.TenGV + "\" không có dạy");
+                    return View(suaNhiemVuModel);
+                }
+                nhiemVu.HocPhan_ID = hocPhan.ID;
+                Lop lop = db.Lop.Where(x => x.TenLop == suaNhiemVuModel.TenLop).SingleOrDefault();
+                if (lop == null)
+                {
+                    ModelState.AddModelError("TenLop", "Tên lớp không tồn tại trên hệ thống!");
+                    return View(suaNhiemVuModel);
+                }
+                if (!PhanCongLib.IsLopOfHocPhan(hocPhan.MaHP, lop.TenLop))
+                {
+                    ModelState.AddModelError("TenLop", "Chương trình của tên lớp này không có học phần \"" + hocPhan.MaHP + "\"");
+                    return View(suaNhiemVuModel);
+                }
+                nhiemVu.Lop_ID = lop.ID;
+                nhiemVu.LoaiPhong = suaNhiemVuModel.LoaiPhong;
+                nhiemVu.NhomLT = suaNhiemVuModel.NhomLT;
+                nhiemVu.NhomHT = suaNhiemVuModel.NhomHT;
+                nhiemVu.GhiChu = suaNhiemVuModel.GhiChu;
+                db.Entry(nhiemVu).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = suaNhiemVuModel.PhanCong_ID });
+            }
+
+            return View(suaNhiemVuModel);
         }
 
         protected override void Dispose(bool disposing)

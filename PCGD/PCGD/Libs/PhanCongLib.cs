@@ -35,5 +35,33 @@ namespace PCGD.Libs
                 return true;
             return false;
         }
+        public static List<NhiemVuModel> GetDanhSachNhiemVuPhanCong(long PhanCongID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            return (from n in db.NhiemVu
+                    join g in db.GiangVien on n.GiangVien_ID equals g.ID
+                    join h in db.HocPhan on n.HocPhan_ID equals h.ID
+                    join l in db.Lop on n.Lop_ID equals l.ID
+                    where n.PhanCong_ID == PhanCongID
+                    select new NhiemVuModel
+                    {
+                        ID = n.ID,
+                        Lop_ID = l.ID,
+                        GiangVien_ID = g.ID,
+                        HocPhan_ID = h.ID,
+                        PhanCong_ID = n.PhanCong_ID,
+                        TenLop = l.TenLop,
+                        SoSV = l.SoSV,
+                        MaHP = h.MaHP,
+                        TenHP = h.TenHP,
+                        LoaiHP = h.LoaiHP,
+                        SoTC = h.SoTC,
+                        TenGV = g.TenGV,
+                        LoaiPhong = n.LoaiPhong,
+                        NhomLT = n.NhomLT,
+                        NhomHT = n.NhomHT,
+                        GhiChu = n.GhiChu
+                    }).ToList();
+        }
     }
 }

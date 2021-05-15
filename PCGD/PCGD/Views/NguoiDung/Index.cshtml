@@ -15,13 +15,13 @@
                 <th class="text-center" style="width: 80px">
                     TT
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.TaiKhoan)
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.QuyenHan)
                 </th>
-                <th>
+                <th class="text-center">
                     @Html.DisplayNameFor(model => model.NgayTao)
                 </th>
                 <th class="text-center" style="width: 100px">Hành động</th>
@@ -39,7 +39,14 @@
                         @Html.DisplayFor(modelItem => item.TaiKhoan)
                     </td>
                     <td>
-                        @PCGD.Libs.NguoiDungLib.Role(item.QuyenHan)
+                        @if (item.QuyenHan == 0)
+                        {
+                            <span class="badge badge-primary">@PCGD.Libs.NguoiDungLib.Role(item.QuyenHan)</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">@PCGD.Libs.NguoiDungLib.Role(item.QuyenHan)</span>
+                        }
                     </td>
                     <td>
                         @item.NgayTao.ToString("dd-MM-yyyy")

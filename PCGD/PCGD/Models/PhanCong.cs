@@ -41,7 +41,6 @@ namespace PCGD.Models
     }
     public class ThemNhiemVuModel
     {
-        public long ID { get; set; }
         public long PhanCong_ID { get; set; }
 
         [Display(Name = "Tên giảng viên")]
@@ -73,23 +72,19 @@ namespace PCGD.Models
     public class SuaNhiemVuModel
     {
         public long ID { get; set; }
-
-        [Display(Name = "Lớp")]
-        [Required(ErrorMessage = "Lớp không được bỏ trống!")]
-        [Range(1, 2, ErrorMessage = "Lớp không hợp lệ")]
-        public long Lop_ID { get; set; }
-
         public long PhanCong_ID { get; set; }
 
-        [Display(Name = "Học phần")]
-        [Required(ErrorMessage = "Lớp không được bỏ trống!")]
-        [Range(1, 2, ErrorMessage = "Lớp không hợp lệ")]
-        public long HocPhan_ID { get; set; }
+        [Display(Name = "Tên giảng viên")]
+        [Required(ErrorMessage = "Tên giảng viên không được bỏ trống!")]
+        public string TenGV { get; set; }
 
-        [Display(Name = "Giảng viên")]
-        [Required(ErrorMessage = "Lớp không được bỏ trống!")]
-        [Range(1, 2, ErrorMessage = "Lớp không hợp lệ")]
-        public long GiangVien_ID { get; set; }
+        [Display(Name = "Tên lớp")]
+        [Required(ErrorMessage = "Tên lớp không được bỏ trống!")]
+        public string TenLop { get; set; }
+
+        [Display(Name = "Mã học phần")]
+        [Required(ErrorMessage = "Mã học phần không được bỏ trống!")]
+        public string MaHP { get; set; }
 
         [Display(Name = "Loại phòng")]
         [Required(ErrorMessage = "Loại phòng không được bỏ trống!")]
@@ -97,11 +92,9 @@ namespace PCGD.Models
         public byte LoaiPhong { get; set; }
 
         [Display(Name = "Nhóm lý thuyết")]
-        [Required(ErrorMessage = "Loại phòng không được bỏ trống!")]
         public Nullable<int> NhomLT { get; set; }
 
         [Display(Name = "Nhóm thực hành")]
-        [Required(ErrorMessage = "Loại phòng không được bỏ trống!")]
         public Nullable<int> NhomHT { get; set; }
 
         [Display(Name = "Ghi chú")]
@@ -111,5 +104,28 @@ namespace PCGD.Models
     {
         public long ID { get; set; }
         public long PhanCong_ID { get; set; }
+    }
+    public class NhiemVuModel
+    {
+        public long ID { get; set; }
+        public long Lop_ID { get; set; }
+        public long PhanCong_ID { get; set; }
+        public long HocPhan_ID { get; set; }
+        public long GiangVien_ID { get; set; }
+        public string TenLop { get; set; }
+        public int SoSV { get; set; }
+        public string MaHP { get; set; }
+        public string TenHP { get; set; }
+        public byte LoaiHP { get; set; }
+        public int SoTC { get; set; }
+        public string TenGV { get; set; }
+        public byte LoaiPhong { get; set; }
+        public Nullable<int> NhomLT { get; set; }
+        public Nullable<int> NhomHT { get; set; }
+        public string GhiChu { get; set; }
+    }
+    public class ViewNhiemVuModel
+    {
+
     }
 }

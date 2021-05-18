@@ -102,7 +102,7 @@
           <Property Name="GiangVien_ID" Type="bigint" Nullable="false" />
           <Property Name="LoaiPhong" Type="tinyint" Nullable="false" />
           <Property Name="NhomLT" Type="int" />
-          <Property Name="NhomHT" Type="int" />
+          <Property Name="NhomTH" Type="int" />
           <Property Name="GhiChu" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="NhomHocPhan">
@@ -124,7 +124,7 @@
           <Property Name="HocKi" Type="tinyint" Nullable="false" />
           <Property Name="NgayTao" Type="date" Nullable="false" />
         </EntityType>
-        <Association Name="FK__ChiTietGi__Giang__4A23E96A">
+        <Association Name="FK__ChiTietGi__Giang__035C66C6">
           <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -138,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietGi__HocPh__4B180DA3">
+        <Association Name="FK__ChiTietGi__HocPh__04508AFF">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -152,7 +152,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__HocPh__3FA65AF7">
+        <Association Name="FK__ChiTietHo__HocPh__78DED853">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -166,7 +166,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__NhomH__3EB236BE">
+        <Association Name="FK__ChiTietHo__NhomH__77EAB41A">
           <End Role="NhomHocPhan" Type="Self.NhomHocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -180,7 +180,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HocKi__ChuongTri__38F95D68">
+        <Association Name="FK__HocKi__ChuongTri__7231DAC4">
           <End Role="ChuongTrinh" Type="Self.ChuongTrinh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -194,7 +194,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Lop__ChuongTrinh__446B1014">
+        <Association Name="FK__Lop__ChuongTrinh__7DA38D70">
           <End Role="ChuongTrinh" Type="Self.ChuongTrinh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -208,7 +208,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Lop__Nganh_ID__4376EBDB">
+        <Association Name="FK__Lop__Nganh_ID__7CAF6937">
           <End Role="Nganh" Type="Self.Nganh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -222,7 +222,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Nganh__Khoa_ID__33408412">
+        <Association Name="FK__Nganh__Khoa_ID__6C79016E">
           <End Role="Khoa" Type="Self.Khoa" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -236,7 +236,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__GiangVi__55959C16">
+        <Association Name="FK__NhiemVu__GiangVi__0ECE1972">
           <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -250,7 +250,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__HocPhan__54A177DD">
+        <Association Name="FK__NhiemVu__HocPhan__0DD9F539">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -264,7 +264,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__Lop_ID__52B92F6B">
+        <Association Name="FK__NhiemVu__Lop_ID__0BF1ACC7">
           <End Role="Lop" Type="Self.Lop" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -278,7 +278,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__PhanCon__53AD53A4">
+        <Association Name="FK__NhiemVu__PhanCon__0CE5D100">
           <End Role="PhanCong" Type="Self.PhanCong" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -292,7 +292,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhomHocPh__HocKi__3BD5CA13">
+        <Association Name="FK__NhomHocPh__HocKi__750E476F">
           <End Role="HocKi" Type="Self.HocKi" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -306,7 +306,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PhanCong__NguoiD__4FDCC2C0">
+        <Association Name="FK__PhanCong__NguoiD__0915401C">
           <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -334,59 +334,59 @@
           <EntitySet Name="NhiemVu" EntityType="Self.NhiemVu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NhomHocPhan" EntityType="Self.NhomHocPhan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhanCong" EntityType="Self.PhanCong" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__ChiTietGi__Giang__4A23E96A" Association="Self.FK__ChiTietGi__Giang__4A23E96A">
+          <AssociationSet Name="FK__ChiTietGi__Giang__035C66C6" Association="Self.FK__ChiTietGi__Giang__035C66C6">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="ChiTietGiangVien" EntitySet="ChiTietGiangVien" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietGi__HocPh__4B180DA3" Association="Self.FK__ChiTietGi__HocPh__4B180DA3">
+          <AssociationSet Name="FK__ChiTietGi__HocPh__04508AFF" Association="Self.FK__ChiTietGi__HocPh__04508AFF">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="ChiTietGiangVien" EntitySet="ChiTietGiangVien" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__HocPh__3FA65AF7" Association="Self.FK__ChiTietHo__HocPh__3FA65AF7">
+          <AssociationSet Name="FK__ChiTietHo__HocPh__78DED853" Association="Self.FK__ChiTietHo__HocPh__78DED853">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="ChiTietHocPhan" EntitySet="ChiTietHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__NhomH__3EB236BE" Association="Self.FK__ChiTietHo__NhomH__3EB236BE">
+          <AssociationSet Name="FK__ChiTietHo__NhomH__77EAB41A" Association="Self.FK__ChiTietHo__NhomH__77EAB41A">
             <End Role="NhomHocPhan" EntitySet="NhomHocPhan" />
             <End Role="ChiTietHocPhan" EntitySet="ChiTietHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__HocKi__ChuongTri__38F95D68" Association="Self.FK__HocKi__ChuongTri__38F95D68">
+          <AssociationSet Name="FK__HocKi__ChuongTri__7231DAC4" Association="Self.FK__HocKi__ChuongTri__7231DAC4">
             <End Role="ChuongTrinh" EntitySet="ChuongTrinh" />
             <End Role="HocKi" EntitySet="HocKi" />
           </AssociationSet>
-          <AssociationSet Name="FK__Lop__ChuongTrinh__446B1014" Association="Self.FK__Lop__ChuongTrinh__446B1014">
+          <AssociationSet Name="FK__Lop__ChuongTrinh__7DA38D70" Association="Self.FK__Lop__ChuongTrinh__7DA38D70">
             <End Role="ChuongTrinh" EntitySet="ChuongTrinh" />
             <End Role="Lop" EntitySet="Lop" />
           </AssociationSet>
-          <AssociationSet Name="FK__Lop__Nganh_ID__4376EBDB" Association="Self.FK__Lop__Nganh_ID__4376EBDB">
+          <AssociationSet Name="FK__Lop__Nganh_ID__7CAF6937" Association="Self.FK__Lop__Nganh_ID__7CAF6937">
             <End Role="Nganh" EntitySet="Nganh" />
             <End Role="Lop" EntitySet="Lop" />
           </AssociationSet>
-          <AssociationSet Name="FK__Nganh__Khoa_ID__33408412" Association="Self.FK__Nganh__Khoa_ID__33408412">
+          <AssociationSet Name="FK__Nganh__Khoa_ID__6C79016E" Association="Self.FK__Nganh__Khoa_ID__6C79016E">
             <End Role="Khoa" EntitySet="Khoa" />
             <End Role="Nganh" EntitySet="Nganh" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__GiangVi__55959C16" Association="Self.FK__NhiemVu__GiangVi__55959C16">
+          <AssociationSet Name="FK__NhiemVu__GiangVi__0ECE1972" Association="Self.FK__NhiemVu__GiangVi__0ECE1972">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__HocPhan__54A177DD" Association="Self.FK__NhiemVu__HocPhan__54A177DD">
+          <AssociationSet Name="FK__NhiemVu__HocPhan__0DD9F539" Association="Self.FK__NhiemVu__HocPhan__0DD9F539">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__Lop_ID__52B92F6B" Association="Self.FK__NhiemVu__Lop_ID__52B92F6B">
+          <AssociationSet Name="FK__NhiemVu__Lop_ID__0BF1ACC7" Association="Self.FK__NhiemVu__Lop_ID__0BF1ACC7">
             <End Role="Lop" EntitySet="Lop" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__PhanCon__53AD53A4" Association="Self.FK__NhiemVu__PhanCon__53AD53A4">
+          <AssociationSet Name="FK__NhiemVu__PhanCon__0CE5D100" Association="Self.FK__NhiemVu__PhanCon__0CE5D100">
             <End Role="PhanCong" EntitySet="PhanCong" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhomHocPh__HocKi__3BD5CA13" Association="Self.FK__NhomHocPh__HocKi__3BD5CA13">
+          <AssociationSet Name="FK__NhomHocPh__HocKi__750E476F" Association="Self.FK__NhomHocPh__HocKi__750E476F">
             <End Role="HocKi" EntitySet="HocKi" />
             <End Role="NhomHocPhan" EntitySet="NhomHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__PhanCong__NguoiD__4FDCC2C0" Association="Self.FK__PhanCong__NguoiD__4FDCC2C0">
+          <AssociationSet Name="FK__PhanCong__NguoiD__0915401C" Association="Self.FK__PhanCong__NguoiD__0915401C">
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="PhanCong" EntitySet="PhanCong" />
           </AssociationSet>
@@ -403,8 +403,8 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GiangVien_ID" Type="Int64" Nullable="false" />
           <Property Name="HocPhan_ID" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="GiangVien" Relationship="Self.FK__ChiTietGi__Giang__4A23E96A" FromRole="ChiTietGiangVien" ToRole="GiangVien" />
-          <NavigationProperty Name="HocPhan" Relationship="Self.FK__ChiTietGi__HocPh__4B180DA3" FromRole="ChiTietGiangVien" ToRole="HocPhan" />
+          <NavigationProperty Name="GiangVien" Relationship="Self.FK__ChiTietGi__Giang__035C66C6" FromRole="ChiTietGiangVien" ToRole="GiangVien" />
+          <NavigationProperty Name="HocPhan" Relationship="Self.FK__ChiTietGi__HocPh__04508AFF" FromRole="ChiTietGiangVien" ToRole="HocPhan" />
         </EntityType>
         <EntityType Name="ChiTietHocPhan">
           <Key>
@@ -415,8 +415,8 @@
           <Property Name="HocPhan_ID" Type="Int64" Nullable="false" />
           <Property Name="SoTietLT" Type="Int32" />
           <Property Name="SoTietTH" Type="Int32" />
-          <NavigationProperty Name="HocPhan" Relationship="Self.FK__ChiTietHo__HocPh__3FA65AF7" FromRole="ChiTietHocPhan" ToRole="HocPhan" />
-          <NavigationProperty Name="NhomHocPhan" Relationship="Self.FK__ChiTietHo__NhomH__3EB236BE" FromRole="ChiTietHocPhan" ToRole="NhomHocPhan" />
+          <NavigationProperty Name="HocPhan" Relationship="Self.FK__ChiTietHo__HocPh__78DED853" FromRole="ChiTietHocPhan" ToRole="HocPhan" />
+          <NavigationProperty Name="NhomHocPhan" Relationship="Self.FK__ChiTietHo__NhomH__77EAB41A" FromRole="ChiTietHocPhan" ToRole="NhomHocPhan" />
         </EntityType>
         <EntityType Name="ChuongTrinh">
           <Key>
@@ -425,8 +425,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenCT" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="HocKi" Relationship="Self.FK__HocKi__ChuongTri__38F95D68" FromRole="ChuongTrinh" ToRole="HocKi" />
-          <NavigationProperty Name="Lop" Relationship="Self.FK__Lop__ChuongTrinh__446B1014" FromRole="ChuongTrinh" ToRole="Lop" />
+          <NavigationProperty Name="HocKi" Relationship="Self.FK__HocKi__ChuongTri__7231DAC4" FromRole="ChuongTrinh" ToRole="HocKi" />
+          <NavigationProperty Name="Lop" Relationship="Self.FK__Lop__ChuongTrinh__7DA38D70" FromRole="ChuongTrinh" ToRole="Lop" />
         </EntityType>
         <EntityType Name="GiangVien">
           <Key>
@@ -434,8 +434,8 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenGV" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="ChiTietGiangVien" Relationship="Self.FK__ChiTietGi__Giang__4A23E96A" FromRole="GiangVien" ToRole="ChiTietGiangVien" />
-          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__GiangVi__55959C16" FromRole="GiangVien" ToRole="NhiemVu" />
+          <NavigationProperty Name="ChiTietGiangVien" Relationship="Self.FK__ChiTietGi__Giang__035C66C6" FromRole="GiangVien" ToRole="ChiTietGiangVien" />
+          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__GiangVi__0ECE1972" FromRole="GiangVien" ToRole="NhiemVu" />
         </EntityType>
         <EntityType Name="HocKi">
           <Key>
@@ -444,8 +444,8 @@
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ChuongTrinh_ID" Type="Int32" Nullable="false" />
           <Property Name="SoHocKi" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="ChuongTrinh" Relationship="Self.FK__HocKi__ChuongTri__38F95D68" FromRole="HocKi" ToRole="ChuongTrinh" />
-          <NavigationProperty Name="NhomHocPhan" Relationship="Self.FK__NhomHocPh__HocKi__3BD5CA13" FromRole="HocKi" ToRole="NhomHocPhan" />
+          <NavigationProperty Name="ChuongTrinh" Relationship="Self.FK__HocKi__ChuongTri__7231DAC4" FromRole="HocKi" ToRole="ChuongTrinh" />
+          <NavigationProperty Name="NhomHocPhan" Relationship="Self.FK__NhomHocPh__HocKi__750E476F" FromRole="HocKi" ToRole="NhomHocPhan" />
         </EntityType>
         <EntityType Name="HocPhan">
           <Key>
@@ -456,9 +456,9 @@
           <Property Name="TenHP" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LoaiHP" Type="Byte" Nullable="false" />
           <Property Name="SoTC" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ChiTietGiangVien" Relationship="Self.FK__ChiTietGi__HocPh__4B180DA3" FromRole="HocPhan" ToRole="ChiTietGiangVien" />
-          <NavigationProperty Name="ChiTietHocPhan" Relationship="Self.FK__ChiTietHo__HocPh__3FA65AF7" FromRole="HocPhan" ToRole="ChiTietHocPhan" />
-          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__HocPhan__54A177DD" FromRole="HocPhan" ToRole="NhiemVu" />
+          <NavigationProperty Name="ChiTietGiangVien" Relationship="Self.FK__ChiTietGi__HocPh__04508AFF" FromRole="HocPhan" ToRole="ChiTietGiangVien" />
+          <NavigationProperty Name="ChiTietHocPhan" Relationship="Self.FK__ChiTietHo__HocPh__78DED853" FromRole="HocPhan" ToRole="ChiTietHocPhan" />
+          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__HocPhan__0DD9F539" FromRole="HocPhan" ToRole="NhiemVu" />
         </EntityType>
         <EntityType Name="Khoa">
           <Key>
@@ -466,7 +466,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenKhoa" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Nganh" Relationship="Self.FK__Nganh__Khoa_ID__33408412" FromRole="Khoa" ToRole="Nganh" />
+          <NavigationProperty Name="Nganh" Relationship="Self.FK__Nganh__Khoa_ID__6C79016E" FromRole="Khoa" ToRole="Nganh" />
         </EntityType>
         <EntityType Name="Lop">
           <Key>
@@ -477,9 +477,9 @@
           <Property Name="ChuongTrinh_ID" Type="Int32" Nullable="false" />
           <Property Name="TenLop" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SoSV" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ChuongTrinh" Relationship="Self.FK__Lop__ChuongTrinh__446B1014" FromRole="Lop" ToRole="ChuongTrinh" />
-          <NavigationProperty Name="Nganh" Relationship="Self.FK__Lop__Nganh_ID__4376EBDB" FromRole="Lop" ToRole="Nganh" />
-          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__Lop_ID__52B92F6B" FromRole="Lop" ToRole="NhiemVu" />
+          <NavigationProperty Name="ChuongTrinh" Relationship="Self.FK__Lop__ChuongTrinh__7DA38D70" FromRole="Lop" ToRole="ChuongTrinh" />
+          <NavigationProperty Name="Nganh" Relationship="Self.FK__Lop__Nganh_ID__7CAF6937" FromRole="Lop" ToRole="Nganh" />
+          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__Lop_ID__0BF1ACC7" FromRole="Lop" ToRole="NhiemVu" />
         </EntityType>
         <EntityType Name="Nganh">
           <Key>
@@ -488,8 +488,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Khoa_ID" Type="Int32" Nullable="false" />
           <Property Name="TenNganh" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Khoa" Relationship="Self.FK__Nganh__Khoa_ID__33408412" FromRole="Nganh" ToRole="Khoa" />
-          <NavigationProperty Name="Lop" Relationship="Self.FK__Lop__Nganh_ID__4376EBDB" FromRole="Nganh" ToRole="Lop" />
+          <NavigationProperty Name="Khoa" Relationship="Self.FK__Nganh__Khoa_ID__6C79016E" FromRole="Nganh" ToRole="Khoa" />
+          <NavigationProperty Name="Lop" Relationship="Self.FK__Lop__Nganh_ID__7CAF6937" FromRole="Nganh" ToRole="Lop" />
         </EntityType>
         <EntityType Name="NguoiDung">
           <Key>
@@ -500,7 +500,7 @@
           <Property Name="TaiKhoan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MatKhau" Type="String" MaxLength="40" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PhanCong" Relationship="Self.FK__PhanCong__NguoiD__4FDCC2C0" FromRole="NguoiDung" ToRole="PhanCong" />
+          <NavigationProperty Name="PhanCong" Relationship="Self.FK__PhanCong__NguoiD__0915401C" FromRole="NguoiDung" ToRole="PhanCong" />
         </EntityType>
         <EntityType Name="NhiemVu">
           <Key>
@@ -513,12 +513,12 @@
           <Property Name="GiangVien_ID" Type="Int64" Nullable="false" />
           <Property Name="LoaiPhong" Type="Byte" Nullable="false" />
           <Property Name="NhomLT" Type="Int32" />
-          <Property Name="NhomHT" Type="Int32" />
+          <Property Name="NhomTH" Type="Int32" />
           <Property Name="GhiChu" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="GiangVien" Relationship="Self.FK__NhiemVu__GiangVi__55959C16" FromRole="NhiemVu" ToRole="GiangVien" />
-          <NavigationProperty Name="HocPhan" Relationship="Self.FK__NhiemVu__HocPhan__54A177DD" FromRole="NhiemVu" ToRole="HocPhan" />
-          <NavigationProperty Name="Lop" Relationship="Self.FK__NhiemVu__Lop_ID__52B92F6B" FromRole="NhiemVu" ToRole="Lop" />
-          <NavigationProperty Name="PhanCong" Relationship="Self.FK__NhiemVu__PhanCon__53AD53A4" FromRole="NhiemVu" ToRole="PhanCong" />
+          <NavigationProperty Name="GiangVien" Relationship="Self.FK__NhiemVu__GiangVi__0ECE1972" FromRole="NhiemVu" ToRole="GiangVien" />
+          <NavigationProperty Name="HocPhan" Relationship="Self.FK__NhiemVu__HocPhan__0DD9F539" FromRole="NhiemVu" ToRole="HocPhan" />
+          <NavigationProperty Name="Lop" Relationship="Self.FK__NhiemVu__Lop_ID__0BF1ACC7" FromRole="NhiemVu" ToRole="Lop" />
+          <NavigationProperty Name="PhanCong" Relationship="Self.FK__NhiemVu__PhanCon__0CE5D100" FromRole="NhiemVu" ToRole="PhanCong" />
         </EntityType>
         <EntityType Name="NhomHocPhan">
           <Key>
@@ -529,8 +529,8 @@
           <Property Name="HocPhanDieuKien" Type="Byte" Nullable="false" />
           <Property Name="HocPhanThayThe" Type="Byte" Nullable="false" />
           <Property Name="TongTC" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ChiTietHocPhan" Relationship="Self.FK__ChiTietHo__NhomH__3EB236BE" FromRole="NhomHocPhan" ToRole="ChiTietHocPhan" />
-          <NavigationProperty Name="HocKi" Relationship="Self.FK__NhomHocPh__HocKi__3BD5CA13" FromRole="NhomHocPhan" ToRole="HocKi" />
+          <NavigationProperty Name="ChiTietHocPhan" Relationship="Self.FK__ChiTietHo__NhomH__77EAB41A" FromRole="NhomHocPhan" ToRole="ChiTietHocPhan" />
+          <NavigationProperty Name="HocKi" Relationship="Self.FK__NhomHocPh__HocKi__750E476F" FromRole="NhomHocPhan" ToRole="HocKi" />
         </EntityType>
         <EntityType Name="PhanCong">
           <Key>
@@ -540,10 +540,10 @@
           <Property Name="NguoiDung_ID" Type="Int32" Nullable="false" />
           <Property Name="HocKi" Type="Byte" Nullable="false" />
           <Property Name="NgayTao" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__PhanCong__NguoiD__4FDCC2C0" FromRole="PhanCong" ToRole="NguoiDung" />
-          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__PhanCon__53AD53A4" FromRole="PhanCong" ToRole="NhiemVu" />
+          <NavigationProperty Name="NguoiDung" Relationship="Self.FK__PhanCong__NguoiD__0915401C" FromRole="PhanCong" ToRole="NguoiDung" />
+          <NavigationProperty Name="NhiemVu" Relationship="Self.FK__NhiemVu__PhanCon__0CE5D100" FromRole="PhanCong" ToRole="NhiemVu" />
         </EntityType>
-        <Association Name="FK__ChiTietGi__Giang__4A23E96A">
+        <Association Name="FK__ChiTietGi__Giang__035C66C6">
           <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -557,7 +557,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietGi__HocPh__4B180DA3">
+        <Association Name="FK__ChiTietGi__HocPh__04508AFF">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -571,7 +571,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__HocPh__3FA65AF7">
+        <Association Name="FK__ChiTietHo__HocPh__78DED853">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -585,7 +585,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ChiTietHo__NhomH__3EB236BE">
+        <Association Name="FK__ChiTietHo__NhomH__77EAB41A">
           <End Role="NhomHocPhan" Type="Self.NhomHocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -599,7 +599,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HocKi__ChuongTri__38F95D68">
+        <Association Name="FK__HocKi__ChuongTri__7231DAC4">
           <End Role="ChuongTrinh" Type="Self.ChuongTrinh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -613,7 +613,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Lop__ChuongTrinh__446B1014">
+        <Association Name="FK__Lop__ChuongTrinh__7DA38D70">
           <End Role="ChuongTrinh" Type="Self.ChuongTrinh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -627,7 +627,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__GiangVi__55959C16">
+        <Association Name="FK__NhiemVu__GiangVi__0ECE1972">
           <End Role="GiangVien" Type="Self.GiangVien" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -641,7 +641,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhomHocPh__HocKi__3BD5CA13">
+        <Association Name="FK__NhomHocPh__HocKi__750E476F">
           <End Role="HocKi" Type="Self.HocKi" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -655,7 +655,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__HocPhan__54A177DD">
+        <Association Name="FK__NhiemVu__HocPhan__0DD9F539">
           <End Role="HocPhan" Type="Self.HocPhan" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -669,7 +669,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Nganh__Khoa_ID__33408412">
+        <Association Name="FK__Nganh__Khoa_ID__6C79016E">
           <End Role="Khoa" Type="Self.Khoa" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -683,7 +683,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Lop__Nganh_ID__4376EBDB">
+        <Association Name="FK__Lop__Nganh_ID__7CAF6937">
           <End Role="Nganh" Type="Self.Nganh" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -697,7 +697,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__Lop_ID__52B92F6B">
+        <Association Name="FK__NhiemVu__Lop_ID__0BF1ACC7">
           <End Role="Lop" Type="Self.Lop" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -711,7 +711,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PhanCong__NguoiD__4FDCC2C0">
+        <Association Name="FK__PhanCong__NguoiD__0915401C">
           <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -725,7 +725,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__NhiemVu__PhanCon__53AD53A4">
+        <Association Name="FK__NhiemVu__PhanCon__0CE5D100">
           <End Role="PhanCong" Type="Self.PhanCong" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -753,59 +753,59 @@
           <EntitySet Name="NhiemVu" EntityType="Self.NhiemVu" />
           <EntitySet Name="NhomHocPhan" EntityType="Self.NhomHocPhan" />
           <EntitySet Name="PhanCong" EntityType="Self.PhanCong" />
-          <AssociationSet Name="FK__ChiTietGi__Giang__4A23E96A" Association="Self.FK__ChiTietGi__Giang__4A23E96A">
+          <AssociationSet Name="FK__ChiTietGi__Giang__035C66C6" Association="Self.FK__ChiTietGi__Giang__035C66C6">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="ChiTietGiangVien" EntitySet="ChiTietGiangVien" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietGi__HocPh__4B180DA3" Association="Self.FK__ChiTietGi__HocPh__4B180DA3">
+          <AssociationSet Name="FK__ChiTietGi__HocPh__04508AFF" Association="Self.FK__ChiTietGi__HocPh__04508AFF">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="ChiTietGiangVien" EntitySet="ChiTietGiangVien" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__HocPh__3FA65AF7" Association="Self.FK__ChiTietHo__HocPh__3FA65AF7">
+          <AssociationSet Name="FK__ChiTietHo__HocPh__78DED853" Association="Self.FK__ChiTietHo__HocPh__78DED853">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="ChiTietHocPhan" EntitySet="ChiTietHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__ChiTietHo__NhomH__3EB236BE" Association="Self.FK__ChiTietHo__NhomH__3EB236BE">
+          <AssociationSet Name="FK__ChiTietHo__NhomH__77EAB41A" Association="Self.FK__ChiTietHo__NhomH__77EAB41A">
             <End Role="NhomHocPhan" EntitySet="NhomHocPhan" />
             <End Role="ChiTietHocPhan" EntitySet="ChiTietHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__HocKi__ChuongTri__38F95D68" Association="Self.FK__HocKi__ChuongTri__38F95D68">
+          <AssociationSet Name="FK__HocKi__ChuongTri__7231DAC4" Association="Self.FK__HocKi__ChuongTri__7231DAC4">
             <End Role="ChuongTrinh" EntitySet="ChuongTrinh" />
             <End Role="HocKi" EntitySet="HocKi" />
           </AssociationSet>
-          <AssociationSet Name="FK__Lop__ChuongTrinh__446B1014" Association="Self.FK__Lop__ChuongTrinh__446B1014">
+          <AssociationSet Name="FK__Lop__ChuongTrinh__7DA38D70" Association="Self.FK__Lop__ChuongTrinh__7DA38D70">
             <End Role="ChuongTrinh" EntitySet="ChuongTrinh" />
             <End Role="Lop" EntitySet="Lop" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__GiangVi__55959C16" Association="Self.FK__NhiemVu__GiangVi__55959C16">
+          <AssociationSet Name="FK__NhiemVu__GiangVi__0ECE1972" Association="Self.FK__NhiemVu__GiangVi__0ECE1972">
             <End Role="GiangVien" EntitySet="GiangVien" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhomHocPh__HocKi__3BD5CA13" Association="Self.FK__NhomHocPh__HocKi__3BD5CA13">
+          <AssociationSet Name="FK__NhomHocPh__HocKi__750E476F" Association="Self.FK__NhomHocPh__HocKi__750E476F">
             <End Role="HocKi" EntitySet="HocKi" />
             <End Role="NhomHocPhan" EntitySet="NhomHocPhan" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__HocPhan__54A177DD" Association="Self.FK__NhiemVu__HocPhan__54A177DD">
+          <AssociationSet Name="FK__NhiemVu__HocPhan__0DD9F539" Association="Self.FK__NhiemVu__HocPhan__0DD9F539">
             <End Role="HocPhan" EntitySet="HocPhan" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__Nganh__Khoa_ID__33408412" Association="Self.FK__Nganh__Khoa_ID__33408412">
+          <AssociationSet Name="FK__Nganh__Khoa_ID__6C79016E" Association="Self.FK__Nganh__Khoa_ID__6C79016E">
             <End Role="Khoa" EntitySet="Khoa" />
             <End Role="Nganh" EntitySet="Nganh" />
           </AssociationSet>
-          <AssociationSet Name="FK__Lop__Nganh_ID__4376EBDB" Association="Self.FK__Lop__Nganh_ID__4376EBDB">
+          <AssociationSet Name="FK__Lop__Nganh_ID__7CAF6937" Association="Self.FK__Lop__Nganh_ID__7CAF6937">
             <End Role="Nganh" EntitySet="Nganh" />
             <End Role="Lop" EntitySet="Lop" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__Lop_ID__52B92F6B" Association="Self.FK__NhiemVu__Lop_ID__52B92F6B">
+          <AssociationSet Name="FK__NhiemVu__Lop_ID__0BF1ACC7" Association="Self.FK__NhiemVu__Lop_ID__0BF1ACC7">
             <End Role="Lop" EntitySet="Lop" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
-          <AssociationSet Name="FK__PhanCong__NguoiD__4FDCC2C0" Association="Self.FK__PhanCong__NguoiD__4FDCC2C0">
+          <AssociationSet Name="FK__PhanCong__NguoiD__0915401C" Association="Self.FK__PhanCong__NguoiD__0915401C">
             <End Role="NguoiDung" EntitySet="NguoiDung" />
             <End Role="PhanCong" EntitySet="PhanCong" />
           </AssociationSet>
-          <AssociationSet Name="FK__NhiemVu__PhanCon__53AD53A4" Association="Self.FK__NhiemVu__PhanCon__53AD53A4">
+          <AssociationSet Name="FK__NhiemVu__PhanCon__0CE5D100" Association="Self.FK__NhiemVu__PhanCon__0CE5D100">
             <End Role="PhanCong" EntitySet="PhanCong" />
             <End Role="NhiemVu" EntitySet="NhiemVu" />
           </AssociationSet>
@@ -922,7 +922,7 @@
                 <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
                 <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />
                 <ScalarProperty Name="NhomLT" ColumnName="NhomLT" />
-                <ScalarProperty Name="NhomHT" ColumnName="NhomHT" />
+                <ScalarProperty Name="NhomTH" ColumnName="NhomTH" />
                 <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
               </MappingFragment>
             </EntityTypeMapping>

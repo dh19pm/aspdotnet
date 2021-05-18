@@ -107,7 +107,7 @@
           <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
           <ScalarProperty Name="LoaiPhong" ColumnName="LoaiPhong" />
           <ScalarProperty Name="NhomLT" ColumnName="NhomLT" />
-          <ScalarProperty Name="NhomHT" ColumnName="NhomHT" />
+          <ScalarProperty Name="NhomTH" ColumnName="NhomTH" />
           <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
         </MappingFragment>
       </EntityTypeMapping>

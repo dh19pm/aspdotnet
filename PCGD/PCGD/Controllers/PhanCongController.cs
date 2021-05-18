@@ -147,7 +147,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ThemNhiemVu([Bind(Include = "PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomHT,GhiChu")] ThemNhiemVuModel themNhiemVuModel)
+        public ActionResult ThemNhiemVu([Bind(Include = "PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomTH,GhiChu")] ThemNhiemVuModel themNhiemVuModel)
         {
             if (ModelState.IsValid)
             {
@@ -186,7 +186,7 @@ namespace PCGD.Controllers
                 nhiemVu.Lop_ID = lop.ID;
                 nhiemVu.LoaiPhong = themNhiemVuModel.LoaiPhong;
                 nhiemVu.NhomLT = themNhiemVuModel.NhomLT;
-                nhiemVu.NhomHT = themNhiemVuModel.NhomHT;
+                nhiemVu.NhomTH = themNhiemVuModel.NhomTH;
                 nhiemVu.GhiChu = themNhiemVuModel.GhiChu;
                 db.NhiemVu.Add(nhiemVu);
                 db.SaveChanges();
@@ -231,7 +231,7 @@ namespace PCGD.Controllers
             suaNhiemVuModel.TenLop = lop.TenLop;
             suaNhiemVuModel.LoaiPhong = nhiemVu.LoaiPhong;
             suaNhiemVuModel.NhomLT = nhiemVu.NhomLT;
-            suaNhiemVuModel.NhomHT = nhiemVu.NhomHT;
+            suaNhiemVuModel.NhomTH = nhiemVu.NhomTH;
             suaNhiemVuModel.GhiChu = nhiemVu.GhiChu;
             return View(suaNhiemVuModel);
         }
@@ -241,7 +241,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SuaNhiemVu([Bind(Include = "ID,PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomHT,GhiChu")] SuaNhiemVuModel suaNhiemVuModel)
+        public ActionResult SuaNhiemVu([Bind(Include = "ID,PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomTH,GhiChu")] SuaNhiemVuModel suaNhiemVuModel)
         {
             if (ModelState.IsValid)
             {
@@ -281,7 +281,7 @@ namespace PCGD.Controllers
                 nhiemVu.Lop_ID = lop.ID;
                 nhiemVu.LoaiPhong = suaNhiemVuModel.LoaiPhong;
                 nhiemVu.NhomLT = suaNhiemVuModel.NhomLT;
-                nhiemVu.NhomHT = suaNhiemVuModel.NhomHT;
+                nhiemVu.NhomTH = suaNhiemVuModel.NhomTH;
                 nhiemVu.GhiChu = suaNhiemVuModel.GhiChu;
                 db.Entry(nhiemVu).State = EntityState.Modified;
                 db.SaveChanges();

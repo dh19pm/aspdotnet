@@ -21,7 +21,7 @@ namespace PCGD.Models
         public long GiangVien_ID { get; set; }
         public byte LoaiPhong { get; set; }
         public Nullable<int> NhomLT { get; set; }
-        public Nullable<int> NhomHT { get; set; }
+        public Nullable<int> NhomTH { get; set; }
         public string GhiChu { get; set; }
     
         public virtual GiangVien GiangVien { get; set; }

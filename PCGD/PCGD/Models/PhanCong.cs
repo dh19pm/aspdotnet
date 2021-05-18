@@ -64,7 +64,7 @@ namespace PCGD.Models
         public Nullable<int> NhomLT { get; set; }
 
         [Display(Name = "Nhóm thực hành")]
-        public Nullable<int> NhomHT { get; set; }
+        public Nullable<int> NhomTH { get; set; }
 
         [Display(Name = "Ghi chú")]
         public string GhiChu { get; set; }
@@ -95,7 +95,7 @@ namespace PCGD.Models
         public Nullable<int> NhomLT { get; set; }
 
         [Display(Name = "Nhóm thực hành")]
-        public Nullable<int> NhomHT { get; set; }
+        public Nullable<int> NhomTH { get; set; }
 
         [Display(Name = "Ghi chú")]
         public string GhiChu { get; set; }
@@ -135,8 +135,12 @@ namespace PCGD.Models
         public string TenGV { get; set; }
         public byte LoaiPhong { get; set; }
         public Nullable<int> NhomLT { get; set; }
-        public Nullable<int> NhomHT { get; set; }
+        public Nullable<int> NhomTH { get; set; }
         public string GhiChu { get; set; }
+        public decimal? HeSo { get; set; }
+        public decimal? TongTietLT { get; set; }
+        public decimal? TongTietTH { get; set; }
+        public decimal? TongTiet { get; set; }
     }
     public class ViewNhiemVuModel
     {

@@ -8,6 +8,10 @@ namespace PCGD.Libs
 {
     public class PhanCongLib
     {
+        public static decimal? TinhHeSo(int sv)
+        {
+            return (decimal)(sv <= 40 ? 1.0 : (sv <= 70 ? 1.1 : (sv <= 100 ? 1.2 : (sv <= 130 ? 1.3 : 0.0))));
+        }
         public static bool IsHocPhanOfGiangVien(string TenGV, string MaHP)
         {
             PCGDEntities db = new PCGDEntities();
@@ -73,34 +77,48 @@ namespace PCGD.Libs
         public static List<NhiemVuModel> GetNhiemVuModel(long PhanCongID)
         {
             PCGDEntities db = new PCGDEntities();
-            return (from n in db.NhiemVu
-                    join g in db.GiangVien on n.GiangVien_ID equals g.ID
-                    join h in db.HocPhan on n.HocPhan_ID equals h.ID
-                    join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
-                    join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
-                    join k in db.HocKi on o.HocKi_ID equals k.ID
-                    join l in db.Lop on n.Lop_ID equals l.ID
-                    where n.PhanCong_ID == PhanCongID
-                    orderby c.ID ascending
-                    select new NhiemVuModel
-                    {
-                        ID = n.ID,
-                        Lop_ID = l.ID,
-                        NhomHocPhan_ID = o.ID,
-                        TenLop = l.TenLop,
-                        SoSV = l.SoSV,
-                        MaHP = h.MaHP,
-                        TenHP = h.TenHP,
-                        LoaiHP = h.LoaiHP,
-                        SoTC = h.SoTC,
-                        SoTietLT = c.SoTietLT,
-                        SoTietTH = c.SoTietTH,
-                        TenGV = g.TenGV,
-                        LoaiPhong = n.LoaiPhong,
-                        NhomLT = n.NhomLT,
-                        NhomHT = n.NhomHT,
-                        GhiChu = n.GhiChu
-                    }).ToList();
+            List<NhiemVuModel> nhiemVu = (from n in db.NhiemVu
+                                          join g in db.GiangVien on n.GiangVien_ID equals g.ID
+                                          join h in db.HocPhan on n.HocPhan_ID equals h.ID
+                                          join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                                          join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
+                                          join k in db.HocKi on o.HocKi_ID equals k.ID
+                                          join l in db.Lop on n.Lop_ID equals l.ID
+                                          where n.PhanCong_ID == PhanCongID
+                                          orderby c.ID ascending
+                                          select new NhiemVuModel
+                                          {
+                                              ID = n.ID,
+                                              Lop_ID = l.ID,
+                                              NhomHocPhan_ID = o.ID,
+                                              TenLop = l.TenLop,
+                                              SoSV = l.SoSV,
+                                              MaHP = h.MaHP,
+                                              TenHP = h.TenHP,
+                                              LoaiHP = h.LoaiHP,
+                                              SoTC = h.SoTC,
+                                              SoTietLT = c.SoTietLT,
+                                              SoTietTH = c.SoTietTH,
+                                              TenGV = g.TenGV,
+                                              LoaiPhong = n.LoaiPhong,
+                                              NhomLT = n.NhomLT,
+                                              NhomTH = n.NhomTH,
+                                              GhiChu = n.GhiChu,
+                                              HeSo = 0,
+                                              TongTietLT = 0,
+                                              TongTietTH = 0,
+                                              TongTiet = 0
+                                          }).ToList();
+            foreach (var item in nhiemVu)
+            {
+                item.NhomLT = (item.NhomLT == null ? 0 : item.NhomLT);
+                item.NhomTH = (item.NhomTH == null ? 0 : item.NhomTH);
+                item.HeSo = TinhHeSo(item.SoSV);
+                item.TongTietLT = ((item.SoTietLT == null ? 0 : item.SoTietLT) * item.NhomLT * item.HeSo);
+                item.TongTietTH = ((item.SoTietTH == null ? 0 : item.SoTietTH) * item.NhomTH);
+                item.TongTiet = (item.TongTietLT + item.TongTietTH / 2 + item.TongTietTH / 5);
+            }
+            return nhiemVu;
         }
     }
 }

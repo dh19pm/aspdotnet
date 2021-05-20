@@ -16,6 +16,9 @@
         }
         <table class="table table-bordered table-sm table-hover">
             <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
                 <th class="text-center" style="width: 130px">
                     Mã Học Phần
                 </th>
@@ -42,9 +45,15 @@
                     <td colspan="7" class="text-center bg-light">Danh sách học phần rỗng.</td>
                 </tr>
             }
+            @{
+                int stt = 1;
+            }
             @foreach (var item in Model.HocPhan)
             {
                 <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
                     <td class="text-center">
                         <strong>@Html.DisplayFor(modelItem => item.MaHP)</strong>
                     </td>

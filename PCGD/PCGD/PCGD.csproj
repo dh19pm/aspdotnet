@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Libs\HocPhanLib.cs" />
     <Compile Include="Libs\NguoiDungLib.cs" />
+    <Compile Include="Libs\PaginationLib.cs" />
     <Compile Include="Libs\PhanCongLib.cs" />
     <Compile Include="Libs\Request.cs" />
     <Compile Include="Libs\Sha1.cs" />

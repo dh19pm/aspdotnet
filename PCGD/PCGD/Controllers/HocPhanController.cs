@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using PCGD.Models;
@@ -17,9 +18,13 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: HocPhan
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            return View(db.HocPhan.OrderByDescending(x => x.ID).ToList());
+            List<HocPhan> hocPhan = db.HocPhan.OrderByDescending(x => x.ID).Skip(page * Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"])).Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Take(Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"])).ToList();
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = db.HocPhan.Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Count();
+            return View(hocPhan);
         }
 
         // GET: HocPhan/Create

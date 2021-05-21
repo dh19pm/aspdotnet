@@ -1,0 +1,174 @@
+﻿@model PCGD.Models.ViewNhiemVuModel
+
+@{
+    ViewBag.Title = "Danh Sách Nhiệm Vụ";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("ThemNhiemVu", new { phancong_id = Model.PhanCong.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
+        </p>
+        <table class="table table-bordered table-sm mb-0">
+            <tr>
+                <th class="text-center align-middle" style="width: 30px" rowspan="2">
+                    Số TT
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 50px;">
+                    Mã HP
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 250px;">
+                    Tên học phần
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 40px;">
+                    Số TC
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 40px;">
+                    Tự chọn
+                </th>
+                <th class="text-center align-middle" colspan="2">
+                    Số tiết
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 70px;">
+                    Loại phòng TH/TN
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 200px;">
+                    Giảng viên phụ trách
+                </th>
+                <th class="text-center align-middle" rowspan="2">
+                    Ghi chú
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 20px">
+                    Số SV
+                </th>
+                <th class="text-center align-middle" colspan="2">
+                    Nhóm
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 20px">
+                    Hệ số
+                </th>
+                <th class="text-center align-middle" colspan="2">
+                    Số tiết
+                </th>
+                <th class="text-center align-middle" rowspan="2" style="width: 20px">
+                    Tổng Tiết
+                </th>
+                <th class="text-center align-middle" style="width: 100px" rowspan="2">Hành động</th>
+            </tr>
+            <tr>
+                <th class="text-center align-middle" style="width: 30px;">
+                    LT
+                </th>
+                <th class="text-center align-middle" style="width: 30px;">
+                    TH
+                </th>
+                <th class="text-center align-middle" style="width: 30px;">
+                    LT
+                </th>
+                <th class="text-center align-middle" style="width: 30px;">
+                    TH
+                </th>
+                <th class="text-center align-middle" style="width: 30px;">
+                    LT
+                </th>
+                <th class="text-center align-middle" style="width: 30px;">
+                    TH
+                </th>
+            </tr>
+            @foreach (var lop in Model.Lop)
+            {
+                int stt = 1;
+                <tr class="bg-light">
+                    <td colspan="18">
+                        <strong>Lớp: @lop.TenLop - @lop.TenNganh</strong>
+                    </td>
+                </tr>
+                foreach (var nhomHocPhan in Model.NhomHocPhan.Where(x => x.Lop_ID == lop.ID).ToList())
+                {
+                    int hocPhanTuChon = 0;
+                    foreach (var nhiemVu in Model.NhiemVu.Where(x => x.Lop_ID == lop.ID && x.NhomHocPhan_ID == nhomHocPhan.ID).ToList())
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @stt
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.MaHP
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.TenHP@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                {@Html.Raw("(*)")}
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.SoTC@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                {@Html.Raw("*")}
+                            </td>
+                            @if (nhiemVu.LoaiHP == 1)
+                            {
+                                hocPhanTuChon++;
+                                if (hocPhanTuChon == 1)
+                                {
+                                    <td class="text-center align-middle" rowspan="@Model.NhiemVu.Where(x => x.Lop_ID == lop.ID && x.NhomHocPhan_ID == nhiemVu.NhomHocPhan_ID && x.LoaiHP == 1).Count()">
+                                        @nhomHocPhan.TongTC@if (nhomHocPhan.HocPhanDieuKien == 1)
+                                        {@Html.Raw("*")}
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                hocPhanTuChon = 0;
+                                <td class="text-center">
+                                </td>
+                            }
+                            <td class="text-center">
+                                @nhiemVu.SoTietLT
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.SoTietTH
+                            </td>
+                            <td class="text-center">
+                                @if (nhiemVu.LoaiPhong == 1)
+                                {
+                                    @Html.Raw("MT")
+                                }
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.TenGV
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.GhiChu
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.SoSV
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.NhomLT
+                            </td>
+                            <td class="text-center">
+                                @nhiemVu.NhomTH
+                            </td>
+                            <td class="text-center">
+                                @String.Format("{0:0.##}", nhiemVu.HeSo)
+                            </td>
+                            <td class="text-center">
+                                @String.Format("{0:0.##}", nhiemVu.TongTietLT)
+                            </td>
+                            <td class="text-center">
+                                @String.Format("{0:0.##}", nhiemVu.TongTietTH)
+                            </td>
+                            <td class="text-center">
+                                @String.Format("{0:0.##}", nhiemVu.TongTiet)
+                            </td>
+                            <td class="text-center">
+                                <a class="badge badge-primary" href="@Url.Action("SuaNhiemVu", new { nhiemvu_id = nhiemVu.ID })"><i class="fal fa-pen"></i></a>
+                                <a class="badge badge-danger" href="@Url.Action("XoaNhiemVu", new { nhiemvu_id = nhiemVu.ID })"><i class="fal fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        stt++;
+                    }
+                }
+            }
+        </table>
+    </div>
+</div>

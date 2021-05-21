@@ -24,6 +24,12 @@
                 <th class="text-center" style="width: 200px">Danh sách học phần</th>
                 <th class="text-center" style="width: 100px">Hành động</th>
             </tr>
+            @if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="5" class="text-center bg-light">Danh sách chương trình rỗng.</td>
+                </tr>
+            }
             @{
                 int stt = 1;
             }

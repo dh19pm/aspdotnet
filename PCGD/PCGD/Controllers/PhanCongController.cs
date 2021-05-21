@@ -20,8 +20,8 @@ namespace PCGD.Controllers
         // GET: PhanCong
         public ActionResult Index()
         {
-            var phanCong = db.PhanCong.Include(p => p.NguoiDung);
-            return View(phanCong.OrderByDescending(x => x.NamHoc).ToList());
+            var phanCong = db.PhanCong.Include(p => p.TongHop).OrderByDescending(x => x.TongHop.NamHoc).ThenByDescending(x => x.HocKi);
+            return View(phanCong.ToList());
         }
 
         // GET: PhanCong/Details/5
@@ -55,17 +55,33 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,NamHoc,HocKi")] PhanCong phanCong)
+        public ActionResult Create([Bind(Include = "ID,NamHoc,HocKi")] PhanCongModel phanCongModel)
         {
             if (ModelState.IsValid)
             {
-                phanCong.NguoiDung_ID = NguoiDungLib.Get().ID;
+                TongHop tongHop = db.TongHop.Where(x => x.NamHoc == phanCongModel.NamHoc).SingleOrDefault();
+                if (tongHop == null)
+                {
+                    tongHop = new TongHop();
+                    tongHop.NguoiDung_ID = NguoiDungLib.Get().ID;
+                    tongHop.NamHoc = phanCongModel.NamHoc;
+                    db.TongHop.Add(tongHop);
+                    db.SaveChanges();
+                }
+                if (PhanCongLib.ExistsPhanCong(tongHop.ID, phanCongModel.HocKi))
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Năm học " + phanCongModel.NamHoc + " - " + (phanCongModel.NamHoc + 1) + " đã có phân công học kì " + HocPhanLib.ConvertHocKi(phanCongModel.HocKi) + " này rồi!");
+                    return View(phanCongModel);
+                }
+                PhanCong phanCong = new PhanCong();
+                phanCong.TongHop_ID = tongHop.ID;
+                phanCong.HocKi = phanCongModel.HocKi;
                 db.PhanCong.Add(phanCong);
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = phanCong.ID });
             }
 
-            return View(phanCong);
+            return View(phanCongModel);
         }
 
         // GET: PhanCong/Edit/5
@@ -80,7 +96,11 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
-            return View(phanCong);
+            PhanCongModel phanCongModel = new PhanCongModel();
+            phanCongModel.ID = phanCong.ID;
+            phanCongModel.NamHoc = db.TongHop.Find(phanCong.TongHop_ID).NamHoc;
+            phanCongModel.HocKi = phanCong.HocKi;
+            return View(phanCongModel);
         }
 
         // POST: PhanCong/Edit/5
@@ -88,15 +108,43 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,NguoiDung_ID,NamHoc,HocKi")] PhanCong phanCong)
+        public ActionResult Edit([Bind(Include = "ID,NamHoc,HocKi")] PhanCongModel phanCongModel)
         {
             if (ModelState.IsValid)
             {
+                PhanCong phanCong = db.PhanCong.Find(phanCongModel.ID);
+                if (phanCong == null)
+                {
+                    return HttpNotFound();
+                }
+                TongHop tongHop = db.TongHop.Where(x => x.NamHoc == phanCongModel.NamHoc).SingleOrDefault();
+                if (tongHop == null)
+                {
+                    tongHop = new TongHop();
+                    tongHop.NguoiDung_ID = NguoiDungLib.Get().ID;
+                    tongHop.NamHoc = phanCongModel.NamHoc;
+                    db.TongHop.Add(tongHop);
+                    db.SaveChanges();
+                }
+                if (PhanCongLib.ExistsPhanCong(tongHop.ID, phanCongModel.HocKi, phanCong.ID))
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Năm học " + phanCongModel.NamHoc + " - " + (phanCongModel.NamHoc + 1) + " đã có phân công học kì " + HocPhanLib.ConvertHocKi(phanCongModel.HocKi) + " này rồi!");
+                    return View(phanCongModel);
+                }
+                long tempID = phanCong.TongHop_ID;
+                phanCong.HocKi = phanCongModel.HocKi;
+                phanCong.TongHop_ID = tongHop.ID;
                 db.Entry(phanCong).State = EntityState.Modified;
                 db.SaveChanges();
+                if (db.PhanCong.Where(x => x.TongHop_ID == tempID).Count() <= 0)
+                {
+                    TongHop th = db.TongHop.Find(tempID);
+                    db.TongHop.Remove(th);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-            return View(phanCong);
+            return View(phanCongModel);
         }
 
         // GET: PhanCong/Delete/5
@@ -122,6 +170,12 @@ namespace PCGD.Controllers
             PhanCong phanCong = db.PhanCong.Find(id);
             db.PhanCong.Remove(phanCong);
             db.SaveChanges();
+            if (db.PhanCong.Where(x => x.TongHop_ID == phanCong.TongHop_ID).Count() <= 0)
+            {
+                TongHop th = db.TongHop.Find(phanCong.TongHop_ID);
+                db.TongHop.Remove(th);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

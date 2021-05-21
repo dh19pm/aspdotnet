@@ -52,8 +52,7 @@ footer {
     box-shadow: 0 0 0 .2rem rgba(220,53,69,.25)
 }
 
-.form-control.input-validation-error ~ .invalid-feedback
-{
+.field-validation-error.invalid-feedback {
     display: block;
 }
 

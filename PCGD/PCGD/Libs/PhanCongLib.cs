@@ -120,6 +120,29 @@ namespace PCGD.Libs
             }
             return nhiemVu;
         }
+        public static bool ExistsPhanCong(long TongHopID, byte HocKi, long PhanCongID = 0)
+        {
+            PCGDEntities db = new PCGDEntities();
+            if (PhanCongID > 0)
+            {
+                if ((from p in db.PhanCong
+                     where p.ID != PhanCongID && p.HocKi == HocKi && p.TongHop_ID == TongHopID
+                     select new
+                     {
+                     }).Count() > 0)
+                    return true;
+            }
+            else
+            {
+                if ((from p in db.PhanCong
+                     where p.HocKi == HocKi && p.TongHop_ID == TongHopID
+                     select new
+                     {
+                     }).Count() > 0)
+                    return true;
+            }
+            return false;
+        }
         public static bool ExistsNhiemVu(long PhanCongID, long LopID, long HocPhanID, long GiaoVienID)
         {
             PCGDEntities db = new PCGDEntities();

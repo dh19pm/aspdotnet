@@ -76,6 +76,12 @@
                     TH
                 </th>
             </tr>
+            @if (Model.Lop.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="18" class="text-center bg-light">Danh sách nhiệm vụ rỗng.</td>
+                </tr>
+            }
             @foreach (var lop in Model.Lop)
             {
                 int stt = 1;

@@ -1,0 +1,128 @@
+﻿@model PCGD.Models.SuaHocPhanModel
+
+@{
+    ViewBag.Title = "Sửa Học Phần";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.NhomHocPhan_ID)
+            @Html.HiddenFor(model => model.ChiTietHocPhan_ID)
+
+            if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="d-block text-danger">@ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MaHP)
+                @Html.EditorFor(model => model.MaHP, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.MaHP, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoTietLT)
+                @Html.EditorFor(model => model.SoTietLT, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.SoTietLT, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoTietTH)
+                @Html.EditorFor(model => model.SoTietTH, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.SoTietTH, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="text-left">
+                <input type="submit" value="Sửa ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = Model.NhomHocPhan_ID })">trang chính</a>
+            </div>
+        }
+    </div>
+</div>
+<script>
+    let inputMaHP = document.getElementById('MaHP');
+    let tagifyMaHP = new Tagify(inputMaHP, {
+        originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
+        enforceWhitelist: true,
+        mode: "select",
+        dropdown: {
+            enabled: 0,
+            maxItems: 100,
+            searchKeys: ["value"],
+            closeOnSelect: false
+        },
+        keepInvalidTags: true,
+        whitelist: inputMaHP.value.trim().split(/\s*,\s*/)
+    });
+
+    let isFocus = true;
+
+    tagifyMaHP.on('blur', (e) => {
+        isFocus = false;
+    });
+    tagifyMaHP.on('focus', (e) => {
+        let controller;
+        isFocus = true;
+
+        controller && controller.abort();
+        controller = new AbortController();
+        tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
+        let valueInput = document.getElementById("MaHP").getAttribute("value");
+        $.ajax({
+            url: '/HocPhan/Search' + (valueInput ? '?mahp=' + valueInput : ""),
+            type: 'GET',
+            success: function (data) {
+                if (isFocus === true) {
+                    tagifyMaHP.settings.whitelist = [];
+                    tagifyMaHP.settings.whitelist.splice(0, data.length, ...data);
+                    tagifyMaHP.loading(false).dropdown.show.call(tagifyMaHP);
+                }
+            },
+            error: function () {
+                tagifyMaHP.loading(false).dropdown.hide.call(tagifyMaHP);
+            }
+        });
+    });
+    tagifyMaHP.on('remove', (e) => {
+        document.getElementById("MaHP").setAttribute("value", "");
+    });
+    tagifyMaHP.on('input', (e) => {
+        let value = e.detail.value, controller;
+        document.getElementById("MaHP").setAttribute("value", value);
+
+        isFocus = true;
+
+        if (value == "")
+            return false;
+
+        controller && controller.abort();
+        controller = new AbortController();
+        tagifyMaHP.loading(true).dropdown.hide.call(tagifyMaHP);
+
+        $.ajax({
+            url: '/HocPhan/Search?mahp=' + value,
+            type: 'GET',
+            success: function (data) {
+                if (isFocus === true) {
+                    tagifyMaHP.settings.whitelist = [];
+                    tagifyMaHP.settings.whitelist.splice(0, data.length, ...data);
+                    tagifyMaHP.loading(false).dropdown.show.call(tagifyMaHP);
+                }
+            },
+            error: function () {
+                tagifyMaHP.loading(false).dropdown.hide.call(tagifyMaHP);
+            }
+        });
+    });
+    tagifyMaHP.on('add', (e) => {
+        document.getElementById("MaHP").setAttribute("value", e.detail.data.value);
+    });
+</script>

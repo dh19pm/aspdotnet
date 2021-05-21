@@ -1,0 +1,76 @@
+﻿@model PCGD.Models.ViewGiangVienModel
+
+@{
+    ViewBag.Title = "Danh Sách Học Phần Giảng Viên";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { giangvien_id = Model.GiangVien_ID })">Thêm Mới <i class="fal fa-plus"></i></a> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+        </p>
+        <table class="table table-bordered table-sm mb-0 table-hover">
+            <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 130px">
+                    Mã Học Phần
+                </th>
+                <th class="text-center">
+                    Tên Học Phần
+                </th>
+                <th class="text-center" style="width: 150px">
+                    Loại Học Phần
+                </th>
+                <th class="text-center" style="width: 100px">
+                    Số tín chỉ
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @if (Model.HocPhan.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center bg-light">Danh sách học phần rỗng.</td>
+                </tr>
+            }
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model.HocPhan)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MaHP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td class="text-center">
+                        @if (item.LoaiHP == 0)
+                        {
+                            @Html.Raw("Bắt buộc")
+                        }
+                        else
+                        {
+                            @Html.Raw("Tự chọn")
+                        }
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTC)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+    </div>
+</div>

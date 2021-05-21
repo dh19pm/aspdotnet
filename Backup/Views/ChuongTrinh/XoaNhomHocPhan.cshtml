@@ -1,0 +1,94 @@
+﻿@model PCGD.Models.XoaNhomHocPhanModel
+
+@{
+    ViewBag.Title = "Xoá Nhóm Học Phần";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="alert alert-warning" role="alert">
+            Bạn có muốn xoá nhóm học phần này không?
+        </div>
+        <table class="table table-bordered table-sm">
+            <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 130px">
+                    Mã Học Phần
+                </th>
+                <th class="text-center">
+                    Tên Học Phần
+                </th>
+                <th class="text-center" style="width: 150px">
+                    Loại Học Phần
+                </th>
+                <th class="text-center" style="width: 100px">
+                    Số tín chỉ
+                </th>
+                <th class="text-center" style="width: 150px">
+                    Số tiết lý thuyết
+                </th>
+                <th class="text-center" style="width: 150px">
+                    Số tiết thực hành
+                </th>
+            </tr>
+            @if (Model.HocPhan.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center bg-light">Danh sách học phần rỗng.</td>
+                </tr>
+            }
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model.HocPhan)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MaHP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td class="text-center">
+                        @if (item.LoaiHP == 0)
+                        {
+                            @Html.Raw("Bắt buộc")
+                        }
+                        else
+                        {
+                            @Html.Raw("Tự chọn")
+                        }
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTC)@if (item.HocPhanDieuKien == 1)
+                        {@Html.Raw("*")}
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTietLT)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTietTH)
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="text-left">
+                <input type="submit" value="Xoá ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", "ChuongTrinh", new { id = Model.ChuongTrinh_ID })">trang chính</a>
+            </div>
+        }
+
+    </div>
+</div>
+

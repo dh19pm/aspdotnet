@@ -1,0 +1,22 @@
+﻿@model PCGD.Models.PhanCong
+
+@{
+    ViewBag.Title = "Xoá Phân Công";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="alert alert-warning" role="alert">
+            Bạn có muốn xoá phân công <strong>học kì @PCGD.Libs.HocPhanLib.ConvertHocKi(Model.HocKi) của năm học @Model.NamHoc - @(Model.NamHoc + 1)</strong> này không?
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="text-left">
+                <input type="submit" value="Xoá ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+            </div>
+        }
+    </div>
+</div>

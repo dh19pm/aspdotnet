@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PCGD.Models.Khoa>
+
+@{
+    ViewBag.Title = "Danh Sách Khoa";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("Create")">Thêm Mới <i class="fal fa-plus"></i></a>
+        </p>
+        <table class="table table-bordered table-sm table-hover mb-0">
+            <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TenKhoa)
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenKhoa)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+    </div>
+</div>

@@ -140,8 +140,7 @@
       <EntityTypeMapping TypeName="PCGDModel.PhanCong">
         <MappingFragment StoreEntitySet="PhanCong">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="NguoiDung_ID" ColumnName="NguoiDung_ID" />
-          <ScalarProperty Name="NamHoc" ColumnName="NamHoc" />
+          <ScalarProperty Name="TongHop_ID" ColumnName="TongHop_ID" />
           <ScalarProperty Name="HocKi" ColumnName="HocKi" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -150,6 +149,7 @@
       <EntityTypeMapping TypeName="PCGDModel.TongHop">
         <MappingFragment StoreEntitySet="TongHop">
           <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NguoiDung_ID" ColumnName="NguoiDung_ID" />
           <ScalarProperty Name="NamHoc" ColumnName="NamHoc" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -12,7 +12,7 @@ namespace PCGD.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    
     public partial class PhanCong
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +22,18 @@ namespace PCGD.Models
         }
     
         public long ID { get; set; }
-        public int NguoiDung_ID { get; set; }
+        public long TongHop_ID { get; set; }
+
+        [Display(Name = "Học kì")]
+        public byte HocKi { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NhiemVu> NhiemVu { get; set; }
+        public virtual TongHop TongHop { get; set; }
+    }
+    public class PhanCongModel
+    {
+        public long ID { get; set; }
 
         [Display(Name = "Năm học")]
         [Required(ErrorMessage = "Năm học không được bỏ trống!")]
@@ -33,10 +44,6 @@ namespace PCGD.Models
         [Required(ErrorMessage = "Học kì không được bỏ trống!")]
         [Range(1, 2, ErrorMessage = "Học kì không hợp lệ")]
         public byte HocKi { get; set; }
-    
-        public virtual NguoiDung NguoiDung { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NhiemVu> NhiemVu { get; set; }
     }
     public class ThemNhiemVuModel
     {

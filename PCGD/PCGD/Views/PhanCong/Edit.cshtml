@@ -1,4 +1,4 @@
-﻿@model PCGD.Models.PhanCong
+﻿@model PCGD.Models.PhanCongModel
 
 @{
     ViewBag.Title = "Sửa Phân Công";
@@ -11,7 +11,6 @@
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.ID)
-            @Html.HiddenFor(model => model.NguoiDung_ID)
 
             if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
             {
@@ -26,7 +25,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.NamHoc)
                 <select id="NamHoc" name="NamHoc" class="form-control">
-                    @for (int i = 2000; i <= 2100; i++)
+                    @for (int i = DateTime.Now.Year - 3; i <= DateTime.Now.Year + 3; i++)
                     {
                         <option value="@i" @if (Model != null && Model.NamHoc.Equals(i)) { @Html.Raw("selected") }>@i - @(i + 1) </option>
                     }

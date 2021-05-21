@@ -1,0 +1,82 @@
+﻿@model IEnumerable<PCGD.Models.HocPhan>
+
+@{
+    ViewBag.Title = "Danh Sách Học Phần";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Học Phần</li>
+    </ol>
+</nav>
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col">
+                <form method="get">
+                    <div class="input-group" style="max-width: 223px">
+                        <input type="text" name="text" class="form-control" placeholder="Tìm kiếm..." autocomplete="off" value="@ViewBag.searchString">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><i class="fal fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4 text-right"><a class="btn btn-primary" href="@Url.Action("Create")" role="button">Thêm Mới <i class="fal fa-plus"></i></a></div>
+        </div>
+        <table class="table table-bordered table-sm table-hover mb-0">
+            <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 130px">
+                    @Html.DisplayNameFor(model => model.MaHP)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.TenHP)
+                </th>
+                <th class="text-center" style="width: 130px">
+                    @Html.DisplayNameFor(model => model.LoaiHP)
+                </th>
+                <th class="text-center" style="width: 100px">
+                    @Html.DisplayNameFor(model => model.SoTC)
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.MaHP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TenHP)
+                    </td>
+                    <td class="text-center">
+                        @if (item.LoaiHP == 0)
+                        {@Html.Raw("Bắt buộc") }
+                    else
+                    { @Html.Raw("Tự chọn")}
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.SoTC)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+        @Html.Raw(PCGD.Libs.PaginationLib.Get(ViewBag.searchString, ViewBag.Total, ViewBag.Page))
+    </div>
+</div>

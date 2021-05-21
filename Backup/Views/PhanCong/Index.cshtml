@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PCGD.Models.PhanCong>
+
+@{
+    ViewBag.Title = "Danh Sách Phân Công";
+}
+
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        <p>
+            <a class="btn btn-primary" href="@Url.Action("Create")">Thêm Mới <i class="fal fa-plus"></i></a>
+        </p>
+        <table class="table table-bordered table-sm table-hover mb-0">
+            <tr>
+                <th class="text-center" style="width: 80px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 200px">
+                    @Html.DisplayNameFor(model => model.NamHoc)
+                </th>
+                <th class="text-center" style="width: 150px">
+                    @Html.DisplayNameFor(model => model.HocKi)
+                </th>
+                <th class="text-center" style="width: 150px">
+                    Nhiệm vụ
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @{ 
+                int stt = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        @item.NamHoc - @(item.NamHoc + 1)
+                    </td>
+                    <td class="text-center">
+                        @PCGD.Libs.HocPhanLib.ConvertHocKi(item.HocKi)
+                    </td>
+                    <td class="text-center">
+                        <a href="@Url.Action("Details", new { id = item.ID })">Xem chi tiết</a>
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                stt++;
+            }
+
+        </table>
+    </div>
+</div>

@@ -21,6 +21,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ChiTietTongHop">
+      <EntityTypeMapping TypeName="PCGDModel.ChiTietTongHop">
+        <MappingFragment StoreEntitySet="ChiTietTongHop">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TongHop_ID" ColumnName="TongHop_ID" />
+          <ScalarProperty Name="GiangVien_ID" ColumnName="GiangVien_ID" />
+          <ScalarProperty Name="DinhMucGioChuan" ColumnName="DinhMucGioChuan" />
+          <ScalarProperty Name="DinhMucCongTac" ColumnName="DinhMucCongTac" />
+          <ScalarProperty Name="GiamDinhMuc" ColumnName="GiamDinhMuc" />
+          <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ChuongTrinh">
       <EntityTypeMapping TypeName="PCGDModel.ChuongTrinh">
         <MappingFragment StoreEntitySet="ChuongTrinh">
@@ -128,8 +141,16 @@
         <MappingFragment StoreEntitySet="PhanCong">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="NguoiDung_ID" ColumnName="NguoiDung_ID" />
+          <ScalarProperty Name="NamHoc" ColumnName="NamHoc" />
           <ScalarProperty Name="HocKi" ColumnName="HocKi" />
-          <ScalarProperty Name="NgayTao" ColumnName="NgayTao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TongHop">
+      <EntityTypeMapping TypeName="PCGDModel.TongHop">
+        <MappingFragment StoreEntitySet="TongHop">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NamHoc" ColumnName="NamHoc" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -16,10 +16,10 @@
                     TT
                 </th>
                 <th class="text-center" style="width: 200px">
-                    @Html.DisplayNameFor(model => model.HocKi)
+                    @Html.DisplayNameFor(model => model.NamHoc)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NgayTao)
+                <th class="text-center" style="width: 150px">
+                    @Html.DisplayNameFor(model => model.HocKi)
                 </th>
                 <th class="text-center" style="width: 150px">
                     Nhiệm vụ
@@ -36,10 +36,10 @@
                         @stt
                     </td>
                     <td class="text-center">
-                        @PCGD.Libs.HocPhanLib.ConvertHocKi(item.HocKi)
+                        @item.NamHoc - @(item.NamHoc + 1)
                     </td>
-                    <td>
-                        @item.NgayTao.ToString("dd-MM-yyyy")
+                    <td class="text-center">
+                        @PCGD.Libs.HocPhanLib.ConvertHocKi(item.HocKi)
                     </td>
                     <td class="text-center">
                         <a href="@Url.Action("Details", new { id = item.ID })">Xem chi tiết</a>

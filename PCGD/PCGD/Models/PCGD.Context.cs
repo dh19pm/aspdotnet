@@ -27,6 +27,7 @@ namespace PCGD.Models
     
         public virtual DbSet<ChiTietGiangVien> ChiTietGiangVien { get; set; }
         public virtual DbSet<ChiTietHocPhan> ChiTietHocPhan { get; set; }
+        public virtual DbSet<ChiTietTongHop> ChiTietTongHop { get; set; }
         public virtual DbSet<ChuongTrinh> ChuongTrinh { get; set; }
         public virtual DbSet<GiangVien> GiangVien { get; set; }
         public virtual DbSet<HocKi> HocKi { get; set; }
@@ -38,5 +39,6 @@ namespace PCGD.Models
         public virtual DbSet<NhiemVu> NhiemVu { get; set; }
         public virtual DbSet<NhomHocPhan> NhomHocPhan { get; set; }
         public virtual DbSet<PhanCong> PhanCong { get; set; }
+        public virtual DbSet<TongHop> TongHop { get; set; }
     }
 }

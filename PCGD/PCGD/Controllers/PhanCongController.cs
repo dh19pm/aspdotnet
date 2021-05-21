@@ -21,7 +21,7 @@ namespace PCGD.Controllers
         public ActionResult Index()
         {
             var phanCong = db.PhanCong.Include(p => p.NguoiDung);
-            return View(phanCong.OrderByDescending(x => x.NgayTao).ToList());
+            return View(phanCong.OrderByDescending(x => x.NamHoc).ToList());
         }
 
         // GET: PhanCong/Details/5
@@ -55,7 +55,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,HocKi,NgayTao")] PhanCong phanCong)
+        public ActionResult Create([Bind(Include = "ID,NamHoc,HocKi")] PhanCong phanCong)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,NguoiDung_ID,HocKi,NgayTao")] PhanCong phanCong)
+        public ActionResult Edit([Bind(Include = "ID,NguoiDung_ID,NamHoc,HocKi")] PhanCong phanCong)
         {
             if (ModelState.IsValid)
             {

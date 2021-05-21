@@ -4,34 +4,38 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="92dfee39b6bf404d8787061bb537a9f0" Name="Diagram1">
-        <EntityTypeShape EntityType="PCGDModel.ChiTietGiangVien" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.ChiTietHocPhan" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.ChuongTrinh" Width="1.5" PointX="1.5" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.GiangVien" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.HocKi" Width="1.5" PointX="1.5" PointY="9" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.HocPhan" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.Khoa" Width="1.5" PointX="1.5" PointY="21.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.Lop" Width="1.5" PointX="3.75" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.Nganh" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.NguoiDung" Width="1.5" PointX="1.5" PointY="24.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.NhiemVu" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.NhomHocPhan" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PCGDModel.PhanCong" Width="1.5" PointX="3.75" PointY="24.5" IsExpanded="true" />
-        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__Giang__035C66C6" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__HocPh__04508AFF" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__HocPh__78DED853" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__NhomH__77EAB41A" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__HocKi__ChuongTri__7231DAC4" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__Lop__ChuongTrinh__7DA38D70" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__NhiemVu__GiangVi__0ECE1972" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__NhomHocPh__HocKi__750E476F" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__NhiemVu__HocPhan__0DD9F539" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__Nganh__Khoa_ID__6C79016E" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__Lop__Nganh_ID__7CAF6937" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__NhiemVu__Lop_ID__0BF1ACC7" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__PhanCong__NguoiD__0915401C" ManuallyRouted="false" />
-        <AssociationConnector Association="PCGDModel.FK__NhiemVu__PhanCon__0CE5D100" ManuallyRouted="false" />
+      <Diagram DiagramId="714a9d4e68764c7093a0919ea5cc15bd" Name="Diagram1">
+        <EntityTypeShape EntityType="PCGDModel.ChiTietGiangVien" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.ChiTietHocPhan" Width="1.5" PointX="8.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.ChiTietTongHop" Width="1.5" PointX="6" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.ChuongTrinh" Width="1.5" PointX="1.5" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.GiangVien" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.HocKi" Width="1.5" PointX="3.75" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.HocPhan" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Khoa" Width="1.5" PointX="1.5" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Lop" Width="1.5" PointX="0.75" PointY="13.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.Nganh" Width="1.5" PointX="1.5" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NguoiDung" Width="1.5" PointX="1.5" PointY="28.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NhiemVu" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.NhomHocPhan" Width="1.5" PointX="6" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.PhanCong" Width="1.5" PointX="0.75" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PCGDModel.TongHop" Width="1.5" PointX="3.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__Giang__75CD617E" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietGi__HocPh__76C185B7" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__HocPh__6B4FD30B" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietHo__NhomH__6A5BAED2" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietTo__Giang__013F142A" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__ChiTietTo__TongH__02333863" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__HocKi__ChuongTri__64A2D57C" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Lop__ChuongTrinh__70148828" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__GiangVi__07EC11B9" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhomHocPh__HocKi__677F4227" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__HocPhan__06F7ED80" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Nganh__Khoa_ID__5EE9FC26" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__Lop__Nganh_ID__6F2063EF" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__Lop_ID__050FA50E" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__PhanCong__NguoiD__7B863AD4" ManuallyRouted="false" />
+        <AssociationConnector Association="PCGDModel.FK__NhiemVu__PhanCon__0603C947" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

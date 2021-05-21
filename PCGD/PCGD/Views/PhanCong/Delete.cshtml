@@ -8,7 +8,7 @@
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
         <div class="alert alert-warning" role="alert">
-            Bạn có muốn xoá phân công ngày <strong>@Model.NgayTao.ToString("dd-MM-yyyy")</strong> này không?
+            Bạn có muốn xoá phân công ngày <strong>học kì @PCGD.Libs.HocPhanLib.ConvertHocKi(Model.HocKi) của năm học @Model.NamHoc - @(Model.NamHoc + 1)</strong> này không?
         </div>
         @using (Html.BeginForm())
         {

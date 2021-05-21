@@ -138,6 +138,7 @@
     <Compile Include="Controllers\NganhController.cs" />
     <Compile Include="Controllers\NguoiDungController.cs" />
     <Compile Include="Controllers\PhanCongController.cs" />
+    <Compile Include="Controllers\TongHopController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -151,6 +152,9 @@
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChiTietHocPhan.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChiTietTongHop.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ChuongTrinh.cs">
@@ -199,6 +203,9 @@
       <DependentUpon>PCGD.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\PhanCong.cs">
+      <DependentUpon>PCGD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TongHop.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -468,6 +475,11 @@
     <Content Include="Views\PhanCong\ThemNhiemVu.cshtml" />
     <Content Include="Views\PhanCong\SuaNhiemVu.cshtml" />
     <Content Include="Views\PhanCong\XoaNhiemVu.cshtml" />
+    <Content Include="Views\TongHop\Create.cshtml" />
+    <Content Include="Views\TongHop\Delete.cshtml" />
+    <Content Include="Views\TongHop\Details.cshtml" />
+    <Content Include="Views\TongHop\Edit.cshtml" />
+    <Content Include="Views\TongHop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,7 +15,7 @@
             @Html.AntiForgeryToken()
 
             <div class="text-left">
-                <input type="submit" value="Xoá ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+                <input type="submit" value="Xoá ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = Model.PhanCong_ID })">trang chính</a>
             </div>
         }
 

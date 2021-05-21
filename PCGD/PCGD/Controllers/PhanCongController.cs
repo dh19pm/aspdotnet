@@ -184,6 +184,11 @@ namespace PCGD.Controllers
                     return View(themNhiemVuModel);
                 }
                 nhiemVu.Lop_ID = lop.ID;
+                if (PhanCongLib.ExistsNhiemVu(nhiemVu.PhanCong_ID, nhiemVu.Lop_ID, nhiemVu.HocPhan_ID, nhiemVu.GiangVien_ID))
+                {
+                    ModelState.AddModelError("ThongBaoLoi", "Nhiệm vụ đã tồn tại trên trên hệ thống!");
+                    return View(themNhiemVuModel);
+                }
                 nhiemVu.LoaiPhong = themNhiemVuModel.LoaiPhong;
                 nhiemVu.NhomLT = themNhiemVuModel.NhomLT;
                 nhiemVu.NhomTH = themNhiemVuModel.NhomTH;

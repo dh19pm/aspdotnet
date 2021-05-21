@@ -248,7 +248,7 @@ namespace PCGD.Controllers
                     ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.ExistMaHocPhan(themHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP))
+                if (HocPhanLib.ExistsMaHocPhan(themHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP))
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã đã tồn tại!");
                     return View(themHocPhanModel);
@@ -324,7 +324,7 @@ namespace PCGD.Controllers
                     ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
                     return View(suaHocPhanModel);
                 }
-                if (HocPhanLib.ExistMaHocPhan(suaHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP, suaHocPhanModel.ChiTietHocPhan_ID))
+                if (HocPhanLib.ExistsMaHocPhan(suaHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP, suaHocPhanModel.ChiTietHocPhan_ID))
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã đã tồn tại!");
                     return View(suaHocPhanModel);

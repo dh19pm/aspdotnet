@@ -133,7 +133,7 @@ namespace PCGD.Libs
             }
             return viewHocKiModel;
         }
-        public static bool ExistMaHocPhan(long nhomHocPhanID, string MaHP, long chiTietHocPhanID = 0)
+        public static bool ExistsMaHocPhan(long nhomHocPhanID, string MaHP, long chiTietHocPhanID = 0)
         {
             PCGDEntities db = new PCGDEntities();
             int countRow = 0;

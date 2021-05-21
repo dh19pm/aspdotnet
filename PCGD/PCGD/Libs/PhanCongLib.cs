@@ -120,5 +120,12 @@ namespace PCGD.Libs
             }
             return nhiemVu;
         }
+        public static bool ExistsNhiemVu(long PhanCongID, long LopID, long HocPhanID, long GiaoVienID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            if (db.NhiemVu.Where(x => x.PhanCong_ID == PhanCongID && x.Lop_ID == LopID && x.HocPhan_ID == HocPhanID && x.GiangVien_ID == GiaoVienID).Count() > 0)
+                return true;
+            return false;
+        }
     }
 }

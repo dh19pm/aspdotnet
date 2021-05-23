@@ -134,9 +134,9 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Create
-        public ActionResult ThemHocPhan(long? giangvien_id)
+        public ActionResult ThemHocPhan(long? id)
         {
-            GiangVien giangVien = db.GiangVien.Find(giangvien_id);
+            GiangVien giangVien = db.GiangVien.Find(id);
             if (giangVien == null)
             {
                 return HttpNotFound();
@@ -178,13 +178,13 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Edit/5
-        public ActionResult SuaHocPhan(long? chitietgiangvien_id)
+        public ActionResult SuaHocPhan(long? id)
         {
-            if (chitietgiangvien_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(chitietgiangvien_id);
+            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(id);
             if (chiTietGiangVien == null)
             {
                 return HttpNotFound();
@@ -235,13 +235,13 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/XoaHocPhan/5
-        public ActionResult XoaHocPhan(long? chitietgiangvien_id)
+        public ActionResult XoaHocPhan(long? id)
         {
-            if (chitietgiangvien_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(chitietgiangvien_id);
+            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(id);
             if (chiTietGiangVien == null)
             {
                 return HttpNotFound();
@@ -261,9 +261,9 @@ namespace PCGD.Controllers
         // POST: GiangVien/XoaHocPhan/5
         [HttpPost, ActionName("XoaHocPhan")]
         [ValidateAntiForgeryToken]
-        public ActionResult XoaHocPhanConfirmed(long? chitietgiangvien_id)
+        public ActionResult XoaHocPhanConfirmed(long? id)
         {
-            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(chitietgiangvien_id);
+            ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(id);
             db.ChiTietGiangVien.Remove(chiTietGiangVien);
             db.SaveChanges();
             return RedirectToAction("Details", "GiangVien", new { id = chiTietGiangVien.GiangVien_ID });

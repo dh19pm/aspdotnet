@@ -1,26 +1,21 @@
 ﻿@model PCGD.Models.TongHop
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Danh Sách Tổng Hợp Giảng Viên";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>TongHop</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NamHoc)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NamHoc)
-        </dd>
-
-    </dl>
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @{ 
+            var Data = PCGD.Libs.TongHopLib.GetTongHopModel(Model.ID);
+        }
+        @foreach (var t in Data)
+        {
+            <strong>
+                @t.TenGV - @t.HocKi1 - @t.HocKi2
+            </strong>
+            <br />
+        }
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

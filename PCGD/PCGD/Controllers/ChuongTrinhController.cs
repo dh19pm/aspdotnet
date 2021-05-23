@@ -12,7 +12,7 @@ using PCGD.Libs;
 namespace PCGD.Controllers
 {
     [Authentication]
-    [Role("Admin", "USer")]
+    [Role("Admin")]
     public class ChuongTrinhController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
@@ -139,33 +139,33 @@ namespace PCGD.Controllers
         }
 
         // GET: ChuongTrinh/ThemNhomHocPhan/HocKi_ID
-        public ActionResult ThemNhomHocPhan(long? hocki_id)
+        public ActionResult ThemNhomHocPhan(long? id)
         {
-            if (hocki_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            HocKi hocKi = db.HocKi.Find(hocki_id);
+            HocKi hocKi = db.HocKi.Find(id);
             if (hocKi == null)
             {
                 return HttpNotFound();
             }
             NhomHocPhan nhomHocPhan = new NhomHocPhan();
-            nhomHocPhan.HocKi_ID = Convert.ToInt64(hocki_id);
+            nhomHocPhan.HocKi_ID = Convert.ToInt64(id);
             nhomHocPhan.TongTC = 0;
             db.NhomHocPhan.Add(nhomHocPhan);
             db.SaveChanges();
-            return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { nhomhocphan_id = nhomHocPhan.ID });
+            return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = nhomHocPhan.ID });
         }
 
         // GET: ChuongTrinh/NhomHocPhan/HocKi_ID/NhomHocPhan_ID
-        public ActionResult NhomHocPhan(long? nhomhocphan_id)
+        public ActionResult NhomHocPhan(long? id)
         {
-            if (nhomhocphan_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(nhomhocphan_id);
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(id);
             if (nhomHocPhan == null)
             {
                 return HttpNotFound();
@@ -182,7 +182,7 @@ namespace PCGD.Controllers
             nhomHocPhanModel.TongTC = nhomHocPhan.TongTC;
             nhomHocPhanModel.HocPhanDieuKien = nhomHocPhan.HocPhanDieuKien;
             nhomHocPhanModel.HocPhanThayThe = nhomHocPhan.HocPhanThayThe;
-            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(nhomhocphan_id));
+            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(id));
             viewNhomHocPhan.ChuongTrinh = chuongTrinh;
             viewNhomHocPhan.NhomHocPhan = nhomHocPhan;
             viewNhomHocPhan.HocPhan = hocPhanModel;
@@ -216,20 +216,19 @@ namespace PCGD.Controllers
         }
 
         // GET: ChuongTrinh/ThemHocPhan/HocKi_ID/NhomHocPhan_ID
-        public ActionResult ThemHocPhan(long? nhomhocphan_id)
+        public ActionResult ThemHocPhan(long? id)
         {
-            if (nhomhocphan_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(nhomhocphan_id);
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(id);
             if (nhomHocPhan == null)
             {
                 return HttpNotFound();
             }
             ThemHocPhanModel themHocPhanModel = new ThemHocPhanModel();
             themHocPhanModel.NhomHocPhan_ID = nhomHocPhan.ID;
-
             return View(themHocPhanModel);
         }
 
@@ -275,21 +274,20 @@ namespace PCGD.Controllers
                 chiTietHocPhan.SoTietTH = themHocPhanModel.SoTietTH;
                 db.ChiTietHocPhan.Add(chiTietHocPhan);
                 db.SaveChanges();
-
-                return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { nhomhocphan_id = themHocPhanModel.NhomHocPhan_ID });
+                return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = themHocPhanModel.NhomHocPhan_ID });
             }
 
             return View(themHocPhanModel);
         }
 
         // GET: ChuongTrinh/SuaHocPhan/ChiTietHocPhan_ID
-        public ActionResult SuaHocPhan(long? chitiethocphan_id)
+        public ActionResult SuaHocPhan(long? id)
         {
-            if (chitiethocphan_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(chitiethocphan_id);
+            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(id);
             if (chiTietHocPhan == null)
             {
                 return HttpNotFound();
@@ -305,7 +303,6 @@ namespace PCGD.Controllers
             suaHocPhanModel.MaHP = db.HocPhan.Find(chiTietHocPhan.HocPhan_ID).MaHP;
             suaHocPhanModel.SoTietLT = chiTietHocPhan.SoTietLT;
             suaHocPhanModel.SoTietTH = chiTietHocPhan.SoTietTH;
-
             return View(suaHocPhanModel);
         }
 
@@ -354,16 +351,16 @@ namespace PCGD.Controllers
 
                 db.Entry(chiTietHocPhan).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { nhomhocphan_id = suaHocPhanModel.NhomHocPhan_ID });
+                return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = suaHocPhanModel.NhomHocPhan_ID });
             }
             return View(suaHocPhanModel);
         }
 
         // GET: ChuongTrinh/XoaHocPhan/
-        public ActionResult XoaHocPhan(long? chitiethocphan_id)
+        public ActionResult XoaHocPhan(long? id)
         {
             XoaHocPhanModel xoaHocPhanModel = new XoaHocPhanModel();
-            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(chitiethocphan_id);
+            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(id);
 
             if (chiTietHocPhan == null)
             {
@@ -379,9 +376,9 @@ namespace PCGD.Controllers
         // POST: ChuongTrinh/Delete/5
         [HttpPost, ActionName("XoaHocPhan")]
         [ValidateAntiForgeryToken]
-        public ActionResult XoaHocPhanConfirm(long? chitiethocphan_id)
+        public ActionResult XoaHocPhanConfirm(long? id)
         {
-            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(chitiethocphan_id);
+            ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(id);
             if (chiTietHocPhan == null)
             {
                 return HttpNotFound();
@@ -403,20 +400,18 @@ namespace PCGD.Controllers
                 db.Entry(nhomHocPhan).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { nhomhocphan_id = nhomHocPhan.ID });
+            return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = nhomHocPhan.ID });
         }
 
         // GET: ChuongTrinh/XoaNhomHocPhan/
-        public ActionResult XoaNhomHocPhan(long? nhomhocphan_id)
+        public ActionResult XoaNhomHocPhan(long? id)
         {
-            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(nhomhocphan_id);
-
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(id);
             if (nhomHocPhan == null)
             {
                 return HttpNotFound();
             }
-
-            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(nhomhocphan_id));
+            List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(id));
             XoaNhomHocPhanModel xoaNhomHocPhanModel = new XoaNhomHocPhanModel();
             xoaNhomHocPhanModel.HocPhan = hocPhanModel;
             xoaNhomHocPhanModel.ChuongTrinh_ID = db.HocKi.Find(nhomHocPhan.HocKi_ID).ChuongTrinh_ID;
@@ -426,9 +421,9 @@ namespace PCGD.Controllers
         // POST: ChuongTrinh/Delete/5
         [HttpPost, ActionName("XoaNhomHocPhan")]
         [ValidateAntiForgeryToken]
-        public ActionResult XoaNhomHocPhanConfirm(long? nhomhocphan_id)
+        public ActionResult XoaNhomHocPhanConfirm(long? id)
         {
-            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(nhomhocphan_id);
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(id);
             if (nhomHocPhan == null)
             {
                 return HttpNotFound();

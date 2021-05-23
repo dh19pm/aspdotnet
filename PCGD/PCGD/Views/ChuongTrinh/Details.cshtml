@@ -56,7 +56,7 @@
                 @foreach (var hocKi in Model.HocKi.Where(x => x.ChuongTrinh_ID == Model.ChuongTrinh.ID).ToList())
                 {
                     <tr>
-                        <td colspan="10" class="bg-light"><strong>Tổng số tín chỉ học kỳ @HocPhanLib.ConvertHocKi(hocKi.SoHocKi):  @hocKi.TongTC TC (Bắt buộc: @hocKi.TongTCBatBuoc TC; Tự chọn: @hocKi.TongTCTuChon TC)</strong> <span class="float-right"><a class="badge badge-primary" href="@Url.Action("ThemNhomHocPhan", new { hocki_id = hocKi.ID })"><i class="fal fa-plus"></i> Thêm Nhóm</a></span></td>
+                        <td colspan="10" class="bg-light"><strong>Tổng số tín chỉ học kỳ @HocPhanLib.ConvertHocKi(hocKi.SoHocKi):  @hocKi.TongTC TC (Bắt buộc: @hocKi.TongTCBatBuoc TC; Tự chọn: @hocKi.TongTCTuChon TC)</strong> <span class="float-right"><a class="badge badge-primary" href="@Url.Action("ThemNhomHocPhan", new { id = hocKi.ID })"><i class="fal fa-plus"></i> Thêm Nhóm</a></span></td>
                     </tr>
                     int i = 1;
                     var ModelNhomHocPhan = Model.NhomHocPhan.Where(x => x.HocKi_ID == hocKi.ID).ToList();
@@ -75,8 +75,8 @@
                             <tr>
                                 <td colspan="9" class="text-danger">Nhóm học phần rỗng.</td>
                                 <td class="text-center align-middle">
-                                    <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
-                                    <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
+                                    <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
+                                    <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
                                 </td>
                             </tr>
                         }
@@ -153,8 +153,8 @@
                                     @if (j == 1)
                                     {
                                         <td class="text-center align-middle" rowspan="@ModelChiTietHocPhan.Count()">
-                                            <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
-                                            <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { nhomhocphan_id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
+                                            <a class="badge badge-primary" href="@Url.Action("NhomHocPhan", new { id = nhomHocPhan.ID })"><i class="fal fa-pen"></i></a>
+                                            <a class="badge badge-danger" href="@Url.Action("XoaNhomHocPhan", new { id = nhomHocPhan.ID })"><i class="fal fa-trash"></i></a>
                                         </td>
                                     }
                                 </tr>

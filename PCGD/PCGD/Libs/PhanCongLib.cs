@@ -8,9 +8,9 @@ namespace PCGD.Libs
 {
     public class PhanCongLib
     {
-        public static decimal? TinhHeSo(int sv)
+        public static double TinhHeSo(int sv)
         {
-            return (decimal)(sv <= 40 ? 1.0 : (sv <= 70 ? 1.1 : (sv <= 100 ? 1.2 : (sv <= 130 ? 1.3 : 0.0))));
+            return (sv <= 40 ? 1.0 : (sv <= 70 ? 1.1 : (sv <= 100 ? 1.2 : (sv <= 130 ? 1.3 : 0.0))));
         }
         public static bool IsHocPhanOfGiangVien(string TenGV, string MaHP)
         {
@@ -77,19 +77,27 @@ namespace PCGD.Libs
         public static List<NhiemVuModel> GetNhiemVuModel(long PhanCongID)
         {
             PCGDEntities db = new PCGDEntities();
-            List<NhiemVuModel> nhiemVu = (from n in db.NhiemVu
+            List<NhiemVuModel> nhiemVu = (from p in db.PhanCong
+                                          join n in db.NhiemVu on p.ID equals n.PhanCong_ID
                                           join g in db.GiangVien on n.GiangVien_ID equals g.ID
                                           join h in db.HocPhan on n.HocPhan_ID equals h.ID
                                           join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
                                           join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
                                           join k in db.HocKi on o.HocKi_ID equals k.ID
                                           join l in db.Lop on n.Lop_ID equals l.ID
-                                          where n.PhanCong_ID == PhanCongID
+                                          where p.ID == PhanCongID
                                           orderby c.ID ascending
+                                          let heSo = (l.SoSV <= 40 ? 1.0 : (l.SoSV <= 70 ? 1.1 : (l.SoSV <= 100 ? 1.2 : (l.SoSV <= 130 ? 1.3 : 0.0))))
+                                          let tongTietLT = ((c.SoTietLT == null ? 0 : (int)c.SoTietLT) * (n.NhomLT == null ? 0 : (int)n.NhomLT) * heSo)
+                                          let tongTietTH = ((c.SoTietTH == null ? 0 : (int)c.SoTietTH) * (n.NhomTH == null ? 0 : (int)n.NhomTH))
+                                          let tongTiet = (tongTietLT + tongTietTH / 2 + tongTietTH / 5)
                                           select new NhiemVuModel
                                           {
                                               ID = n.ID,
+                                              HocKi = p.HocKi,
                                               Lop_ID = l.ID,
+                                              GiangVien_ID = g.ID,
+                                              HocPhan_ID = h.ID,
                                               NhomHocPhan_ID = o.ID,
                                               TenLop = l.TenLop,
                                               SoSV = l.SoSV,
@@ -104,20 +112,11 @@ namespace PCGD.Libs
                                               NhomLT = n.NhomLT,
                                               NhomTH = n.NhomTH,
                                               GhiChu = n.GhiChu,
-                                              HeSo = 0,
-                                              TongTietLT = 0,
-                                              TongTietTH = 0,
-                                              TongTiet = 0
+                                              HeSo = heSo,
+                                              TongTietLT = tongTietLT,
+                                              TongTietTH = tongTietTH,
+                                              TongTiet = tongTiet
                                           }).ToList();
-            foreach (var item in nhiemVu)
-            {
-                item.NhomLT = (item.NhomLT == null ? 0 : item.NhomLT);
-                item.NhomTH = (item.NhomTH == null ? 0 : item.NhomTH);
-                item.HeSo = TinhHeSo(item.SoSV);
-                item.TongTietLT = ((item.SoTietLT == null ? 0 : item.SoTietLT) * item.NhomLT * item.HeSo);
-                item.TongTietTH = ((item.SoTietTH == null ? 0 : item.SoTietTH) * item.NhomTH);
-                item.TongTiet = (item.TongTietLT + item.TongTietTH / 2 + item.TongTietTH / 5);
-            }
             return nhiemVu;
         }
         public static bool ExistsPhanCong(long TongHopID, byte HocKi, long PhanCongID = 0)

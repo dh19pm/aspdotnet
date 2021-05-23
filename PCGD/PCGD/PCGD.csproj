@@ -148,6 +148,7 @@
     <Compile Include="Libs\PhanCongLib.cs" />
     <Compile Include="Libs\Request.cs" />
     <Compile Include="Libs\Sha1.cs" />
+    <Compile Include="Libs\TongHopLib.cs" />
     <Compile Include="Models\ChiTietGiangVien.cs">
       <DependentUpon>PCGD.tt</DependentUpon>
     </Compile>
@@ -475,11 +476,9 @@
     <Content Include="Views\PhanCong\ThemNhiemVu.cshtml" />
     <Content Include="Views\PhanCong\SuaNhiemVu.cshtml" />
     <Content Include="Views\PhanCong\XoaNhiemVu.cshtml" />
-    <Content Include="Views\TongHop\Create.cshtml" />
-    <Content Include="Views\TongHop\Delete.cshtml" />
     <Content Include="Views\TongHop\Details.cshtml" />
-    <Content Include="Views\TongHop\Edit.cshtml" />
     <Content Include="Views\TongHop\Index.cshtml" />
+    <Content Include="Views\TongHop\SuaGiangVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

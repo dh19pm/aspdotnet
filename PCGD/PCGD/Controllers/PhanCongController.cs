@@ -63,7 +63,6 @@ namespace PCGD.Controllers
                 if (tongHop == null)
                 {
                     tongHop = new TongHop();
-                    tongHop.NguoiDung_ID = NguoiDungLib.Get().ID;
                     tongHop.NamHoc = phanCongModel.NamHoc;
                     db.TongHop.Add(tongHop);
                     db.SaveChanges();
@@ -121,7 +120,6 @@ namespace PCGD.Controllers
                 if (tongHop == null)
                 {
                     tongHop = new TongHop();
-                    tongHop.NguoiDung_ID = NguoiDungLib.Get().ID;
                     tongHop.NamHoc = phanCongModel.NamHoc;
                     db.TongHop.Add(tongHop);
                     db.SaveChanges();
@@ -249,6 +247,14 @@ namespace PCGD.Controllers
                 nhiemVu.GhiChu = themNhiemVuModel.GhiChu;
                 db.NhiemVu.Add(nhiemVu);
                 db.SaveChanges();
+                if (db.ChiTietTongHop.Where(x => x.GiangVien_ID == nhiemVu.GiangVien_ID).Count() <= 0)
+                {
+                    ChiTietTongHop chiTietTongHop = new ChiTietTongHop();
+                    chiTietTongHop.GiangVien_ID = nhiemVu.GiangVien_ID;
+                    chiTietTongHop.TongHop_ID = db.PhanCong.Find(nhiemVu.PhanCong_ID).TongHop_ID;
+                    db.ChiTietTongHop.Add(chiTietTongHop);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Details", new { id = themNhiemVuModel.PhanCong_ID });
             }
 

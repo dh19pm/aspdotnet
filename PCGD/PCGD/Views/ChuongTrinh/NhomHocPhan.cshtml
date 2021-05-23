@@ -11,7 +11,7 @@
         @if (HocPhanLib.GetCountHocPhanTuChon(Model.NhomHocPhan.ID) == HocPhanLib.GetCountHocPhan(Model.NhomHocPhan.ID))
         {
             <p>
-                <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { nhomhocphan_id = Model.NhomHocPhan.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
+                <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { id = Model.NhomHocPhan.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
             </p>
         }
         <table class="table table-bordered table-sm table-hover">
@@ -42,7 +42,7 @@
             @if (Model.HocPhan.Count() <= 0)
             {
                 <tr>
-                    <td colspan="7" class="text-center bg-light">Danh sách học phần rỗng.</td>
+                    <td colspan="8" class="text-center bg-light">Danh sách học phần rỗng.</td>
                 </tr>
             }
             @{
@@ -81,8 +81,8 @@
                         @Html.DisplayFor(modelItem => item.SoTietTH)
                     </td>
                     <td class="text-center">
-                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { chitiethocphan_id = item.ChiTietHocPhan_ID })"><i class="fal fa-pen"></i></a>
-                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitiethocphan_id = item.ChiTietHocPhan_ID })"><i class="fal fa-trash"></i></a>
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { id = item.ChiTietHocPhan_ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { id = item.ChiTietHocPhan_ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
                 stt++;

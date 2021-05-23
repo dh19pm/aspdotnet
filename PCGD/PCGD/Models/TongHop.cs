@@ -23,15 +23,25 @@ namespace PCGD.Models
         }
     
         public long ID { get; set; }
-        public int NguoiDung_ID { get; set; }
 
         [Display(Name = "Năm học")]
         public int NamHoc { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietTongHop> ChiTietTongHop { get; set; }
-        public virtual NguoiDung NguoiDung { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PhanCong> PhanCong { get; set; }
+    }
+    public class TongHopModel
+    {
+        public long PhanCong_ID { get; set; }
+        public long GiangVien_ID { get; set; }
+        public string TenGV { get; set; }
+        public Nullable<int> DinhMucGioChuan { get; set; }
+        public Nullable<int> DinhMucCongTac { get; set; }
+        public Nullable<double> GiamDinhMuc { get; set; }
+        public double? HocKi1 { get; set; }
+        public double? HocKi2 { get; set; }
+        public string GhiChu { get; set; }
     }
 }

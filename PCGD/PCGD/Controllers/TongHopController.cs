@@ -35,8 +35,8 @@ namespace PCGD.Controllers
             return View(tongHop);
         }
 
-        // GET: TongHop/Edit/5
-        public ActionResult Edit(long? id)
+        // GET: TongHop/SuaGiangVien/5
+        public ActionResult SuaGiangVien(long? id)
         {
             if (id == null)
             {
@@ -55,7 +55,7 @@ namespace PCGD.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,NamHoc")] TongHop tongHop)
+        public ActionResult SuaGiangVien([Bind(Include = "ID,NamHoc")] TongHop tongHop)
         {
             if (ModelState.IsValid)
             {

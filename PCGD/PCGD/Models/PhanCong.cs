@@ -128,7 +128,10 @@ namespace PCGD.Models
     public class NhiemVuModel
     {
         public long ID { get; set; }
+        public byte HocKi { get; set; }
         public long Lop_ID { get; set; }
+        public long GiangVien_ID { get; set; }
+        public long HocPhan_ID { get; set; }
         public long NhomHocPhan_ID { get; set; }
         public string TenLop { get; set; }
         public int SoSV { get; set; }
@@ -143,10 +146,10 @@ namespace PCGD.Models
         public Nullable<int> NhomLT { get; set; }
         public Nullable<int> NhomTH { get; set; }
         public string GhiChu { get; set; }
-        public decimal? HeSo { get; set; }
-        public decimal? TongTietLT { get; set; }
-        public decimal? TongTietTH { get; set; }
-        public decimal? TongTiet { get; set; }
+        public double HeSo { get; set; }
+        public double TongTietLT { get; set; }
+        public double TongTietTH { get; set; }
+        public double TongTiet { get; set; }
     }
     public class ViewNhiemVuModel
     {

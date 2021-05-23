@@ -8,7 +8,7 @@
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
         <p>
-            <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { giangvien_id = Model.GiangVien_ID })">Thêm Mới <i class="fal fa-plus"></i></a> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
+            <a class="btn btn-primary" href="@Url.Action("ThemHocPhan", new { id = Model.GiangVien_ID })">Thêm Mới <i class="fal fa-plus"></i></a> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Index")">trang chính</a>
         </p>
         <table class="table table-bordered table-sm mb-0 table-hover">
             <tr>
@@ -64,8 +64,8 @@
                         @Html.DisplayFor(modelItem => item.SoTC)
                     </td>
                     <td class="text-center">
-                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-pen"></i></a>
-                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { chitietgiangvien_id = item.ChiTietGiangVien_ID })"><i class="fal fa-trash"></i></a>
+                        <a class="badge badge-primary" href="@Url.Action("SuaHocPhan", new { id = item.ChiTietGiangVien_ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("XoaHocPhan", new { id = item.ChiTietGiangVien_ID })"><i class="fal fa-trash"></i></a>
                     </td>
                 </tr>
                 stt++;

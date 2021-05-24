@@ -7,9 +7,12 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PCGD.Models;
+using PCGD.Libs;
 
 namespace PCGD.Controllers
 {
+    [Authentication]
+    [Role("Admin", "User")]
     public class TongHopController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
@@ -32,7 +35,8 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
-            return View(tongHop);
+            List<TongHopModel> tongHopModel = TongHopLib.GetTongHopModel(id);
+            return View(tongHopModel);
         }
 
         // GET: TongHop/SuaGiangVien/5

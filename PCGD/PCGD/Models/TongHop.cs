@@ -34,14 +34,30 @@ namespace PCGD.Models
     }
     public class TongHopModel
     {
-        public long PhanCong_ID { get; set; }
-        public long GiangVien_ID { get; set; }
+        public long ID { get; set; }
+
+        [Display(Name = "Tên giảng viên")]
         public string TenGV { get; set; }
+
+        [Display(Name = "ĐM Giờ chuẩn")]
         public Nullable<int> DinhMucGioChuan { get; set; }
+
+        [Display(Name = "ĐM Công tác")]
         public Nullable<int> DinhMucCongTac { get; set; }
+
+        [Display(Name = "Giảm ĐM")]
         public Nullable<double> GiamDinhMuc { get; set; }
-        public double? HocKi1 { get; set; }
-        public double? HocKi2 { get; set; }
+
+        [Display(Name = "Học kì I")]
+        public double HocKi1 { get; set; }
+
+        [Display(Name = "Học kì II")]
+        public double HocKi2 { get; set; }
+
+        [Display(Name = "Ghi chú")]
         public string GhiChu { get; set; }
+
+        [Display(Name = "Tổng giờ dạy")]
+        public double TongTiet { get; set; }
     }
 }

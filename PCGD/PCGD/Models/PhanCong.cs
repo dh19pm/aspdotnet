@@ -128,10 +128,7 @@ namespace PCGD.Models
     public class NhiemVuModel
     {
         public long ID { get; set; }
-        public byte HocKi { get; set; }
         public long Lop_ID { get; set; }
-        public long GiangVien_ID { get; set; }
-        public long HocPhan_ID { get; set; }
         public long NhomHocPhan_ID { get; set; }
         public string TenLop { get; set; }
         public int SoSV { get; set; }

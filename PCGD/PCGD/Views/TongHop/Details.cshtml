@@ -1,4 +1,4 @@
-﻿@model PCGD.Models.TongHop
+﻿@model IEnumerable<PCGD.Models.TongHopModel>
 
 @{
     ViewBag.Title = "Danh Sách Tổng Hợp Giảng Viên";
@@ -7,15 +7,83 @@
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
-        @{ 
-            var Data = PCGD.Libs.TongHopLib.GetTongHopModel(Model.ID);
-        }
-        @foreach (var t in Data)
-        {
-            <strong>
-                @t.TenGV - @t.HocKi1 - @t.HocKi2
-            </strong>
-            <br />
-        }
+        <table class="table table-bordered table-sm table-hover mb-0">
+            <tr>
+                <th class="text-center" style="width: 40px">
+                    TT
+                </th>
+                <th class="text-center" style="width: 250px">
+                    @Html.DisplayNameFor(model => model.TenGV)
+                </th>
+                <th class="text-center" style="width: 130px">
+                    @Html.DisplayNameFor(model => model.DinhMucGioChuan)
+                </th>
+                <th class="text-center" style="width: 130px">
+                    @Html.DisplayNameFor(model => model.DinhMucCongTac)
+                </th>
+                <th class="text-center" style="width: 130px">
+                    @Html.DisplayNameFor(model => model.GiamDinhMuc)
+                </th>
+                <th class="text-center" style="width: 80px">
+                    @Html.DisplayNameFor(model => model.HocKi1)
+                </th>
+                <th class="text-center" style="width: 80px">
+                    @Html.DisplayNameFor(model => model.HocKi2)
+                </th>
+                <th class="text-center" style="width: 120px">
+                    @Html.DisplayNameFor(model => model.TongTiet)
+                </th>
+                <th class="text-center">
+                    @Html.DisplayNameFor(model => model.GhiChu)
+                </th>
+                <th class="text-center" style="width: 100px">Hành động</th>
+            </tr>
+            @if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="10" class="text-center bg-light">Danh sách tổng hợp rỗng.</td>
+                </tr>
+            }
+            @{
+                int stt = 1;
+            }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="text-center">
+                        @stt
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.TenGV)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.DinhMucGioChuan)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.DinhMucCongTac)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.GiamDinhMuc)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.HocKi1)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.HocKi2)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.TongTiet)
+                    </td>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.GhiChu)
+                    </td>
+                    <td class="text-center">
+                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                    </td>
+                </tr>
+                stt++;
+            }
+        </table>
     </div>
 </div>

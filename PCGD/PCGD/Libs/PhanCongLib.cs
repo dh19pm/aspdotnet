@@ -12,6 +12,18 @@ namespace PCGD.Libs
         {
             return (sv <= 40 ? 1.0 : (sv <= 70 ? 1.1 : (sv <= 100 ? 1.2 : (sv <= 130 ? 1.3 : 0.0))));
         }
+        public static double TinhTongTietLT(int SoTietLT, int NhomTL, double HeSo)
+        {
+            return SoTietLT * NhomTL * HeSo;
+        }
+        public static double TinhTongTietTH(int SoTietTH, int NhomTH)
+        {
+            return SoTietTH * NhomTH;
+        }
+        public static double TinhTongTiet(double TongTietLT, double TongTietTH)
+        {
+            return TongTietLT + (TongTietTH / 2) + (TongTietTH / 5);
+        }
         public static bool IsHocPhanOfGiangVien(string TenGV, string MaHP)
         {
             PCGDEntities db = new PCGDEntities();
@@ -87,17 +99,10 @@ namespace PCGD.Libs
                                           join l in db.Lop on n.Lop_ID equals l.ID
                                           where p.ID == PhanCongID
                                           orderby c.ID ascending
-                                          let heSo = (l.SoSV <= 40 ? 1.0 : (l.SoSV <= 70 ? 1.1 : (l.SoSV <= 100 ? 1.2 : (l.SoSV <= 130 ? 1.3 : 0.0))))
-                                          let tongTietLT = ((c.SoTietLT == null ? 0 : (int)c.SoTietLT) * (n.NhomLT == null ? 0 : (int)n.NhomLT) * heSo)
-                                          let tongTietTH = ((c.SoTietTH == null ? 0 : (int)c.SoTietTH) * (n.NhomTH == null ? 0 : (int)n.NhomTH))
-                                          let tongTiet = (tongTietLT + tongTietTH / 2 + tongTietTH / 5)
                                           select new NhiemVuModel
                                           {
                                               ID = n.ID,
-                                              HocKi = p.HocKi,
                                               Lop_ID = l.ID,
-                                              GiangVien_ID = g.ID,
-                                              HocPhan_ID = h.ID,
                                               NhomHocPhan_ID = o.ID,
                                               TenLop = l.TenLop,
                                               SoSV = l.SoSV,
@@ -112,10 +117,31 @@ namespace PCGD.Libs
                                               NhomLT = n.NhomLT,
                                               NhomTH = n.NhomTH,
                                               GhiChu = n.GhiChu,
-                                              HeSo = heSo,
-                                              TongTietLT = tongTietLT,
-                                              TongTietTH = tongTietTH,
-                                              TongTiet = tongTiet
+                                              HeSo = 0,
+                                              TongTietLT = 0,
+                                              TongTietTH = 0,
+                                              TongTiet = 0
+                                          }).AsEnumerable().Select(x => new NhiemVuModel {
+                                              ID = x.ID,
+                                              Lop_ID = x.Lop_ID,
+                                              NhomHocPhan_ID = x.NhomHocPhan_ID,
+                                              TenLop = x.TenLop,
+                                              SoSV = x.SoSV,
+                                              MaHP = x.MaHP,
+                                              TenHP = x.TenHP,
+                                              LoaiHP = x.LoaiHP,
+                                              SoTC = x.SoTC,
+                                              SoTietLT = x.SoTietLT,
+                                              SoTietTH = x.SoTietTH,
+                                              TenGV = x.TenGV,
+                                              LoaiPhong = x.LoaiPhong,
+                                              NhomLT = x.NhomLT,
+                                              NhomTH = x.NhomTH,
+                                              GhiChu = x.GhiChu,
+                                              HeSo = TinhHeSo(x.SoSV),
+                                              TongTietLT = TinhTongTietLT((x.SoTietLT == null ? 0 : (int)x.SoTietLT), (x.NhomLT == null ? 0 : (int)x.NhomLT), TinhHeSo(x.SoSV)),
+                                              TongTietTH = TinhTongTietTH((x.SoTietTH == null ? 0 : (int)x.SoTietTH), (x.NhomTH == null ? 0 : (int)x.NhomTH)),
+                                              TongTiet = TinhTongTiet(TinhTongTietLT((x.SoTietLT == null ? 0 : (int)x.SoTietLT), (x.NhomLT == null ? 0 : (int)x.NhomLT), TinhHeSo(x.SoSV)), TinhTongTietTH((x.SoTietTH == null ? 0 : (int)x.SoTietTH), (x.NhomTH == null ? 0 : (int)x.NhomTH)))
                                           }).ToList();
             return nhiemVu;
         }

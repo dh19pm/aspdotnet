@@ -3,7 +3,14 @@
 @{
     ViewBag.Title = "Thêm Nhiệm Vụ";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index")">Phân Công</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Details", new { id = Model.PhanCong_ID })">Học Kì @PCGD.Libs.HocPhanLib.ConvertHocKi(ViewBag.HocKi) Năm Học @ViewBag.NamHoc - @(ViewBag.NamHoc + 1)</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+    </ol>
+</nav>
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">

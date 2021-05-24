@@ -17,10 +17,23 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: Nganh
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            var nganh = db.Nganh.Include(n => n.Khoa);
-            return View(nganh.OrderByDescending(x => x.ID).ToList());
+            var data = db.Nganh.Include(n => n.Khoa);
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TenNganh.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.ID).Skip(start).Where(x => x.TenNganh.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: Nganh/Create

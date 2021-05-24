@@ -1,1 +1,66 @@
-﻿
+﻿@model PCGD.Models.ChiTietTongHopModel
+
+@{
+    ViewBag.Title = "Sửa Giảng Viên";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index")">Tổng Hợp</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Details", new { id = ViewBag.TongHop_ID })">Năm Học @ViewBag.NamHoc - @(ViewBag.NamHoc + 1)</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+    </ol>
+</nav>
+<div class="card">
+    <h5 class="card-header">@ViewBag.Title</h5>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+
+            if (ViewData.ModelState["ThongBaoLoi"] != null && !String.IsNullOrEmpty(ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="d-block text-danger">@ViewData.ModelState["ThongBaoLoi"].Errors[0].ErrorMessage</span>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="form-group">
+                <label for="TenGV">Tên giảng viên</label>
+                <input autocomplete="off" class="form-control text-box single-line" id="TenGV" name="TenGV" type="text" value="@ViewBag.TenGV" disabled>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DinhMucGioChuan)
+                @Html.EditorFor(model => model.DinhMucGioChuan, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.DinhMucGioChuan, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DinhMucCongTac)
+                @Html.EditorFor(model => model.DinhMucCongTac, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.DinhMucCongTac, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GiamDinhMuc)
+                @Html.EditorFor(model => model.GiamDinhMuc, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.GiamDinhMuc, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GhiChu)
+                @Html.EditorFor(model => model.GhiChu, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "invalid-feedback" })
+            </div>
+
+            <div class="text-left">
+                <input type="submit" value="Sửa ngay" class="btn btn-primary" /> hoặc trở lại <a class="text-decoration-none" href="@Url.Action("Details", new { id = ViewBag.TongHop_ID })">trang chính</a>
+            </div>
+        }
+    </div>
+</div>

@@ -3,12 +3,18 @@
 @{
     ViewBag.Title = "Xoá Phân Công";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index")">Phân Công</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.Title</li>
+    </ol>
+</nav>
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
         <div class="alert alert-warning" role="alert">
-            Bạn có muốn xoá phân công <strong>học kì @PCGD.Libs.HocPhanLib.ConvertHocKi(Model.HocKi) của năm học @Model.TongHop.NamHoc - @(Model.TongHop.NamHoc + 1)</strong> này không?
+            Bạn có muốn xoá phân công <strong>học kì @PCGD.Libs.HocPhanLib.ConvertHocKi(Model.HocKi) năm học @Model.TongHop.NamHoc - @(Model.TongHop.NamHoc + 1)</strong> này không?
         </div>
         @using (Html.BeginForm())
         {

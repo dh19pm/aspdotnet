@@ -471,7 +471,6 @@
     <Content Include="Views\PhanCong\Create.cshtml" />
     <Content Include="Views\PhanCong\Delete.cshtml" />
     <Content Include="Views\PhanCong\Details.cshtml" />
-    <Content Include="Views\PhanCong\Edit.cshtml" />
     <Content Include="Views\PhanCong\Index.cshtml" />
     <Content Include="Views\PhanCong\ThemNhiemVu.cshtml" />
     <Content Include="Views\PhanCong\SuaNhiemVu.cshtml" />

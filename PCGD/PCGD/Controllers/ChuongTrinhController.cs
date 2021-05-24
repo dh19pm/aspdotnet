@@ -18,9 +18,23 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: ChuongTrinh
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            return View(db.ChuongTrinh.OrderBy(x => x.NgayTao).ToList());
+            var data = db.ChuongTrinh;
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TenCT.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.NgayTao).Skip(start).Where(x => x.TenCT.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: ChuongTrinh/Details/5
@@ -227,6 +241,8 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.ChuongTrinh_ID = nhomHocPhan.HocKi.ChuongTrinh.ID;
+            this.ViewBag.TenCT = nhomHocPhan.HocKi.ChuongTrinh.TenCT;
             ThemHocPhanModel themHocPhanModel = new ThemHocPhanModel();
             themHocPhanModel.NhomHocPhan_ID = nhomHocPhan.ID;
             return View(themHocPhanModel);
@@ -276,7 +292,13 @@ namespace PCGD.Controllers
                 db.SaveChanges();
                 return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = themHocPhanModel.NhomHocPhan_ID });
             }
-
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(themHocPhanModel.NhomHocPhan_ID);
+            if (nhomHocPhan == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.ChuongTrinh_ID = nhomHocPhan.HocKi.ChuongTrinh.ID;
+            this.ViewBag.TenCT = nhomHocPhan.HocKi.ChuongTrinh.TenCT;
             return View(themHocPhanModel);
         }
 
@@ -297,6 +319,8 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.ChuongTrinh_ID = nhomHocPhan.HocKi.ChuongTrinh.ID;
+            this.ViewBag.TenCT = nhomHocPhan.HocKi.ChuongTrinh.TenCT;
             SuaHocPhanModel suaHocPhanModel = new SuaHocPhanModel();
             suaHocPhanModel.NhomHocPhan_ID = nhomHocPhan.ID;
             suaHocPhanModel.ChiTietHocPhan_ID = chiTietHocPhan.ID;
@@ -353,6 +377,13 @@ namespace PCGD.Controllers
                 db.SaveChanges();
                 return RedirectToAction("NhomHocPhan", "ChuongTrinh", new { id = suaHocPhanModel.NhomHocPhan_ID });
             }
+            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(suaHocPhanModel.NhomHocPhan_ID);
+            if (nhomHocPhan == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.ChuongTrinh_ID = nhomHocPhan.HocKi.ChuongTrinh.ID;
+            this.ViewBag.TenCT = nhomHocPhan.HocKi.ChuongTrinh.TenCT;
             return View(suaHocPhanModel);
         }
 
@@ -361,15 +392,14 @@ namespace PCGD.Controllers
         {
             XoaHocPhanModel xoaHocPhanModel = new XoaHocPhanModel();
             ChiTietHocPhan chiTietHocPhan = db.ChiTietHocPhan.Find(id);
-
             if (chiTietHocPhan == null)
             {
                 return HttpNotFound();
             }
-
-            NhomHocPhan nhomHocPhan = db.NhomHocPhan.Find(chiTietHocPhan.NhomHocPhan_ID);
-            xoaHocPhanModel.MaHP = db.HocPhan.Find(chiTietHocPhan.HocPhan_ID).MaHP;
-            xoaHocPhanModel.NhomHocPhan_ID = nhomHocPhan.ID;
+            this.ViewBag.ChuongTrinh_ID = chiTietHocPhan.NhomHocPhan.HocKi.ChuongTrinh.ID;
+            this.ViewBag.TenCT = chiTietHocPhan.NhomHocPhan.HocKi.ChuongTrinh.TenCT;
+            xoaHocPhanModel.MaHP = chiTietHocPhan.HocPhan.MaHP;
+            xoaHocPhanModel.NhomHocPhan_ID = chiTietHocPhan.NhomHocPhan.ID;
             return View(xoaHocPhanModel);
         }
 
@@ -411,6 +441,12 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            HocKi hocKi = db.HocKi.Find(nhomHocPhan.HocKi_ID);
+            if (hocKi == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.TenCT = hocKi.ChuongTrinh.TenCT;
             List<HocPhanModel> hocPhanModel = HocPhanLib.GetHocPhanModel(Convert.ToInt64(id));
             XoaNhomHocPhanModel xoaNhomHocPhanModel = new XoaNhomHocPhanModel();
             xoaNhomHocPhanModel.HocPhan = hocPhanModel;

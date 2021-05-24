@@ -18,9 +18,23 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: GiangVien
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            return View(db.GiangVien.OrderByDescending(x => x.ID).ToList());
+            var data = db.GiangVien;
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TenGV.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.ID).Skip(start).Where(x => x.TenGV.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: GiangVien/Details/5
@@ -35,6 +49,7 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.TenGV = giangVien.TenGV;
             ViewGiangVienModel viewGiangVienModel = new ViewGiangVienModel();
             viewGiangVienModel.GiangVien_ID = giangVien.ID;
             viewGiangVienModel.HocPhan = HocPhanLib.GetHocPhanGiangVienModels(giangVien.ID);
@@ -141,6 +156,7 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.TenGV = giangVien.TenGV;
             ThemHocPhanGiangVienModel themHocPhanGiangVienModel = new ThemHocPhanGiangVienModel();
             themHocPhanGiangVienModel.GiangVien_ID = giangVien.ID;
             return View(themHocPhanGiangVienModel);
@@ -173,7 +189,12 @@ namespace PCGD.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "GiangVien", new { id = themHocPhanGiangVienModel.GiangVien_ID });
             }
-
+            GiangVien giangVien = db.GiangVien.Find(themHocPhanGiangVienModel.GiangVien_ID);
+            if (giangVien == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.TenGV = giangVien.TenGV;
             return View(themHocPhanGiangVienModel);
         }
 
@@ -194,6 +215,7 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.TenGV = chiTietGiangVien.GiangVien.TenGV;
             SuaHocPhanGiangVienModel suaHocPhanGiangVienModel = new SuaHocPhanGiangVienModel();
             suaHocPhanGiangVienModel.ChiTietGiangVien_ID = chiTietGiangVien.ID;
             suaHocPhanGiangVienModel.MaHP = hocPhan.MaHP;
@@ -231,6 +253,12 @@ namespace PCGD.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "GiangVien", new { id = chiTietGiangVien.GiangVien_ID });
             }
+            GiangVien giangVien = db.GiangVien.Find(suaHocPhanGiangVienModel.GiangVien_ID);
+            if (giangVien == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.TenGV = giangVien.TenGV;
             return View(suaHocPhanGiangVienModel);
         }
 
@@ -251,6 +279,7 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.TenGV = chiTietGiangVien.GiangVien.TenGV;
             XoaHocPhanGiangVienModel xoaHocPhanGiangVienModel = new XoaHocPhanGiangVienModel();
             xoaHocPhanGiangVienModel.ChiTietGiangVien_ID = chiTietGiangVien.ID;
             xoaHocPhanGiangVienModel.MaHP = hocPhan.MaHP;

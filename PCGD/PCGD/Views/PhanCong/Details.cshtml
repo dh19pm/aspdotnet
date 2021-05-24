@@ -3,12 +3,18 @@
 @{
     ViewBag.Title = "Danh Sách Nhiệm Vụ";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index")">Phân Công</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Học Kì @PCGD.Libs.HocPhanLib.ConvertHocKi(Model.PhanCong.HocKi) Năm Học @Model.PhanCong.TongHop.NamHoc - @(Model.PhanCong.TongHop.NamHoc + 1)</li>
+    </ol>
+</nav>
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
         <p>
-            <a class="btn btn-primary" href="@Url.Action("ThemNhiemVu", new { phancong_id = Model.PhanCong.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
+            <a class="btn btn-primary" href="@Url.Action("ThemNhiemVu", new { id = Model.PhanCong.ID })">Thêm Mới <i class="fal fa-plus"></i></a>
         </p>
         <table class="table table-bordered table-sm mb-0">
             <tr>
@@ -167,8 +173,8 @@
                                 @String.Format("{0:0.##}", nhiemVu.TongTiet)
                             </td>
                             <td class="text-center">
-                                <a class="badge badge-primary" href="@Url.Action("SuaNhiemVu", new { nhiemvu_id = nhiemVu.ID })"><i class="fal fa-pen"></i></a>
-                                <a class="badge badge-danger" href="@Url.Action("XoaNhiemVu", new { nhiemvu_id = nhiemVu.ID })"><i class="fal fa-trash"></i></a>
+                                <a class="badge badge-primary" href="@Url.Action("SuaNhiemVu", new { id = nhiemVu.ID })"><i class="fal fa-pen"></i></a>
+                                <a class="badge badge-danger" href="@Url.Action("XoaNhiemVu", new { id = nhiemVu.ID })"><i class="fal fa-trash"></i></a>
                             </td>
                         </tr>
                         stt++;

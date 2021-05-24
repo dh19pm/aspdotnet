@@ -18,9 +18,23 @@ namespace PCGD.Controllers
 
         // GET: NguoiDung
         [Role("Admin")]
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            return View(db.NguoiDung.OrderByDescending(x => x.ID).ToList());
+            var data = db.NguoiDung;
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TaiKhoan.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.ID).Skip(start).Where(x => x.TaiKhoan.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: NguoiDung/Create

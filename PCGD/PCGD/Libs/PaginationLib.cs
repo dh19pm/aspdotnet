@@ -19,7 +19,6 @@ namespace PCGD.Libs
         public static string Get(string text = "", int total = 0, int page = 1)
         {
             string content = "";
-            total = (int)Math.Ceiling((decimal)(total / Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"])));
             if (page > 1)
                 content += "<li class=\"page-item\"><a class=\"page-link\" href=\"" + Url(text, 1) + "\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
             for (int i = (page - limit > 0 ? page - limit : 1); i <= (page + limit < total ? page + limit : total); i++)

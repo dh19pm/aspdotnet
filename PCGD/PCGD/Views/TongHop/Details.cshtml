@@ -3,45 +3,56 @@
 @{
     ViewBag.Title = "Danh Sách Tổng Hợp Giảng Viên";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("Index")">Tổng Hợp</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Năm Học @ViewBag.NamHoc - @(ViewBag.NamHoc + 1)</li>
+    </ol>
+</nav>
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
         <table class="table table-bordered table-sm table-hover mb-0">
             <tr>
-                <th class="text-center" style="width: 40px">
+                <th class="text-center align-middle" style="width: 40px">
                     TT
                 </th>
-                <th class="text-center" style="width: 250px">
-                    @Html.DisplayNameFor(model => model.TenGV)
+                <th class="text-center align-middle" style="width: 250px">
+                    Họ và tên
                 </th>
-                <th class="text-center" style="width: 130px">
-                    @Html.DisplayNameFor(model => model.DinhMucGioChuan)
+                <th class="text-center align-middle" style="width: 120px">
+                    Định mức giờ chuẩn
                 </th>
-                <th class="text-center" style="width: 130px">
-                    @Html.DisplayNameFor(model => model.DinhMucCongTac)
+                <th class="text-center align-middle" style="width: 120px">
+                    Định mức công tác
                 </th>
-                <th class="text-center" style="width: 130px">
-                    @Html.DisplayNameFor(model => model.GiamDinhMuc)
-                </th>
-                <th class="text-center" style="width: 80px">
+                <th class="text-center align-middle" style="width: 90px">
+                    Giảm định mức
+                <th class="text-center align-middle" style="width: 80px">
                     @Html.DisplayNameFor(model => model.HocKi1)
                 </th>
-                <th class="text-center" style="width: 80px">
+                <th class="text-center align-middle" style="width: 80px">
                     @Html.DisplayNameFor(model => model.HocKi2)
                 </th>
-                <th class="text-center" style="width: 120px">
+                <th class="text-center align-middle" style="width: 100px">
                     @Html.DisplayNameFor(model => model.TongTiet)
                 </th>
-                <th class="text-center">
+                <th class="text-center align-middle" style="width: 80px">
+                    Tổng
+                </th>
+                <th class="text-center align-middle" style="width: 80px">
+                    Tổng Không NCKH
+                </th>
+                <th class="text-center align-middle">
                     @Html.DisplayNameFor(model => model.GhiChu)
                 </th>
-                <th class="text-center" style="width: 100px">Hành động</th>
+                <th class="text-center align-middle" style="width: 100px">Hành động</th>
             </tr>
             @if (Model.Count() <= 0)
             {
                 <tr>
-                    <td colspan="10" class="text-center bg-light">Danh sách tổng hợp rỗng.</td>
+                    <td colspan="12" class="text-center bg-light">Danh sách tổng hợp rỗng.</td>
                 </tr>
             }
             @{
@@ -49,6 +60,8 @@
             }
             @foreach (var item in Model)
             {
+                double tongGioDay = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan) - (item.DinhMucCongTac == null ? 0.0 : (int)item.DinhMucCongTac));
+                double tongKhongDinhMucCongTac = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan));
                 <tr>
                     <td class="text-center">
                         @stt
@@ -75,11 +88,16 @@
                         @Html.DisplayFor(modelItem => item.TongTiet)
                     </td>
                     <td class="text-center">
+                        @tongGioDay
+                    </td>
+                    <td class="text-center">
+                        @tongKhongDinhMucCongTac
+                    </td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.GhiChu)
                     </td>
                     <td class="text-center">
-                        <a class="badge badge-primary" href="@Url.Action("Edit", new { id = item.ID })"><i class="fal fa-pen"></i></a>
-                        <a class="badge badge-danger" href="@Url.Action("Delete", new { id = item.ID })"><i class="fal fa-trash"></i></a>
+                        <a class="badge badge-primary" href="@Url.Action("SuaGiangVien", new { id = item.ID })"><i class="fal fa-pen"></i></a>
                     </td>
                 </tr>
                 stt++;

@@ -18,10 +18,23 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: PhanCong
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            var phanCong = db.PhanCong.Include(p => p.TongHop).OrderByDescending(x => x.TongHop.NamHoc).ThenByDescending(x => x.HocKi);
-            return View(phanCong.ToList());
+            var data = db.PhanCong.Include(p => p.TongHop);
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TongHop.NamHoc.ToString().Contains(text) || (x.TongHop.NamHoc + 1).ToString().Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.TongHop.NamHoc).ThenByDescending(x => x.HocKi).Skip(start).Where(x => x.TongHop.NamHoc.ToString().Contains(text) || (x.TongHop.NamHoc + 1).ToString().Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: PhanCong/Details/5
@@ -83,68 +96,6 @@ namespace PCGD.Controllers
             return View(phanCongModel);
         }
 
-        // GET: PhanCong/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PhanCong phanCong = db.PhanCong.Find(id);
-            if (phanCong == null)
-            {
-                return HttpNotFound();
-            }
-            PhanCongModel phanCongModel = new PhanCongModel();
-            phanCongModel.ID = phanCong.ID;
-            phanCongModel.NamHoc = db.TongHop.Find(phanCong.TongHop_ID).NamHoc;
-            phanCongModel.HocKi = phanCong.HocKi;
-            return View(phanCongModel);
-        }
-
-        // POST: PhanCong/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,NamHoc,HocKi")] PhanCongModel phanCongModel)
-        {
-            if (ModelState.IsValid)
-            {
-                PhanCong phanCong = db.PhanCong.Find(phanCongModel.ID);
-                if (phanCong == null)
-                {
-                    return HttpNotFound();
-                }
-                TongHop tongHop = db.TongHop.Where(x => x.NamHoc == phanCongModel.NamHoc).SingleOrDefault();
-                if (tongHop == null)
-                {
-                    tongHop = new TongHop();
-                    tongHop.NamHoc = phanCongModel.NamHoc;
-                    db.TongHop.Add(tongHop);
-                    db.SaveChanges();
-                }
-                if (PhanCongLib.ExistsPhanCong(tongHop.ID, phanCongModel.HocKi, phanCong.ID))
-                {
-                    ModelState.AddModelError("ThongBaoLoi", "Năm học " + phanCongModel.NamHoc + " - " + (phanCongModel.NamHoc + 1) + " đã có phân công học kì " + HocPhanLib.ConvertHocKi(phanCongModel.HocKi) + " này rồi!");
-                    return View(phanCongModel);
-                }
-                long tempID = phanCong.TongHop_ID;
-                phanCong.HocKi = phanCongModel.HocKi;
-                phanCong.TongHop_ID = tongHop.ID;
-                db.Entry(phanCong).State = EntityState.Modified;
-                db.SaveChanges();
-                if (db.PhanCong.Where(x => x.TongHop_ID == tempID).Count() <= 0)
-                {
-                    TongHop th = db.TongHop.Find(tempID);
-                    db.TongHop.Remove(th);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
-            }
-            return View(phanCongModel);
-        }
-
         // GET: PhanCong/Delete/5
         public ActionResult Delete(long? id)
         {
@@ -178,17 +129,19 @@ namespace PCGD.Controllers
         }
 
         // GET: PhanCong/Create
-        public ActionResult ThemNhiemVu(long? phancong_id)
+        public ActionResult ThemNhiemVu(long? id)
         {
-            if (phancong_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PhanCong phanCong = db.PhanCong.Find(phancong_id);
+            PhanCong phanCong = db.PhanCong.Find(id);
             if (phanCong == null)
             {
                 return HttpNotFound();
             }
+            this.ViewBag.NamHoc = phanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = phanCong.HocKi;
             ThemNhiemVuModel themNhiemVuModel = new ThemNhiemVuModel();
             themNhiemVuModel.PhanCong_ID = phanCong.ID;
             return View(themNhiemVuModel);
@@ -257,18 +210,24 @@ namespace PCGD.Controllers
                 }
                 return RedirectToAction("Details", new { id = themNhiemVuModel.PhanCong_ID });
             }
-
+            PhanCong getPhanCong = db.PhanCong.Find(themNhiemVuModel.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(themNhiemVuModel);
         }
 
         // GET: PhanCong/Edit/5
-        public ActionResult SuaNhiemVu(long? nhiemvu_id)
+        public ActionResult SuaNhiemVu(long? id)
         {
-            if (nhiemvu_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            NhiemVu nhiemVu = db.NhiemVu.Find(id);
             if (nhiemVu == null)
             {
                 return HttpNotFound();
@@ -298,6 +257,13 @@ namespace PCGD.Controllers
             suaNhiemVuModel.NhomLT = nhiemVu.NhomLT;
             suaNhiemVuModel.NhomTH = nhiemVu.NhomTH;
             suaNhiemVuModel.GhiChu = nhiemVu.GhiChu;
+            PhanCong getPhanCong = db.PhanCong.Find(nhiemVu.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(suaNhiemVuModel);
         }
 
@@ -352,18 +318,24 @@ namespace PCGD.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = suaNhiemVuModel.PhanCong_ID });
             }
-
+            PhanCong getPhanCong = db.PhanCong.Find(suaNhiemVuModel.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(suaNhiemVuModel);
         }
 
         // GET: PhanCong/Delete/5
-        public ActionResult XoaNhiemVu(long? nhiemvu_id)
+        public ActionResult XoaNhiemVu(long? id)
         {
-            if (nhiemvu_id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            NhiemVu nhiemVu = db.NhiemVu.Find(id);
             if (nhiemVu == null)
             {
                 return HttpNotFound();
@@ -372,15 +344,22 @@ namespace PCGD.Controllers
             xoaNhiemVuModel.ID = nhiemVu.ID;
             xoaNhiemVuModel.PhanCong_ID = nhiemVu.PhanCong_ID;
             xoaNhiemVuModel.TenGV = nhiemVu.GiangVien.TenGV;
+            PhanCong getPhanCong = db.PhanCong.Find(nhiemVu.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(xoaNhiemVuModel);
         }
 
         // POST: PhanCong/Delete/5
         [HttpPost, ActionName("XoaNhiemVu")]
         [ValidateAntiForgeryToken]
-        public ActionResult XoaNhiemVuConfirmed(long nhiemvu_id)
+        public ActionResult XoaNhiemVuConfirmed(long id)
         {
-            NhiemVu nhiemVu = db.NhiemVu.Find(nhiemvu_id);
+            NhiemVu nhiemVu = db.NhiemVu.Find(id);
             db.NhiemVu.Remove(nhiemVu);
             db.SaveChanges();
             return RedirectToAction("Details", new { id = nhiemVu.PhanCong_ID });

@@ -17,10 +17,23 @@ namespace PCGD.Controllers
         private PCGDEntities db = new PCGDEntities();
 
         // GET: Lop
-        public ActionResult Index()
+        public ActionResult Index(string text = "", int page = 1)
         {
-            var lop = db.Lop.Include(l => l.ChuongTrinh).Include(l => l.Nganh);
-            return View(lop.OrderByDescending(x => x.ID).ToList());
+            var data = db.Lop.Include(l => l.ChuongTrinh).Include(l => l.Nganh);
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TenLop.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.searchString = text;
+            this.ViewBag.Page = page;
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.ID).Skip(start).Where(x => x.TenLop.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: Lop/Create

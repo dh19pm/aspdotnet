@@ -20,11 +20,21 @@ namespace PCGD.Controllers
         // GET: HocPhan
         public ActionResult Index(string text = "", int page = 1)
         {
-            List<HocPhan> hocPhan = db.HocPhan.OrderByDescending(x => x.ID).Skip(page * Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"])).Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Take(Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"])).ToList();
+            var data = db.HocPhan;
+            page = (page > 0 ? page : 1);
+            int pageSize = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["PaginationLimit"]);
+            int start = (int)(page - 1) * pageSize;
+            int totalPage = data.Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Count();
+            float totalNumsize = (totalPage / (float)pageSize);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            if (page <= 0 || (page > numSize && numSize > 0))
+            {
+                return HttpNotFound();
+            }
             this.ViewBag.searchString = text;
             this.ViewBag.Page = page;
-            this.ViewBag.Total = db.HocPhan.Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Count();
-            return View(hocPhan);
+            this.ViewBag.Total = numSize;
+            return View(data.OrderByDescending(x => x.ID).Skip(start).Where(x => x.TenHP.Contains(text) || x.MaHP.Contains(text) || text == "").Take(pageSize).ToList());
         }
 
         // GET: HocPhan/Create

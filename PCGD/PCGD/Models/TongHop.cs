@@ -60,4 +60,20 @@ namespace PCGD.Models
         [Display(Name = "Tổng giờ dạy")]
         public double TongTiet { get; set; }
     }
+    public partial class ChiTietTongHopModel
+    {
+        public long ID { get; set; }
+
+        [Display(Name = "Định mức giờ chuẩn")]
+        public Nullable<int> DinhMucGioChuan { get; set; }
+
+        [Display(Name = "Định mức công tác")]
+        public Nullable<int> DinhMucCongTac { get; set; }
+
+        [Display(Name = "Giảm định mức")]
+        public Nullable<double> GiamDinhMuc { get; set; }
+
+        [Display(Name = "Ghi chú")]
+        public string GhiChu { get; set; }
+    }
 }

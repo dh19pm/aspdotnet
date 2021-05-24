@@ -3,10 +3,27 @@
 @{
     ViewBag.Title = "Danh Sách Tổng Hợp";
 }
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tổng Hợp</li>
+    </ol>
+</nav>
 <div class="card">
     <h5 class="card-header">@ViewBag.Title</h5>
     <div class="card-body">
+        <div class="row mb-3">
+            <div class="col">
+                <form method="get">
+                    <div class="input-group" style="max-width: 223px">
+                        <input type="text" name="text" class="form-control" placeholder="Tìm kiếm..." autocomplete="off" value="@ViewBag.searchString">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><i class="fal fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <table class="table table-bordered table-sm table-hover mb-0">
             <tr>
                 <th class="text-center" style="width: 40px">
@@ -41,7 +58,7 @@
                 </tr>
                 stt++;
             }
-
         </table>
+        @Html.Raw(PCGD.Libs.PaginationLib.Get(ViewBag.searchString, ViewBag.Total, ViewBag.Page))
     </div>
 </div>

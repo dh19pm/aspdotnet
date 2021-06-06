@@ -49,8 +49,9 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
+            this.ViewBag.ID = tongHop.ID;
             this.ViewBag.NamHoc = tongHop.NamHoc;
-            List<TongHopModel> tongHopModel = TongHopLib.GetTongHopModel(id);
+            List<TongHopModel> tongHopModel = TongHopLib.GetTongHopModel(tongHop.ID);
             return View(tongHopModel);
         }
 

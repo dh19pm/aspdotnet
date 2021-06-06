@@ -102,17 +102,17 @@
                     foreach (var nhiemVu in Model.NhiemVu.Where(x => x.Lop_ID == lop.ID && x.NhomHocPhan_ID == nhomHocPhan.ID).ToList())
                     {
                         <tr>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @stt
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.MaHP
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.TenHP@if (nhomHocPhan.HocPhanDieuKien == 1)
                                 {@Html.Raw("(*)")}
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.SoTC@if (nhomHocPhan.HocPhanDieuKien == 1)
                                 {@Html.Raw("*")}
                             </td>
@@ -133,46 +133,46 @@
                                 <td class="text-center">
                                 </td>
                             }
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.SoTietLT
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.SoTietTH
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @if (nhiemVu.LoaiPhong == 1)
                                 {
                                     @Html.Raw("MT")
                                 }
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.TenGV
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.GhiChu
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.SoSV
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.NhomLT
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @nhiemVu.NhomTH
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @String.Format("{0:0.##}", nhiemVu.HeSo)
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @String.Format("{0:0.##}", nhiemVu.TongTietLT)
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @String.Format("{0:0.##}", nhiemVu.TongTietTH)
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 @String.Format("{0:0.##}", nhiemVu.TongTiet)
                             </td>
-                            <td class="text-center">
+                            <td class="text-center align-middle">
                                 <a class="badge badge-primary" href="@Url.Action("SuaNhiemVu", new { id = nhiemVu.ID })"><i class="fal fa-pen"></i></a>
                                 <a class="badge badge-danger" href="@Url.Action("XoaNhiemVu", new { id = nhiemVu.ID })"><i class="fal fa-trash"></i></a>
                             </td>

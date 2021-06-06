@@ -131,6 +131,6 @@
         });
     });
     tagifyMaHP.on('add', (e) => {
-        document.getElementById("MaHP").setAttribute("value", e.detail.data.value);
+        document.getElementById("MaHP").setAttribute("value", e.detail.data.value.split(" - ")[0]);
     });
 </script>

@@ -257,13 +257,14 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                themHocPhanModel.MaHP = themHocPhanModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 HocPhan hocPhan = db.HocPhan.Where(x => x.MaHP == themHocPhanModel.MaHP).FirstOrDefault();
                 if (hocPhan == null)
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần không tồn tại trên hệ thống!");
                     return View(themHocPhanModel);
                 }
-                if (HocPhanLib.ExistsMaHocPhan(themHocPhanModel.NhomHocPhan_ID, (string)hocPhan.MaHP))
+                if (HocPhanLib.ExistsMaHocPhan(themHocPhanModel.NhomHocPhan_ID, hocPhan.MaHP))
                 {
                     ModelState.AddModelError("MaHP", "Mã học phần đã đã tồn tại!");
                     return View(themHocPhanModel);
@@ -324,7 +325,7 @@ namespace PCGD.Controllers
             SuaHocPhanModel suaHocPhanModel = new SuaHocPhanModel();
             suaHocPhanModel.NhomHocPhan_ID = nhomHocPhan.ID;
             suaHocPhanModel.ChiTietHocPhan_ID = chiTietHocPhan.ID;
-            suaHocPhanModel.MaHP = db.HocPhan.Find(chiTietHocPhan.HocPhan_ID).MaHP;
+            suaHocPhanModel.MaHP = chiTietHocPhan.HocPhan.MaHP + " - " + chiTietHocPhan.HocPhan.TenHP;
             suaHocPhanModel.SoTietLT = chiTietHocPhan.SoTietLT;
             suaHocPhanModel.SoTietTH = chiTietHocPhan.SoTietTH;
             return View(suaHocPhanModel);
@@ -339,6 +340,7 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                suaHocPhanModel.MaHP = suaHocPhanModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 HocPhan hocPhan = db.HocPhan.Where(x => x.MaHP == suaHocPhanModel.MaHP).FirstOrDefault();
                 if (hocPhan == null)
                 {

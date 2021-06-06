@@ -42,7 +42,6 @@ namespace PCGD.Models
 
         [Display(Name = "Mã học phần")]
         [Required(ErrorMessage = "Mã học phần không được bỏ trống!")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "Mã học phần buộc phải là 6 kí tự!")]
         public string MaHP { get; set; }
     }
     public class SuaHocPhanGiangVienModel
@@ -52,7 +51,6 @@ namespace PCGD.Models
 
         [Display(Name = "Mã học phần")]
         [Required(ErrorMessage = "Mã học phần không được bỏ trống!")]
-        [StringLength(6, MinimumLength = 6, ErrorMessage = "Mã học phần buộc phải là 6 kí tự!")]
         public string MaHP { get; set; }
     }
     public class XoaHocPhanGiangVienModel

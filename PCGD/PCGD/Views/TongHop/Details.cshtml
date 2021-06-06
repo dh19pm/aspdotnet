@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<PCGD.Models.TongHopModel>
+@using PCGD.Libs
 
 @{
     ViewBag.Title = "Danh Sách Tổng Hợp Giảng Viên";
@@ -30,13 +31,13 @@
                 <th class="text-center align-middle" style="width: 90px">
                     Giảm định mức
                 <th class="text-center align-middle" style="width: 80px">
-                    @Html.DisplayNameFor(model => model.HocKi1)
+                    Học kì I
                 </th>
                 <th class="text-center align-middle" style="width: 80px">
-                    @Html.DisplayNameFor(model => model.HocKi2)
+                    Học kì II
                 </th>
                 <th class="text-center align-middle" style="width: 100px">
-                    @Html.DisplayNameFor(model => model.TongTiet)
+                    Tổng tiết
                 </th>
                 <th class="text-center align-middle" style="width: 80px">
                     Tổng
@@ -62,10 +63,11 @@
             }
             @foreach (var item in Model)
             {
-                double tongGioDay = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan) - (item.DinhMucCongTac == null ? 0.0 : (int)item.DinhMucCongTac));
-                double tongKhongDinhMucCongTac = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan));
+                double tongTiet = TongHopLib.GetTongGioDay(ViewBag.ID, item.GiangVien_ID);
+                double tongGioDay = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + tongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan) - (item.DinhMucCongTac == null ? 0.0 : (int)item.DinhMucCongTac));
+                double tongKhongDinhMucCongTac = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + tongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan));
                 tongGiamDinhMuc = tongGiamDinhMuc + (item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc);
-                tongSoGioDay = tongSoGioDay + item.TongTiet;
+                tongSoGioDay = tongSoGioDay + tongTiet;
                 <tr>
                     <td class="text-center">
                         @stt
@@ -83,13 +85,13 @@
                         @Html.DisplayFor(modelItem => item.GiamDinhMuc)
                     </td>
                     <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.HocKi1)
+                        @TongHopLib.GetTongTietCuaTungHocKi(ViewBag.ID, 1, item.GiangVien_ID)
                     </td>
                     <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.HocKi2)
+                        @TongHopLib.GetTongTietCuaTungHocKi(ViewBag.ID, 2, item.GiangVien_ID)
                     </td>
                     <td class="text-center">
-                        @Html.DisplayFor(modelItem => item.TongTiet)
+                        @tongTiet
                     </td>
                     <td class="text-center">
                         @tongGioDay
@@ -101,7 +103,7 @@
                         @Html.DisplayFor(modelItem => item.GhiChu)
                     </td>
                     <td class="text-center">
-                        <a class="badge badge-primary" href="@Url.Action("SuaGiangVien", new { id = item.ID })"><i class="fal fa-pen"></i></a>
+                        <a class="badge badge-primary" href="@Url.Action("SuaGiangVien", new { id = PCGD.Libs.TongHopLib.GetChiTietTongHopID(ViewBag.ID, item.GiangVien_ID) })"><i class="fal fa-pen"></i></a>
                     </td>
                 </tr>
                 stt++;
@@ -128,7 +130,7 @@
                         <strong>Số tiết trung bình của GV</strong>
                     </td>
                     <td class="text-center">
-                        @(tongSoGioDay / (stt - 1))
+                        @String.Format("{0:0.##}", (tongSoGioDay / (stt - 1)))
                     </td>
                     <td colspan="4">
 

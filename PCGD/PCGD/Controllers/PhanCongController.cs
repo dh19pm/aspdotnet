@@ -154,10 +154,19 @@ namespace PCGD.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ThemNhiemVu([Bind(Include = "PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomTH,GhiChu")] ThemNhiemVuModel themNhiemVuModel)
         {
+            PhanCong getPhanCong = db.PhanCong.Find(themNhiemVuModel.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
+
             if (ModelState.IsValid)
             {
                 NhiemVu nhiemVu = new NhiemVu();
                 nhiemVu.PhanCong_ID = themNhiemVuModel.PhanCong_ID;
+                themNhiemVuModel.MaHP = themNhiemVuModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 GiangVien giangVien = db.GiangVien.Where(x => x.TenGV == themNhiemVuModel.TenGV).SingleOrDefault();
                 if (giangVien == null)
                 {
@@ -200,23 +209,16 @@ namespace PCGD.Controllers
                 nhiemVu.GhiChu = themNhiemVuModel.GhiChu;
                 db.NhiemVu.Add(nhiemVu);
                 db.SaveChanges();
-                if (db.ChiTietTongHop.Where(x => x.GiangVien_ID == nhiemVu.GiangVien_ID).Count() <= 0)
+                if (db.ChiTietTongHop.Where(x => x.GiangVien_ID == nhiemVu.GiangVien_ID && x.TongHop_ID == nhiemVu.PhanCong.TongHop_ID).Count() <= 0)
                 {
                     ChiTietTongHop chiTietTongHop = new ChiTietTongHop();
                     chiTietTongHop.GiangVien_ID = nhiemVu.GiangVien_ID;
-                    chiTietTongHop.TongHop_ID = db.PhanCong.Find(nhiemVu.PhanCong_ID).TongHop_ID;
+                    chiTietTongHop.TongHop_ID = nhiemVu.PhanCong.TongHop_ID;
                     db.ChiTietTongHop.Add(chiTietTongHop);
                     db.SaveChanges();
                 }
                 return RedirectToAction("Details", new { id = themNhiemVuModel.PhanCong_ID });
             }
-            PhanCong getPhanCong = db.PhanCong.Find(themNhiemVuModel.PhanCong_ID);
-            if (getPhanCong == null)
-            {
-                return HttpNotFound();
-            }
-            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
-            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(themNhiemVuModel);
         }
 
@@ -246,7 +248,7 @@ namespace PCGD.Controllers
             {
                 return HttpNotFound();
             }
-            suaNhiemVuModel.MaHP = hocPhan.MaHP;
+            suaNhiemVuModel.MaHP = hocPhan.MaHP + " - " + hocPhan.TenHP;
             Lop lop = db.Lop.Find(nhiemVu.Lop_ID);
             if (lop == null)
             {
@@ -274,11 +276,25 @@ namespace PCGD.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SuaNhiemVu([Bind(Include = "ID,PhanCong_ID,TenGV,MaHP,TenLop,LoaiPhong,NhomLT,NhomTH,GhiChu")] SuaNhiemVuModel suaNhiemVuModel)
         {
+            PhanCong getPhanCong = db.PhanCong.Find(suaNhiemVuModel.PhanCong_ID);
+            if (getPhanCong == null)
+            {
+                return HttpNotFound();
+            }
+            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
+            this.ViewBag.HocKi = getPhanCong.HocKi;
+
             if (ModelState.IsValid)
             {
-                NhiemVu nhiemVu = new NhiemVu();
-                nhiemVu.ID = suaNhiemVuModel.ID;
+                NhiemVu nhiemVu = db.NhiemVu.Find(suaNhiemVuModel.ID);
+                if (nhiemVu == null)
+                {
+                    return HttpNotFound();
+                }
+                long TongHop_ID = getPhanCong.TongHop_ID;
+                long GiangVien_ID = nhiemVu.GiangVien_ID;
                 nhiemVu.PhanCong_ID = suaNhiemVuModel.PhanCong_ID;
+                suaNhiemVuModel.MaHP = suaNhiemVuModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 GiangVien giangVien = db.GiangVien.Where(x => x.TenGV == suaNhiemVuModel.TenGV).SingleOrDefault();
                 if (giangVien == null)
                 {
@@ -316,15 +332,22 @@ namespace PCGD.Controllers
                 nhiemVu.GhiChu = suaNhiemVuModel.GhiChu;
                 db.Entry(nhiemVu).State = EntityState.Modified;
                 db.SaveChanges();
+                if (db.ChiTietTongHop.Where(x => x.GiangVien_ID == nhiemVu.GiangVien_ID && x.TongHop_ID == getPhanCong.TongHop_ID).Count() <= 0)
+                {
+                    ChiTietTongHop chiTietTongHop = new ChiTietTongHop();
+                    chiTietTongHop.GiangVien_ID = nhiemVu.GiangVien_ID;
+                    chiTietTongHop.TongHop_ID = getPhanCong.TongHop_ID;
+                    db.ChiTietTongHop.Add(chiTietTongHop);
+                    db.SaveChanges();
+                }
+                if (PhanCongLib.ExistsGiangVien(TongHop_ID, GiangVien_ID) == false)
+                {
+                    ChiTietTongHop chiTietTongHop = db.ChiTietTongHop.Where(r => r.TongHop_ID == TongHop_ID && r.GiangVien_ID == GiangVien_ID).SingleOrDefault();
+                    db.ChiTietTongHop.Remove(chiTietTongHop);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Details", new { id = suaNhiemVuModel.PhanCong_ID });
             }
-            PhanCong getPhanCong = db.PhanCong.Find(suaNhiemVuModel.PhanCong_ID);
-            if (getPhanCong == null)
-            {
-                return HttpNotFound();
-            }
-            this.ViewBag.NamHoc = getPhanCong.TongHop.NamHoc;
-            this.ViewBag.HocKi = getPhanCong.HocKi;
             return View(suaNhiemVuModel);
         }
 
@@ -360,8 +383,16 @@ namespace PCGD.Controllers
         public ActionResult XoaNhiemVuConfirmed(long id)
         {
             NhiemVu nhiemVu = db.NhiemVu.Find(id);
+            long TongHop_ID = nhiemVu.PhanCong.TongHop_ID;
+            long GiangVien_ID = nhiemVu.GiangVien_ID;
             db.NhiemVu.Remove(nhiemVu);
             db.SaveChanges();
+            if (PhanCongLib.ExistsGiangVien(TongHop_ID, GiangVien_ID) == false)
+            {
+                ChiTietTongHop chiTietTongHop = db.ChiTietTongHop.Where(r => r.TongHop_ID == TongHop_ID && r.GiangVien_ID == GiangVien_ID).SingleOrDefault();
+                db.ChiTietTongHop.Remove(chiTietTongHop);
+                db.SaveChanges();
+            }
             return RedirectToAction("Details", new { id = nhiemVu.PhanCong_ID });
         }
 

@@ -180,6 +180,7 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                themHocPhanGiangVienModel.MaHP = themHocPhanGiangVienModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 HocPhan hocPhan = db.HocPhan.Where(x => x.MaHP == themHocPhanGiangVienModel.MaHP).SingleOrDefault();
                 if (hocPhan == null)
                 {
@@ -228,7 +229,7 @@ namespace PCGD.Controllers
             this.ViewBag.TenGV = chiTietGiangVien.GiangVien.TenGV;
             SuaHocPhanGiangVienModel suaHocPhanGiangVienModel = new SuaHocPhanGiangVienModel();
             suaHocPhanGiangVienModel.ChiTietGiangVien_ID = chiTietGiangVien.ID;
-            suaHocPhanGiangVienModel.MaHP = hocPhan.MaHP;
+            suaHocPhanGiangVienModel.MaHP = hocPhan.MaHP + " - " + hocPhan.TenHP;
             suaHocPhanGiangVienModel.GiangVien_ID = chiTietGiangVien.GiangVien_ID;
             return View(suaHocPhanGiangVienModel);
         }
@@ -243,6 +244,7 @@ namespace PCGD.Controllers
         {
             if (ModelState.IsValid)
             {
+                suaHocPhanGiangVienModel.MaHP = suaHocPhanGiangVienModel.MaHP.Split(new[] { " - " }, StringSplitOptions.None)[0];
                 ChiTietGiangVien chiTietGiangVien = db.ChiTietGiangVien.Find(suaHocPhanGiangVienModel.ChiTietGiangVien_ID);
                 if (chiTietGiangVien == null)
                 {

@@ -81,7 +81,7 @@
     </div>
 </div>
 <script>
-    let MaHP = "", TenGV = "", TenLop = "";
+    let MaHP = "@Html.Raw(Model.MaHP)", TenGV = "@Html.Raw(Model.TenGV)", TenLop = "@Html.Raw(Model.TenLop)";
     // giảng viên
     let isFocus = true;
     let inputTenGV = document.getElementById('TenGV');
@@ -237,7 +237,7 @@
     });
     tagifyMaHP.on('add', (e) => {
         MaHP = e.detail.data.value.split(" - ")[0];
-        inputMaHP.setAttribute("value", e.detail.data.value.split(" - ")[0]);
+        inputMaHP.setAttribute("value", e.detail.data.value);
     });
 
     // tên lớp

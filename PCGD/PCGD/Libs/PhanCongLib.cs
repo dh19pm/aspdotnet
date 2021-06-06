@@ -163,5 +163,20 @@ namespace PCGD.Libs
                 return true;
             return false;
         }
+        public static bool ExistsGiangVien(long TongHopID, long GiangVienID)
+        {
+            PCGDEntities db = new PCGDEntities();
+            var data = (from p in db.PhanCong
+                        join n in db.NhiemVu on p.ID equals n.PhanCong_ID
+                        join g in db.GiangVien on n.GiangVien_ID equals g.ID
+                        join h in db.HocPhan on n.HocPhan_ID equals h.ID
+                        join c in db.ChiTietHocPhan on h.ID equals c.HocPhan_ID
+                        join o in db.NhomHocPhan on c.NhomHocPhan_ID equals o.ID
+                        join k in db.HocKi on o.HocKi_ID equals k.ID
+                        join l in db.Lop on n.Lop_ID equals l.ID
+                        where p.TongHop_ID == TongHopID && g.ID == GiangVienID
+                        select new { }).Count();
+            return data > 0 ? true : false;
+        }
     }
 }

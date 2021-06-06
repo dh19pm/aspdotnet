@@ -32,7 +32,7 @@
                 <select id="NamHoc" name="NamHoc" class="form-control">
                     @for (int i = DateTime.Now.Year - 3; i <= DateTime.Now.Year + 3; i++)
                     {
-                        <option value="@i" @if (Model != null && Model.NamHoc.Equals(i)) { @Html.Raw("selected") }>@i - @(i + 1) </option>
+                        <option value="@i" @if ((Model != null && Model.NamHoc.Equals(i)) || (Model == null && DateTime.Now.Year.Equals(i))) { @Html.Raw("selected") }>@i - @(i + 1) </option>
                     }
                 </select>
                 @Html.ValidationMessageFor(model => model.NamHoc, "", new { @class = "invalid-feedback" })

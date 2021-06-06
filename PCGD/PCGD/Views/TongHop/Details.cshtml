@@ -57,11 +57,15 @@
             }
             @{
                 int stt = 1;
+                double tongGiamDinhMuc = 0;
+                double tongSoGioDay = 0;
             }
             @foreach (var item in Model)
             {
                 double tongGioDay = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan) - (item.DinhMucCongTac == null ? 0.0 : (int)item.DinhMucCongTac));
                 double tongKhongDinhMucCongTac = ((item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc) + item.TongTiet - (item.DinhMucGioChuan == null ? 0.0 : (int)item.DinhMucGioChuan));
+                tongGiamDinhMuc = tongGiamDinhMuc + (item.GiamDinhMuc == null ? 0.0 : (double)item.GiamDinhMuc);
+                tongSoGioDay = tongSoGioDay + item.TongTiet;
                 <tr>
                     <td class="text-center">
                         @stt
@@ -102,6 +106,34 @@
                 </tr>
                 stt++;
             }
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <strong>Tổng số tiết BM</strong>
+                    </td>
+                    <td class="text-center">
+                        @tongGiamDinhMuc
+                    </td>
+                    <td colspan="2">
+                        
+                    </td>
+                    <td class="text-center">
+                        @tongSoGioDay
+                    </td>
+                    <td colspan="4">
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="7">
+                        <strong>Số tiết trung bình của GV</strong>
+                    </td>
+                    <td class="text-center">
+                        @(tongSoGioDay / (stt - 1))
+                    </td>
+                    <td colspan="4">
+
+                    </td>
+                </tr>
         </table>
     </div>
 </div>

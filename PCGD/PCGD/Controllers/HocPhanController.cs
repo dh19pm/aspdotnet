@@ -12,12 +12,12 @@ using PCGD.Models;
 namespace PCGD.Controllers
 {
     [Authentication]
-    [Role("Admin")]
     public class HocPhanController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
 
         // GET: HocPhan
+        [Role("Admin")]
         public ActionResult Index(string text = "", int page = 1)
         {
             var data = db.HocPhan;
@@ -38,6 +38,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Create
+        [Role("Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace PCGD.Controllers
         // POST: HocPhan/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,MaHP,LoaiHP,TenHP,SoTC")] HocPhan hocPhan)
@@ -67,6 +69,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Edit/5
+        [Role("Admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -84,6 +87,7 @@ namespace PCGD.Controllers
         // POST: HocPhan/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,MaHP,TenHP,SoTC")] HocPhan hocPhan)
@@ -109,6 +113,7 @@ namespace PCGD.Controllers
         }
 
         // GET: HocPhan/Delete/5
+        [Role("Admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -124,6 +129,7 @@ namespace PCGD.Controllers
         }
 
         // POST: HocPhan/Delete/5
+        [Role("Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
@@ -135,6 +141,7 @@ namespace PCGD.Controllers
         }
 
         // Post: HocPhan/Search
+        [Role("Admin", "User")]
         public JsonResult Search(string mahp, string tengv, string tenlop)
         {
             tengv = HttpUtility.UrlDecode(tengv);
@@ -142,7 +149,7 @@ namespace PCGD.Controllers
             {
                 return new JsonResult()
                 {
-                    Data = db.HocPhan.Where(x => x.MaHP.Contains(mahp)).Select(x => new { value = x.MaHP }).ToList(),
+                    Data = db.HocPhan.Where(x => (x.MaHP.Contains(mahp) || x.TenHP.Contains(mahp))).Select(x => new { value = x.MaHP + " - " + x.TenHP }).ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -154,7 +161,7 @@ namespace PCGD.Controllers
                             join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
                             join h in db.HocPhan on c.HocPhan_ID equals h.ID
                             where g.TenGV == tengv
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -169,7 +176,7 @@ namespace PCGD.Controllers
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
                             where l.TenLop == tenlop
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -180,8 +187,8 @@ namespace PCGD.Controllers
                     Data = (from g in db.GiangVien
                             join c in db.ChiTietGiangVien on g.ID equals c.GiangVien_ID
                             join h in db.HocPhan on c.HocPhan_ID equals h.ID
-                            where h.MaHP.Contains(mahp) && g.TenGV == tengv
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            where (h.MaHP.Contains(mahp) || h.TenHP.Contains(mahp)) && g.TenGV == tengv
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -195,8 +202,8 @@ namespace PCGD.Controllers
                             join k in db.HocKi on n.HocKi_ID equals k.ID
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
-                            where h.MaHP.Contains(mahp) && l.TenLop == tenlop
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            where (h.MaHP.Contains(mahp) || h.TenHP.Contains(mahp)) && l.TenLop == tenlop
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -213,7 +220,7 @@ namespace PCGD.Controllers
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
                             where l.TenLop == tenlop && g.TenGV == tengv
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
@@ -229,14 +236,14 @@ namespace PCGD.Controllers
                             join k in db.HocKi on n.HocKi_ID equals k.ID
                             join t in db.ChuongTrinh on k.ChuongTrinh_ID equals t.ID
                             join l in db.Lop on t.ID equals l.ChuongTrinh_ID
-                            where h.MaHP.Contains(mahp) && l.TenLop == tenlop && g.TenGV == tengv
-                            select new { value = h.MaHP }).Distinct().ToList(),
+                            where (h.MaHP.Contains(mahp) || h.TenHP.Contains(mahp)) && l.TenLop == tenlop && g.TenGV == tengv
+                            select new { value = h.MaHP + " - " + h.TenHP }).Distinct().ToList(),
                     JsonRequestBehavior = JsonRequestBehavior.AllowGet
                 };
             }
             return new JsonResult()
             {
-                Data = db.HocPhan.Select(x => new { value = x.MaHP }).ToList(),
+                Data = db.HocPhan.Select(x => new { value = x.MaHP + " - " + x.TenHP  }).ToList(),
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }

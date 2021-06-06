@@ -12,12 +12,12 @@ using PCGD.Libs;
 namespace PCGD.Controllers
 {
     [Authentication]
-    [Role("Admin")]
     public class GiangVienController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
 
         // GET: GiangVien
+        [Role("Admin")]
         public ActionResult Index(string text = "", int page = 1)
         {
             var data = db.GiangVien;
@@ -38,6 +38,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Details/5
+        [Role("Admin")]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -57,6 +58,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Create
+        [Role("Admin")]
         public ActionResult Create()
         {
             return View();
@@ -65,6 +67,7 @@ namespace PCGD.Controllers
         // POST: GiangVien/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,TenGV")] GiangVien giangVien)
@@ -86,6 +89,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Edit/5
+        [Role("Admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -103,6 +107,7 @@ namespace PCGD.Controllers
         // POST: GiangVien/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,TenGV")] GiangVien giangVien)
@@ -123,6 +128,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Delete/5
+        [Role("Admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -138,6 +144,7 @@ namespace PCGD.Controllers
         }
 
         // POST: GiangVien/Delete/5
+        [Role("Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
@@ -149,6 +156,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Create
+        [Role("Admin")]
         public ActionResult ThemHocPhan(long? id)
         {
             GiangVien giangVien = db.GiangVien.Find(id);
@@ -165,6 +173,7 @@ namespace PCGD.Controllers
         // POST: GiangVien/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ThemHocPhan([Bind(Include = "GiangVien_ID,MaHP")] ThemHocPhanGiangVienModel themHocPhanGiangVienModel)
@@ -199,6 +208,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/Edit/5
+        [Role("Admin")]
         public ActionResult SuaHocPhan(long? id)
         {
             if (id == null)
@@ -226,6 +236,7 @@ namespace PCGD.Controllers
         // POST: GiangVien/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SuaHocPhan([Bind(Include = "ChiTietGiangVien_ID,GiangVien_ID,MaHP")] SuaHocPhanGiangVienModel suaHocPhanGiangVienModel)
@@ -263,6 +274,7 @@ namespace PCGD.Controllers
         }
 
         // GET: GiangVien/XoaHocPhan/5
+        [Role("Admin")]
         public ActionResult XoaHocPhan(long? id)
         {
             if (id == null)
@@ -288,6 +300,7 @@ namespace PCGD.Controllers
         }
 
         // POST: GiangVien/XoaHocPhan/5
+        [Role("Admin")]
         [HttpPost, ActionName("XoaHocPhan")]
         [ValidateAntiForgeryToken]
         public ActionResult XoaHocPhanConfirmed(long? id)
@@ -299,6 +312,7 @@ namespace PCGD.Controllers
         }
 
         // Post: GiangVien/Search
+        [Role("Admin", "User")]
         public JsonResult Search(string mahp, string tengv, string tenlop)
         {
             tengv = HttpUtility.UrlDecode(tengv);

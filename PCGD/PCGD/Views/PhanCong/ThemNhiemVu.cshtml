@@ -236,8 +236,8 @@
         });
     });
     tagifyMaHP.on('add', (e) => {
-        MaHP = e.detail.data.value;
-        inputMaHP.setAttribute("value", e.detail.data.value);
+        MaHP = e.detail.data.value.split(" - ")[0];
+        inputMaHP.setAttribute("value", e.detail.data.value.split(" - ")[0]);
     });
 
     // tên lớp

@@ -11,12 +11,12 @@ using PCGD.Models;
 namespace PCGD.Controllers
 {
     [Authentication]
-    [Role("Admin")]
     public class LopController : Controller
     {
         private PCGDEntities db = new PCGDEntities();
 
         // GET: Lop
+        [Role("Admin")]
         public ActionResult Index(string text = "", int page = 1)
         {
             var data = db.Lop.Include(l => l.ChuongTrinh).Include(l => l.Nganh);
@@ -37,6 +37,7 @@ namespace PCGD.Controllers
         }
 
         // GET: Lop/Create
+        [Role("Admin")]
         public ActionResult Create()
         {
             ViewBag.ChuongTrinh_ID = new SelectList(db.ChuongTrinh, "ID", "TenCT");
@@ -47,6 +48,7 @@ namespace PCGD.Controllers
         // POST: Lop/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nganh_ID,ChuongTrinh_ID,TenLop,SoSV")] Lop lop)
@@ -69,6 +71,7 @@ namespace PCGD.Controllers
         }
 
         // GET: Lop/Edit/5
+        [Role("Admin")]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -88,6 +91,7 @@ namespace PCGD.Controllers
         // POST: Lop/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Role("Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Nganh_ID,ChuongTrinh_ID,TenLop,SoSV")] Lop lop)
@@ -109,6 +113,7 @@ namespace PCGD.Controllers
         }
 
         // GET: Lop/Delete/5
+        [Role("Admin")]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -124,6 +129,7 @@ namespace PCGD.Controllers
         }
 
         // POST: Lop/Delete/5
+        [Role("Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
@@ -135,6 +141,7 @@ namespace PCGD.Controllers
         }
 
         // Post: GiangVien/Search
+        [Role("Admin", "User")]
         public JsonResult Search(string mahp, string tengv, string tenlop)
         {
             tengv = HttpUtility.UrlDecode(tengv);
